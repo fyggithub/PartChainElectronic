@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>Icon/Titleicon.ico</file>
+        <file>Icon/back.png</file>
+        <file>Icon/preview.png</file>
+        <file>Icon/refresh.png</file>
+        <file>Icon/scn.png</file>
+        <file>Icon/startRecord.png</file>
+        <file>Icon/stopRecord.png</file>
+        <file>Icon/upload.png</file>
+        <file>Icon/url.png</file>
+        <file>Icon/cameraTop.png</file>
+        <file>Icon/top.png</file>
+        <file>Icon/button.png</file>
+        <file>Icon/camera.png</file>
+        <file>Icon/refresh_max.png</file>
+        <file>Icon/scn_max.png</file>
+        <file>Icon/upload_max.png</file>
+        <file>Icon/button_gray.png</file>
+    </qresource>
+</RCC>

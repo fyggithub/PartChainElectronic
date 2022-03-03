@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+ 
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<title>HTML5+QT</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" /> 
+</head>
+ 
+<body>
+ 
+	<div class="limiter">
+		<div class="container-login100" style="background-image: url('images/bg-01.jpg');">
+			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+				<form class="login100-form validate-form">
+
+					<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button class="login100-form-btn" id = "web_login">网页取证</button>
+						</div>
+					</div>
+					
+					<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button class="login100-form-btn" id = "camera_login">拍摄取证</button>
+						</div>
+					</div>
+ 
+ 					<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button class="login100-form-btn" id = "record_login">录屏取证</button>
+						</div>
+					</div>
+					
+					<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button class="login100-form-btn" id = "screenshot_login">截图取证</button>
+						</div>
+					</div>
+ 
+				</form>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="qrc:///qtwebchannel/qwebchannel.js"></script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
+	<script type="text/javascript"> 
+	window.onload = function() {  
+            new QWebChannel(qt.webChannelTransport, function(channel) {    //浏览器内核自带
+			
+                //Get Qt interact object  
+                var interactObj = channel.objects.interactObj;      //注册对象名
+				var type = "token";
+				var str = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MzU0MjU5ODcsInVzZXIiOnsicGFzc3dvcmQiOm51bGwsInVzZXJuYW1lIjoi5a6i5oi356uv5LyB5LiaIiwiZW5hYmxlZCI6dHJ1ZSwidXNlciI6eyJpZCI6IjYzMjg3MjMxOTcyNzE4MTgyNCIsInVzZXJuYW1lIjoi5a6i5oi356uv5LyB5LiaIiwicGFzc3dvcmQiOm51bGwsImVtYWlsIjoiIiwibW9iaWxlIjpudWxsLCJlbmFibGVkIjp0cnVlLCJpc0FkbWluIjpmYWxzZSwiaXNEZWxldGUiOiIxIiwicHdkUmVzZXRUaW1lIjpudWxsLCJzbTRQYXNzd29yZCI6bnVsbCwiY2VydCI6bnVsbCwiZW5jcnlwdENlcnQiOm51bGwsImxpY2Vuc2VVcmwiOm51bGwsImNyZWF0ZVRpbWUiOjE2MzQwODg1MTkwMDAsInVwZGF0ZVRpbWUiOjE2MzQwOTAxMTUwMDAsImF1dGhlbnRpY2F0aW9uSW5mb0lkIjo2MzI4NzIzMjAxMTMwNTc3OTIsImlzQXBwbHlDZXJ0IjoiMSIsImF1dGhlbnRpY2F0aW9uU3RhdHVzIjoiMDIiLCJzaWduUHVibGljS2V5IjoiMDRkY2VmNGY1MTBhMWJhNWU2ZTZjZDg2ZTBhNTJmN2I3MjI3MmYzODZlYzcxNzQ0ZGFmNzc1N2Q1Y2RkMDEwZjAwNGU4NGQ2N2ZmNWE3YWI3M2FjNjhlOTcwNmRiZDVjODIzYTY2NmU4NDNkYTAyMjk4NmIyYTI1ZDZhY2MwOTA4YyIsImVuY3J5cHRQdWJsaWNLZXkiOiIwNDk2YTExMWRkZWYxYjViMjA5ZDgwMWYzOWQ1ZDExNTg4YTkxZmRhYzIyM2MzZGFkOTM5Zjc3N2U1YTJhZGZmMDdhMWRiMzFiNjYzMjFmODI5N2IyYjY1ZDc1N2Q5NGE5NTBiMmUzNmIzYWNhNzgwMTQ4NjIxMjIxZDliMGFkMTg4IiwidG9TaWduZWQiOm51bGwsInJlYXNvbiI6IiJ9LCJyb2xlcyI6W119LCJ1c2VyX25hbWUiOiLlrqLmiLfnq6_kvIHkuJoiLCJqdGkiOiIxODU2MTc3OC1mNGI4LTQ4NzctOGQzNS1mNGRiNDViYzdiOWMiLCJjbGllbnRfaWQiOiJhbXMiLCJzY29wZSI6WyJhbXMiXX0.Prb8JLbQ5LO-E0ZYCnD9SWKffyAtaw3Wvr-uRgtmNbpn7-wrTYuWVnvgCVqQEwmvgCd0XNdTu-chzJvDNSuG6zx0N7y-gpP7IymhIPDZyyjS-yo69w7_z8VTry7k6uGbh3iwhVPfmzxKFk4kojUXdgOumahvObnx4F3DX7DotJueHzOUhAI_MQ9iQY_IXv8AEmPH7GzfqcW_PMAwrF4WAJN3FX12M1wLu40I9qkNLw5Wwz0jKWKXVVzkS2sVcwM-SIuhZULI2YuFxc61syajvoGrW3alLtIIDLmzN5A4eICDhxoTgd48wix5dwxcT7EXMH3vRTMq6VGpyfZu0Z4Nzg";
+
+                //Web send message to Qt 
+				$("#web_login").click(function(){
+					var name = "web_login";
+					var type1 = "url";
+					var str1 = "http://www.baidu.com"
+					interactObj.JSSendMessage(name,type1,str1);													
+				})
+				
+				$("#camera_login").click(function(){
+					 var name = "camera_login";
+					interactObj.JSSendMessage(name,type,str);           //打开拍摄取证
+				})
+				
+				$("#record_login").click(function(){
+					 var name = "record_login";
+					interactObj.JSSendMessage(name,type,str);           //打开录屏取证
+				})
+				
+				$("#screenshot_login").click(function(){
+					 var name = "screenshot_login";
+					interactObj.JSSendMessage(name,type,str);           //打开截图取证
+				})
+				
+                //Web connect the Qt signal, then Qt can call "output" function
+                interactObj.SigSendMessageToJS.connect(function(str, str2, str3) {       //接收信号，响应函数
+                    if(str == "GetWebDate")
+					{
+						if(str2 == "token")
+						{
+							//alert(str3);
+						}
+						else if(str2 == "url")
+						{
+							var name = "web_login";	
+							type = "token";
+							var str = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MzU0MjU5ODcsInVzZXIiOnsicGFzc3dvcmQiOm51bGwsInVzZXJuYW1lIjoi5a6i5oi356uv5LyB5LiaIiwiZW5hYmxlZCI6dHJ1ZSwidXNlciI6eyJpZCI6IjYzMjg3MjMxOTcyNzE4MTgyNCIsInVzZXJuYW1lIjoi5a6i5oi356uv5LyB5LiaIiwicGFzc3dvcmQiOm51bGwsImVtYWlsIjoiIiwibW9iaWxlIjpudWxsLCJlbmFibGVkIjp0cnVlLCJpc0FkbWluIjpmYWxzZSwiaXNEZWxldGUiOiIxIiwicHdkUmVzZXRUaW1lIjpudWxsLCJzbTRQYXNzd29yZCI6bnVsbCwiY2VydCI6bnVsbCwiZW5jcnlwdENlcnQiOm51bGwsImxpY2Vuc2VVcmwiOm51bGwsImNyZWF0ZVRpbWUiOjE2MzQwODg1MTkwMDAsInVwZGF0ZVRpbWUiOjE2MzQwOTAxMTUwMDAsImF1dGhlbnRpY2F0aW9uSW5mb0lkIjo2MzI4NzIzMjAxMTMwNTc3OTIsImlzQXBwbHlDZXJ0IjoiMSIsImF1dGhlbnRpY2F0aW9uU3RhdHVzIjoiMDIiLCJzaWduUHVibGljS2V5IjoiMDRkY2VmNGY1MTBhMWJhNWU2ZTZjZDg2ZTBhNTJmN2I3MjI3MmYzODZlYzcxNzQ0ZGFmNzc1N2Q1Y2RkMDEwZjAwNGU4NGQ2N2ZmNWE3YWI3M2FjNjhlOTcwNmRiZDVjODIzYTY2NmU4NDNkYTAyMjk4NmIyYTI1ZDZhY2MwOTA4YyIsImVuY3J5cHRQdWJsaWNLZXkiOiIwNDk2YTExMWRkZWYxYjViMjA5ZDgwMWYzOWQ1ZDExNTg4YTkxZmRhYzIyM2MzZGFkOTM5Zjc3N2U1YTJhZGZmMDdhMWRiMzFiNjYzMjFmODI5N2IyYjY1ZDc1N2Q5NGE5NTBiMmUzNmIzYWNhNzgwMTQ4NjIxMjIxZDliMGFkMTg4IiwidG9TaWduZWQiOm51bGwsInJlYXNvbiI6IiJ9LCJyb2xlcyI6W119LCJ1c2VyX25hbWUiOiLlrqLmiLfnq6_kvIHkuJoiLCJqdGkiOiIxODU2MTc3OC1mNGI4LTQ4NzctOGQzNS1mNGRiNDViYzdiOWMiLCJjbGllbnRfaWQiOiJhbXMiLCJzY29wZSI6WyJhbXMiXX0.Prb8JLbQ5LO-E0ZYCnD9SWKffyAtaw3Wvr-uRgtmNbpn7-wrTYuWVnvgCVqQEwmvgCd0XNdTu-chzJvDNSuG6zx0N7y-gpP7IymhIPDZyyjS-yo69w7_z8VTry7k6uGbh3iwhVPfmzxKFk4kojUXdgOumahvObnx4F3DX7DotJueHzOUhAI_MQ9iQY_IXv8AEmPH7GzfqcW_PMAwrF4WAJN3FX12M1wLu40I9qkNLw5Wwz0jKWKXVVzkS2sVcwM-SIuhZULI2YuFxc61syajvoGrW3alLtIIDLmzN5A4eICDhxoTgd48wix5dwxcT7EXMH3vRTMq6VGpyfZu0Z4Nzg";
+							interactObj.JSSendMessage(name,type,str);           //打开网页取证
+						}
+						//alert("GetWebDate");
+					}
+					else if(str == "GetCameraDate")
+					{
+						if(str2 == "token")
+						{
+							//alert(str3);
+						}
+						//alert("GetCameraDate");
+					}
+					else if(str == "GetRecordDate")
+					{
+						if(str2 == "token")
+						{
+							//alert(str3);
+						}
+						//alert("GetRecordDate");
+					}
+					else if(str == "GetScreenshotDate")
+					{
+						if(str2 == "token")
+						{
+							//alert(str3);
+						}
+						//alert("GetScreenshotDate");
+					}
+                });    
+            });  
+            }  
+ 
+ 
+ 
+	</script>  
+</body>
+ 
+</html>
