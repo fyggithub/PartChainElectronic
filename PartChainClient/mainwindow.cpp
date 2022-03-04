@@ -14,6 +14,7 @@
 #include "SM4/sm4.h"
 #include "include/JlCompress.h"
 #include "Common/logrecord.h"
+#include <QDesktopServices>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -21,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     //qputenv("QTWEBENGINE_REMOTE_DEBUGGING", "5566");
-    pProgressMaxRange = 40;
+    pProgressMaxRange = 5;
     recvBuff = "";
     sendBuff = "";
 }
@@ -47,8 +48,8 @@ void MainWindow::startweb(void)
     QString filePath = QCoreApplication::applicationDirPath() + "/testHtml.html";
     QString urlPath = "file:///" + filePath;
     //m_webView->page()->load(QUrl(urlPath));
-    //m_webView->page()->load(QUrl("http://172.24.103.6:8016/"));
-    m_webView->page()->load(QUrl("http://172.16.5.71:8083/"));
+    m_webView->page()->load(QUrl("http://172.24.103.6:8016/"));
+    //m_webView->page()->load(QUrl("http://172.16.5.71:8083/"));
 
     QStackedLayout* layout = new QStackedLayout(ui->widgetMain);
     ui->widgetMain->setLayout(layout);
@@ -102,18 +103,20 @@ void MainWindow::DownLoadFinish()
         pCommon->RemoveOverageFile(getName);
         fileLists << fullPath;
     }
-    std::string::size_type zipPos = dir.find(".zip");
-    QString zipPath = downLoadPath;
-    if(zipPos == dir.npos){
-        zipPath = QString("%1.zip").arg(downLoadPath);
-    }
-    JlCompress::compressFiles(zipPath, fileLists);
 
-    for(int j = 0;j < fileLists.size();++j)
-    {
-        pCommon->RemoveOverageFile(fileLists[j]);
+    if(pBatchSingle == "batch"){//为批量就进行压缩
+        std::string::size_type zipPos = dir.find(".zip");
+        QString zipPath = downLoadPath;
+        if(zipPos == dir.npos){
+            zipPath = QString("%1.zip").arg(downLoadPath);
+        }
+        JlCompress::compressFiles(zipPath, fileLists);
+        for(int j = 0;j < fileLists.size();++j)
+        {
+            pCommon->RemoveOverageFile(fileLists[j]);
+        }
     }
-
+    pBatchSingle = "";
     pList.clear();
     return;
 }
@@ -154,9 +157,6 @@ void MainWindow::OnReceiveMessageFromJS(QString strMain,QString type,QString str
         qDebug()<<"state:"<<state;        
         if(state == "start")
         {
-            //qDebug()<<"start111111111111111111111111111";
-            //pDownLoadFileName = jsonObject["filename"].toString();
-            //qDebug()<<"pDownLoadFileName:"<<pDownLoadFileName;
             QString sourceArray = jsonObject["encry"].toString();
             recvBuff.append(sourceArray);
 
@@ -173,7 +173,9 @@ void MainWindow::OnReceiveMessageFromJS(QString strMain,QString type,QString str
         {
             qDebug()<<"finish111111111111111111111111111";
             pDownLoadFileName = "";
+            pBatchSingle = "";
             pDownLoadFileName = jsonObject["filename"].toString();
+            pBatchSingle = jsonObject["batchSingle"].toString();
             qDebug()<<"pDownLoadFileName:"<<pDownLoadFileName;
             QString keyArray = jsonObject["key"].toString();
             qDebug()<<"key:"<<keyArray;
@@ -249,6 +251,18 @@ void MainWindow::OnReceiveMessageFromJS(QString strMain,QString type,QString str
         SigSendMessageToJS(strJson,"","");
         QString msg = QString::fromLocal8Bit("登录信息已失效，<br>请关闭窗口，重新登录！");
         QMessageBox::warning(NULL, QString::fromLocal8Bit("提示"), msg, QString::fromLocal8Bit("确定"), 0);
+        return;
+    }
+    else if(forensicsType == "openResourceManagement")
+    {
+        QString path = jsonObject["path"].toString();
+        qDebug()<<"path:"<<path;
+        QDesktopServices::openUrl(QUrl::fromLocalFile(path));
+        QJsonObject obj;
+        obj.insert("strMain", "openResourceManagement");
+        QByteArray byteArray = QJsonDocument(obj).toJson(QJsonDocument::Compact);
+        QString strJson(byteArray);
+        SigSendMessageToJS(strJson,"","");
         return;
     }
 

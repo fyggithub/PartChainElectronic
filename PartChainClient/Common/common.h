@@ -46,7 +46,7 @@ public:
 };
 
 extern QString pGetJsToken,pGetJsUrl,pGetForensicsName,pGetNameNoTime,pGetHostIp,pGetDirPath;
-extern QString pDownLoadFileName;
+extern QString pDownLoadFileName, pBatchSingle;
 extern QString pIpAddress,pMacAddress,pOsVersion,pGateway;
 
 #endif // COMMON_H

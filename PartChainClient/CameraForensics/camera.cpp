@@ -519,7 +519,8 @@ void Camera::replyFinished(QNetworkReply*)    //删除指针，更新和关闭�
     }
     else
     {
-        QMessageBox::critical(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("视频上传失败，<br>请再次上传取证！"));
+        QMessageBox::critical(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("视频上传失败，<br>请再次上传取证！"),\
+                                                QString::fromLocal8Bit("确定"), 0);
     }
 }
 

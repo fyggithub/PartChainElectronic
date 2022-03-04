@@ -182,13 +182,6 @@ void web_forensics::FullScreenShoot()
 void web_forensics::FullScreenSave()
 {
     QString filePath = pLog->FileDirPath(WebRecord);
-
-//    if(!pFilePathName.isNull()) //删除多余文件
-//    {
-//        QString strFileName = filePath + pFilePathName;
-//        pcom->RemoveOverageFile(strFileName);
-//    }
-
     QString getTime = QDateTime::currentDateTime().toString("yyyy-MM-dd-hh-mm-ss-zzz");
     QString filePathName = "web-" + getTime + ".png";
     QString fileFullPathName = filePath + filePathName;   
@@ -219,6 +212,7 @@ void web_forensics::RecvMsgClose()
 void web_forensics::closeEvent(QCloseEvent *event)
 {
     QString strDirPath = pLog->FileDirPath(WebRecord);
+    qDebug()<<"strDirPath:"<<strDirPath;
     QJsonObject obj;
     switch(pCloseFlag)
     {

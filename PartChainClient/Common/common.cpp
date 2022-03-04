@@ -13,7 +13,8 @@
 # pragma execution_character_set("utf-8")
 #endif
 
-QString pGetJsToken,pGetJsUrl,pGetForensicsName,pGetNameNoTime,pGetHostIp,pGetDirPath,pDownLoadFileName;
+QString pGetJsToken,pGetJsUrl,pGetForensicsName,pGetNameNoTime,pGetHostIp,pGetDirPath;
+QString pDownLoadFileName, pBatchSingle;
 QString pIpAddress,pMacAddress,pOsVersion,pGateway;
 
 Common::Common()

@@ -532,7 +532,8 @@ void RecordVideo::replyFinished(QNetworkReply*)    //删除指针，更新和关
     else
     {
         //QMessageBox::critical(NULL, tr("Error"), "Failed!!!");
-        QMessageBox::critical(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("视频上传失败，<br>请再次上传取证！"));
+        QMessageBox::critical(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("视频上传失败，<br>请再次上传取证！"),\
+                                                QString::fromLocal8Bit("确定"), 0);
     }
 }
 
