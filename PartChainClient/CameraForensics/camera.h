@@ -39,10 +39,12 @@ public:
     explicit Camera(QWidget *parent = nullptr);
     ~Camera();
 
+    void InitPhotographUi();
     void ShowMaximized(void);
     void InitCamera(void);
     void CameraUploadFile(QString *filename,int num);
     void OpenPhotographWeb(void);
+    void ClosePhotograph(void);
 
     void ImageVideo(void);
     QImage cvMat2QImage(const cv::Mat& mat);

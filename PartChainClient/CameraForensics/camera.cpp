@@ -15,6 +15,19 @@ Camera::Camera(QWidget *parent) :
     ui(new Ui::Camera)
 {
     ui->setupUi(this);
+
+}
+
+Camera::~Camera()
+{
+    delete capture;
+    delete outputVideo;
+    delete timer;
+    delete ui;
+}
+
+void Camera::InitPhotographUi()
+{
     m_isRun = false;
     timecount = 0;
     pCloseFlag = 0;
@@ -46,15 +59,6 @@ Camera::Camera(QWidget *parent) :
     //connect(ui->BtnStart, SIGNAL(clicked()), this, SLOT(StartRecordVideo1()));
     //connect(ui->BtnReload, SIGNAL(clicked()), this, SLOT(StopRecordVideo1()));
 }
-
-Camera::~Camera()
-{
-    delete capture;
-    delete outputVideo;
-    delete timer;
-    delete ui;
-}
-
 
 void Camera::StartRecordVideo1(void)
 {
@@ -125,6 +129,11 @@ void Camera::DisplayCurrentTime()
 void Camera::OpenPhotographWeb(void)
 {
     OpenVideo();    //打开摄像头
+}
+
+void Camera::ClosePhotograph(void)
+{
+    capture->release();
 }
 
 void Camera::ShowMaximized(void)
@@ -326,7 +335,8 @@ void Camera::closeEvent(QCloseEvent *event)
                 return;
             }
             pCurrentTime->stop();
-            capture->release();
+            delete pCurrentTime;
+            //capture->release();
             pCloseFlag = 0;
             Common *pCommon = NULL;
             QString strDirPath = pCommon->FileDirPath(CameraRecord);
@@ -341,6 +351,7 @@ void Camera::closeEvent(QCloseEvent *event)
 
             pCommon->CommunicationWriteLog("GetCameraDate","cancel","cancel");
             emit SigSendMessageToJS(strJson,"","");
+            capture->release();
             event->accept();
             pCommon->RemoveDirFile(strDirPath);//本地删除此次操作的取证文件
         }
@@ -491,7 +502,7 @@ void Camera::replyFinished(QNetworkReply*)    //删除指针，更新和关闭�
         QString msg = jsonObject["message"].toString();
         if(code == "0000")
         {
-            int result;
+            int result = 0;
             if(pTimeoutFlag == 1){
                 pTimeoutFlag = 0;
                 result = QMessageBox::warning(NULL,QString::fromLocal8Bit("消息"),QString::fromLocal8Bit("停止录屏，录制时长不能超过10分钟，<br>已为您保存录制内容。"),\
@@ -608,7 +619,7 @@ void Camera::OpenVideo(void)
     capture->set(CAP_PROP_FRAME_WIDTH, 960);  //max:960; normal:640
     capture->set(CAP_PROP_FRAME_HEIGHT, 540);  //max:540; normal:480
     if (!capture->isOpened()){
-        QMessageBox::warning(this,QString::fromLocal8Bit("提示"),QString::fromLocal8Bit("摄像头打开失败！"),QString::fromLocal8Bit("确定"));
+        QMessageBox::warning(this,QString::fromLocal8Bit("提示"),QString::fromLocal8Bit("摄像头打开失败！"),QString::fromLocal8Bit("确定"),0);
         return;
     }
 }

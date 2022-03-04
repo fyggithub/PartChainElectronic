@@ -365,6 +365,11 @@ void MainWindow::replyFinished(QNetworkReply*)    //删除指针，更新和关�
             QByteArray byteArray = QJsonDocument(obj).toJson(QJsonDocument::Compact);
             QString strJson(byteArray);
             emit SigSendMessageToJS(strJson,"","");
+            if(pRecordType == CameraRecord)
+            {
+                pCamera->ClosePhotograph();//关闭摄像头
+                delete pCamera;
+            }
             //上传服务器失败
             QMessageBox::warning(NULL, QString::fromLocal8Bit("提示"), msg, QString::fromLocal8Bit("确定"), 0);
         }
@@ -384,7 +389,13 @@ void MainWindow::replyFinished(QNetworkReply*)    //删除指针，更新和关�
         QByteArray byteArray = QJsonDocument(obj).toJson(QJsonDocument::Compact);
         QString strJson(byteArray);
         emit SigSendMessageToJS(strJson,"","");
-        QMessageBox::critical(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("网络清洁性检测失败，<br>请重新取证！"));
+        if(pRecordType == CameraRecord)
+        {
+            pCamera->ClosePhotograph();//关闭摄像头
+            delete pCamera;
+        }
+        QMessageBox::critical(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("网络清洁性检测失败，<br>请重新取证！"),\
+                                        QString::fromLocal8Bit("确定"), 0);
     }
 }
 
@@ -453,10 +464,11 @@ void MainWindow::OpenWebForensics(void)
 
 void MainWindow::OpenWebCamera(void)
 {
-    pCamera = new Camera;
+    //pCamera = new Camera;
+    pCamera->InitPhotographUi();
     pCamera->setWindowTitle(QString::fromLocal8Bit("拍摄取证"));
     pCamera->ShowMaximized();
-    pCamera->OpenPhotographWeb(); //窗口显示完后在打开摄像头
+    //pCamera->OpenPhotographWeb(); //窗口显示完后在打开摄像头
     connect(pCamera, &Camera::SigSendMessageToJS,pJsCommunicate, &JSCommunicate::SigSendMessageToJS);
     connect(pCamera, &Camera::SendMsgCloseWnd,this, &MainWindow::RecvMsgCloseWnd);
 }
@@ -539,7 +551,12 @@ void MainWindow::DialogProgressTime()
     else if(timecount == pProgressMaxRange)
     {
         progressDialog->setValue(timecount);
-        pNetworkClean->IpTrackFinish(pRecordType);
+        pNetworkClean->IpTrackFinish(pRecordType);        
+        if(pRecordType == CameraRecord)
+        {
+            pCamera = new Camera;
+            pCamera->OpenPhotographWeb(); //窗口显示完后在打开摄像头
+        }
     }
     else
     {

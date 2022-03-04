@@ -356,7 +356,7 @@ void web_forensics::replyFinished(QNetworkReply*)    //删除指针，更新和�
     }
     else
     {
-        QMessageBox::warning(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("网页上传失败，请重新取证！"),\
+        QMessageBox::critical(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("网页上传失败，请重新取证！"),\
                                            QString::fromLocal8Bit("确定"), 0);
     }
     emit SendMsgClose();

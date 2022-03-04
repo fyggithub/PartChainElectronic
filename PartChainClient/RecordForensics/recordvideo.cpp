@@ -29,6 +29,7 @@ RecordVideo::RecordVideo(QWidget *parent) :
 
     timecount = 0;
     pCloseFlag = 0;
+    pTimeoutFlag = 0;
     getStrMsg = "";
     getNameMp4 = "";
     m_isRun = false;
@@ -180,14 +181,9 @@ void RecordVideo::RecordTime()
         ui->label_time->setText(display_time);
         ui->label_time->setStyleSheet("color:red;");
 
-        //if (hour_l >= 1) //如果超过1个小时，则弹框并关闭定时器
-        //{
-        //    QMessageBox::warning(this,"message",tr("It's been more than 1 hour,the recording video is closed.\n"),QMessageBox::Yes);
-        //    emit StopTimeSignal(); //关闭定时器
-        //}
         if ((minute_h >= 1) && (minute_l >= 5)) //如果超过1个小时，则弹框并关闭定时器
         {
-            QMessageBox::warning(this,QString::fromLocal8Bit("消息"),QString::fromLocal8Bit("停止录屏，录制时长不能超过15分钟，<br>已为您保存录制内容。"),QString::fromLocal8Bit("确定"));
+            pTimeoutFlag = 1;
             emit StopTimeSignal(); //关闭定时器
         }
     }
@@ -280,7 +276,6 @@ void RecordVideo::MplayerCompressFinished(int exitCode, QProcess::ExitStatus exi
     QString strRenameFile = pcom->RenameLogFile(VideoRecord, FileLogName);
 
     //上传文件服务器
-    //DialogProgressDeal();
     BufferFileName[0] = getNameMp4;
     //BufferFileName[1] = FileLogName;
     BufferFileName[1] = strRenameFile;
@@ -375,9 +370,6 @@ void RecordVideo::closeEvent(QCloseEvent *event)
         obj.insert("osVersion", pOsVersion);
         QByteArray byteArray = QJsonDocument(obj).toJson(QJsonDocument::Compact);
         QString strJson(byteArray);
-
-        //pCommon->CommunicationWriteLog("GetRecordDate","token",getStrMsg);
-        //emit SigSendMessageToJS("GetRecordDate","token",getStrMsg); //将服务器上传文件的返回结果给前端
         pCommon->CommunicationWriteLog("GetRecordDate","token",strJson);
         emit SigSendMessageToJS(strJson,"","");
         if(m_isRun)
@@ -424,28 +416,6 @@ void RecordVideo::DialogProgressInit()
 void RecordVideo::DialogProgressTime()
 {
     timecount++;
-    /*if(timecount < 40)
-    {
-        progressDialog->setValue(timecount);
-    }
-    else if(timecount == 40)
-    {
-        qDebug() << "emit SigIpTrack";
-        pNetworkClean->IpTrackFinish(VideoRecord);
-        progressDialog->setValue(timecount);
-    }
-    else
-    {
-        DialogProgressStop();
-
-        BufferFileName[0] = pRecordVideoName;
-        BufferFileName[1] = pAudioName;
-        BufferFileName[2] = pHostFileName;
-        BufferFileName[3] = FileLogName;
-        BufferFileName[4] = pIpTrackFileName;
-        RecordVideoUploadFile(BufferFileName, 5);
-        return;
-    }*/
 }
 
 void RecordVideo::DialogProgressStop()
@@ -511,15 +481,21 @@ void RecordVideo::replyFinished(QNetworkReply*)    //删除指针，更新和关
         QString msg = jsonObject["message"].toString();
         if(code == "0000")
         {
-            int result = QMessageBox::information(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("视频文件保存成功"),\
-                                               QString::fromLocal8Bit("确定"), 0);
+            int result = 0;
+            if(pTimeoutFlag == 1){
+                pTimeoutFlag = 0;
+                result = QMessageBox::warning(NULL,QString::fromLocal8Bit("消息"),QString::fromLocal8Bit("停止录屏，录制时长不能超过10分钟，<br>已为您保存录制内容。"),\
+                                                    QString::fromLocal8Bit("确定"),0);
+            }
+            else{
+                result = QMessageBox::information(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("视频文件保存成功"),\
+                                                   QString::fromLocal8Bit("确定"), 0);
+            }
+
             if (result == 0)
             {
-                //qDebug() << "code == 0000";
-                //emit SigSendMessageToJS("GetRecordDate","token",str);
                 getStrMsg = str;
                 pCloseFlag = 3;
-                //this->close();  //关闭子窗口
             }
         }
         else
@@ -531,7 +507,6 @@ void RecordVideo::replyFinished(QNetworkReply*)    //删除指针，更新和关
     }
     else
     {
-        //QMessageBox::critical(NULL, tr("Error"), "Failed!!!");
         QMessageBox::critical(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("视频上传失败，<br>请再次上传取证！"),\
                                                 QString::fromLocal8Bit("确定"), 0);
     }

@@ -83,6 +83,7 @@ private:
     QProgressDialog* progressDialog;
     int timecount;
     int pCloseFlag;
+    int pTimeoutFlag;
     QString getStrMsg;
     QString getNameMp4;
 };
