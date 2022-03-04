@@ -47,8 +47,8 @@ void MainWindow::startweb(void)
 
     QString filePath = QCoreApplication::applicationDirPath() + "/testHtml.html";
     QString urlPath = "file:///" + filePath;
-    //m_webView->page()->load(QUrl(urlPath));
-    m_webView->page()->load(QUrl("http://172.24.103.6:8016/"));
+    m_webView->page()->load(QUrl(urlPath));
+    //m_webView->page()->load(QUrl("http://172.24.103.6:8016/"));
     //m_webView->page()->load(QUrl("http://172.16.5.71:8083/"));
 
     QStackedLayout* layout = new QStackedLayout(ui->widgetMain);
@@ -85,39 +85,42 @@ void MainWindow::DownLoadFinish()
     QString path = QString("DownLoadPath:%1").arg(downLoadPath);
     LogRecord wLog;
     wLog.LogTrack(path);
-    Common *pCommon = NULL;
-    pCommon->RemoveOverageFile(downLoadPath);
-    std::string dir = downLoadPath.toStdString();
-    int pos = dir.rfind("/");
-    QString toDir = downLoadPath.left(pos+1);
-    QStringList fileLists;
+    wLog.LogTrack(QString("pBatchSingle:%1").arg(pBatchSingle));
+    if(pBatchSingle != ""){
+        Common *pCommon = NULL;
+        pCommon->RemoveOverageFile(downLoadPath);
+        std::string dir = downLoadPath.toStdString();
+        int pos = dir.rfind("/");
+        QString toDir = downLoadPath.left(pos+1);
+        QStringList fileLists;
 
-    for(int i = 0; i < pList.size(); ++i){
-        QString getName = pList.at(i);
-        qDebug() << getName;
-        QString fullPath = toDir + getName;
-        if(!QFile::copy(getName, fullPath))
-        {
-            qDebug()<< "file copy fail.";
+        for(int i = 0; i < pList.size(); ++i){
+            QString getName = pList.at(i);
+            qDebug() << getName;
+            QString fullPath = toDir + getName;
+            if(!QFile::copy(getName, fullPath))
+            {
+                qDebug()<< "file copy fail.";
+            }
+            pCommon->RemoveOverageFile(getName);
+            fileLists << fullPath;
         }
-        pCommon->RemoveOverageFile(getName);
-        fileLists << fullPath;
-    }
 
-    if(pBatchSingle == "batch"){//为批量就进行压缩
-        std::string::size_type zipPos = dir.find(".zip");
-        QString zipPath = downLoadPath;
-        if(zipPos == dir.npos){
-            zipPath = QString("%1.zip").arg(downLoadPath);
+        if(pBatchSingle == "batch"){//为批量就进行压缩
+            std::string::size_type zipPos = dir.find(".zip");
+            QString zipPath = downLoadPath;
+            if(zipPos == dir.npos){
+                zipPath = QString("%1.zip").arg(downLoadPath);
+            }
+            JlCompress::compressFiles(zipPath, fileLists);
+            for(int j = 0;j < fileLists.size();++j)
+            {
+                pCommon->RemoveOverageFile(fileLists[j]);
+            }
         }
-        JlCompress::compressFiles(zipPath, fileLists);
-        for(int j = 0;j < fileLists.size();++j)
-        {
-            pCommon->RemoveOverageFile(fileLists[j]);
-        }
+        pBatchSingle = "";
+        pList.clear();
     }
-    pBatchSingle = "";
-    pList.clear();
     return;
 }
 

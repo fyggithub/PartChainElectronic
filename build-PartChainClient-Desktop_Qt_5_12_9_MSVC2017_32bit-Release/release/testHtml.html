@@ -78,16 +78,10 @@
 				})
 				
 				$("#record_login").click(function(){
-					//var msg = new Object();
-					//msg.type = "record_login";
-					//msg.name = "录屏取证测试"
-					//msg.token = strToken
-					//var json = JSON.stringify(msg);
-					//interactObj.JSSendMessage(json,"","");
-					
 					var msg = new Object();
-					msg.type = "openResourceManagement";
-					msg.path = "C:/Users/fyg/Downloads";
+					msg.type = "record_login";
+					msg.name = "录屏取证测试"
+					msg.token = strToken
 					var json = JSON.stringify(msg);
 					interactObj.JSSendMessage(json,"","");
 				})
@@ -131,6 +125,12 @@
 					//var msg = new Object();
 					//msg.type = "openResourceManagement";
 					//msg.path = "F:/work/code/ElectronicDepository/PartChainElectronic/build-PartChainClient-Desktop_Qt_5_12_9_MSVC2017_32bit-Release/release/OutPut";
+					//var json = JSON.stringify(msg);
+					//interactObj.JSSendMessage(json,"","");
+					
+					//var msg = new Object();
+					//msg.type = "openResourceManagement";
+					//msg.path = "C:/Users/fyg/Downloads";
 					//var json = JSON.stringify(msg);
 					//interactObj.JSSendMessage(json,"","");
 				})
