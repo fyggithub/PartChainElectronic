@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     //qputenv("QTWEBENGINE_REMOTE_DEBUGGING", "5566");
-    pProgressMaxRange = 5;
+    pProgressMaxRange = 40;
     recvBuff = "";
     sendBuff = "";
 }
@@ -47,9 +47,9 @@ void MainWindow::startweb(void)
 
     QString filePath = QCoreApplication::applicationDirPath() + "/testHtml.html";
     QString urlPath = "file:///" + filePath;
-    m_webView->page()->load(QUrl(urlPath));
+    //m_webView->page()->load(QUrl(urlPath));
     //m_webView->page()->load(QUrl("http://172.24.103.6:8016/"));
-    //m_webView->page()->load(QUrl("http://172.16.5.71:8083/"));
+    m_webView->page()->load(QUrl("http://172.16.5.71:8083/"));
 
     QStackedLayout* layout = new QStackedLayout(ui->widgetMain);
     ui->widgetMain->setLayout(layout);
@@ -425,6 +425,7 @@ void MainWindow::update_network_state(int state)
         qDebug() << "NetWork is fail." << endl;
         QMessageBox::warning(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("网络异常"), QString::fromLocal8Bit("确定"), 0);
     }
+    delete detect_thread;
 }
 
 void MainWindow::RecvMsgCloseWnd(RecordType type)

@@ -17,10 +17,6 @@
 #include "mywin.h"
 #include <QTextCodec>
 
-/*#if defined(_MSC_VER) && (_MSC_VER >= 1600)
-# pragma execution_character_set("utf-8")
-#endif*/
-
 RecordVideo::RecordVideo(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::RecordVideo)
@@ -173,15 +169,13 @@ void RecordVideo::RecordTime()
         minute_h = (start % 3600) / 600;
         hour_l = (start / 3600);
         hour_h = 0;
-
-        //ui->label_point->setText(QString::fromUtf8("提示：正在进行录屏取证，请在本窗口进行取证"));
         QString display_time = QString::fromLocal8Bit("录制时长：");
         QString time_count = QString("%1%2:%3%4:%5%6").arg(hour_h).arg(hour_l).arg(minute_h).arg(minute_l).arg(second_h).arg(second_l);
         display_time = display_time + time_count;
         ui->label_time->setText(display_time);
         ui->label_time->setStyleSheet("color:red;");
 
-        if ((minute_h >= 1) && (minute_l >= 5)) //如果超过1个小时，则弹框并关闭定时器
+        if ((minute_h >= 1) && (minute_l >= 5)) //如果超过15分钟，则弹框并关闭定时器
         {
             pTimeoutFlag = 1;
             emit StopTimeSignal(); //关闭定时器
@@ -266,7 +260,6 @@ void RecordVideo::StartMplayerCompress(QString wav, QString avi, QString outName
 
 void RecordVideo::MplayerCompressFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
-    //qDebug()<<"onFinished exitCode:"<<exitCode<<" exitStatus:"<<exitStatus;
     if(pProcess) {
         pProcess->close();
     }
@@ -277,7 +270,6 @@ void RecordVideo::MplayerCompressFinished(int exitCode, QProcess::ExitStatus exi
 
     //上传文件服务器
     BufferFileName[0] = getNameMp4;
-    //BufferFileName[1] = FileLogName;
     BufferFileName[1] = strRenameFile;
     RecordVideoUploadFile(BufferFileName, 2);
 
@@ -323,9 +315,8 @@ void RecordVideo::closeEvent(QCloseEvent *event)
         {
             if(m_isRun)
             {
-                //emit StopTimeSignal(); //关闭定时器
-                //pCurrentTime->stop();//停止记录当前时间
-                QMessageBox::warning(this,QString::fromLocal8Bit("消息"),QString::fromLocal8Bit("关闭窗口前，请先停止取证！"),QString::fromLocal8Bit("确定"));
+                QMessageBox::warning(this,QString::fromLocal8Bit("消息"),QString::fromLocal8Bit("关闭窗口前，请先停止取证！"),\
+                                        QString::fromLocal8Bit("确定"),0);
                 event->ignore();
                 return;
             }
@@ -343,7 +334,6 @@ void RecordVideo::closeEvent(QCloseEvent *event)
             QString strJson(byteArray);
 
             pCommon->CommunicationWriteLog("GetRecordDate","cancel","cancel");
-            //emit SigSendMessageToJS("GetRecordDate","cancel","cancel");//通知前端，用户取消当前取证操作
             emit SigSendMessageToJS(strJson,"","");
             event->accept();
             pCommon->RemoveDirFile(strDirPath);//本地删除此次操作的取证文件
@@ -402,13 +392,8 @@ void RecordVideo::DialogProgressInit()
     progressDialog->setMinimumDuration(5);  //设置进度对话框出现需等待的时间，默认为4s
     progressDialog->setWindowTitle(QString::fromLocal8Bit("请稍等"));  //设置进度对话框的窗体标题
     progressDialog->setLabelText(QString::fromLocal8Bit("正在保存视频文件..."));  //设置进度对话框的显示文字信息
-    //设置进度对话框的“取消”按钮的显示文字
-    //progressDialog->setMinimum(0);  // 最小值
-    //progressDialog->setMaximum(0);
     progressDialog->setRange(0,0);     //设置进度对话框的步进范围
     progressDialog->setCancelButton(0);//隐藏取消按钮
-    //progressDialog->setWindowFlags(Qt::FramelessWindowHint);//无边框
-    //progressDialog->setWindowFlags(Qt::Dialog | Qt::WindowCloseButtonHint);
     progressDialog->setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
     progressDialog->show();
 }
@@ -484,7 +469,7 @@ void RecordVideo::replyFinished(QNetworkReply*)    //删除指针，更新和关
             int result = 0;
             if(pTimeoutFlag == 1){
                 pTimeoutFlag = 0;
-                result = QMessageBox::warning(NULL,QString::fromLocal8Bit("消息"),QString::fromLocal8Bit("停止录屏，录制时长不能超过10分钟，<br>已为您保存录制内容。"),\
+                result = QMessageBox::warning(NULL,QString::fromLocal8Bit("消息"),QString::fromLocal8Bit("停止录屏，录制时长不能超过15分钟，<br>已为您保存录制内容。"),\
                                                     QString::fromLocal8Bit("确定"),0);
             }
             else{

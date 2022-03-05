@@ -48,7 +48,6 @@ public slots:
     void ReloadUrl(void);
     void BackUrl(void);    
     void FullScreenSave();
-    void FileUpload();
     void OnUrlChanged(QUrl url); // 测试 urlChanged信号，该信号由 load(QUrl) 触发
     void replyFinished(QNetworkReply*);
     void loadError(QNetworkReply::NetworkError);

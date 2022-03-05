@@ -33,24 +33,6 @@ web_forensics::web_forensics(QWidget *parent) :
     timecount = 0;
     pCloseFlag = 0;
     pFilePathName = "";
-
-//    ui->BtnReload->setStyleSheet("QPushButton{border-top:0px solid #e8f3f9;background:  transparent;}"
-//                                 "QPushButton:pressed{border:2px solid white;border-radius:10px;}"
-//                                 );
-//    ui->BtnShoot->setStyleSheet("QPushButton{border-top:0px solid #e8f3f9;background:  transparent;}"
-//                                 "QPushButton:pressed{border:2px solid white;border-radius:10px;}"
-//                                 );
-//    ui->BtnUpload->setStyleSheet("QPushButton{border-top:0px solid #e8f3f9;background:  transparent;}"
-//                                 "QPushButton:pressed{border:2px solid white;border-radius:10px;}"
-//                                 );
-//    ui->lineEdit->setStyleSheet("QLineEdit{border-image: url(:/new/prefix1/Icon/url.png);}");
-//    ui->lineEdit->setEnabled(false);
-//    ui->BtnReload->setToolTip(QString::fromLocal8Bit("刷新"));
-//    ui->BtnShoot->setToolTip(QString::fromLocal8Bit("网页截图"));
-//    ui->BtnUpload->setToolTip(QString::fromLocal8Bit("上传"));
-
-//    connect(ui->BtnReload,SIGNAL(clicked()),this,SLOT(ReloadUrl()));
-//    connect(ui->BtnUpload,SIGNAL(clicked()),this,SLOT(FileUpload()));
     connect(this, SIGNAL(SendMsgClose()),this, SLOT(RecvMsgClose()));
 }
 
@@ -75,17 +57,6 @@ void web_forensics::OpenWebForensics(void)
     QStackedLayout* layout = new QStackedLayout(ui->webwidget);
     ui->webwidget->setLayout(layout);
     layout->addWidget(m_webView);
-    //ui->lineEdit->setText(pGetJsUrl);
-
-//    QString currentTime = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss:zzz");
-//    QString strTime = QString::fromLocal8Bit("当前时间") +  currentTime;
-//    ui->label_time->setText(strTime);
-//    ui->label_tip->setText(QString::fromLocal8Bit("提示：正在进行网页取证，请在本窗口进行取证"));
-//    ui->label_time->setStyleSheet("color:red;");
-//    ui->label_tip->setStyleSheet("color:red;");
-//    pCurrentTime = new QTimer(this);
-//    connect(pCurrentTime, SIGNAL(timeout()), this, SLOT(DisplayCurrentTime()));
-//    pCurrentTime->start(100);
 
     pLog = new Common();
     QString getTime = QDateTime::currentDateTime().toString("yyyy-MM-dd-hh-mm-ss-zzz");
@@ -117,18 +88,10 @@ void web_forensics::DisplayCurrentTime()
 {
     QString currentTime = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss:zzz");
     QString strTime = QString::fromLocal8Bit("当前时间") +  currentTime;
-    //ui->label_time->setText(strTime);
-    //ui->label_time->setStyleSheet("color:red;");
 }
 
 void web_forensics::JumpUrl(void)
 {
-//    QUrl url = ui->lineEdit->text();
-//    if (!url.isEmpty())
-//    {
-//        m_webView->load(url);
-//        pLog->FromBaiDuJumpUrl(WebRecord, FileLogName,url.toEncoded());
-//    }
 }
 
 void web_forensics::ReloadUrl(void)
@@ -148,21 +111,6 @@ void web_forensics::LoadWebOver(bool tmp)
     {
         FullScreenShoot();
     }
-}
-
-void web_forensics::FileUpload()
-{
-//    if(pCloseFlag == 1)
-//    {
-//        pCloseFlag = 2;
-//        this->close();  //关闭子窗口
-//    }
-//    else
-//    {
-//        QMessageBox::information(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("请先进行取证"),\
-//                                                       QString::fromLocal8Bit("确定"), 0);
-//    }
-
 }
 
 void web_forensics::FullScreenShoot()
@@ -200,7 +148,6 @@ void web_forensics::FullScreenSave()
 void web_forensics::OnUrlChanged(QUrl url)
 {
     pLog->WebJumpUrl(WebRecord, FileLogName,url.toEncoded());
-    //ui->lineEdit->setText(url.toEncoded());
 }
 
 void web_forensics::RecvMsgClose()

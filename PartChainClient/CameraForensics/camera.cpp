@@ -646,7 +646,9 @@ void Camera::WriteToVideo(void)
     double fps = capture->get(CAP_PROP_FPS);//默认是30fps
     qDebug()<<"fps:"<<fps;
     outputVideo = new VideoWriter;
-    outputVideo->open(fileFullPathName.toLocal8Bit().toStdString(), outputVideo->fourcc('M', 'J', 'P', 'G'), 24, Size(frameWidth, frameHeight), true);
+    //间隔33ms
+    outputVideo->open(fileFullPathName.toLocal8Bit().toStdString(), outputVideo->fourcc('M', 'J', 'P', 'G'), 18, Size(frameWidth, frameHeight), true);
+    //outputVideo->open(fileFullPathName.toLocal8Bit().toStdString(), outputVideo->fourcc('M', 'J', 'P', 'G'), 30, Size(frameWidth, frameHeight), true);
 
     //判断open writer对象是否出错
     if (!outputVideo->isOpened()){return;}
@@ -655,8 +657,8 @@ void Camera::WriteToVideo(void)
 
     timer = new QTimer();
     //timer->setInterval(6);
-    timer->setInterval(8);
-    //timer->setInterval(33);
+    //timer->setInterval(8);
+    timer->setInterval(33);
     timer->start();
     connect(timer, SIGNAL(timeout()), this, SLOT(RecordTime()));
 }
