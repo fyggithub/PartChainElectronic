@@ -170,3 +170,23 @@ str : {"hostIp":"{\"code\":\"0000\",\"message\":\"\",\"data\":[{\"id\":\"6847109
 type : GetRecordDate
 key : cancel
 str : cancel
+**********
+type : GetCameraDate
+key : cancel
+str : cancel
+**********
+type : GetWebDate
+key : cancel
+str : 
+**********
+type : GetRecordDate
+key : cancel
+str : cancel
+**********
+type : GetWebDate
+key : token
+str : {"hostIp":"{\"code\":\"0000\",\"message\":\"\",\"data\":[{\"id\":\"685568798211973120\",\"fileName\":\"host2022-03-07-19-25-32-960.txt.aisino\",\"fileUrl\":\"M00/00/5B/rB4U2GIl67KAY2VMAAADOHrh9II.aisino\",\"enabled\":\"0\",\"createTime\":\"1646652338746\",\"fileSuffix\":\"aisino\",\"fileSize\":\"824.0B\",\"fileType\":\"07\",\"fileHash\":\"2d6bdfb341be3a6234b24742377f93aa7c7cfb0d9fd64efa9282c87852e57085\"},{\"id\":\"685568798396522496\",\"fileName\":\"IpTrack2022-03-07-19-25-37-975.txt.aisino\",\"fileUrl\":\"M00/00/5B/rB4U2GIl67KABvzKAAAA_-dFPO4.aisino\",\"enabled\":\"0\",\"createTime\":\"1646652338790\",\"fileSuffix\":\"aisino\",\"fileSize\":\"255.0B\",\"fileType\":\"07\",\"fileHash\":\"7da58ed7c5438181620e2c73a8d07e631cecdf5539971a839a2e759f1332a7ea\"}],\"status\":\"200\"}","ipAddress":"172.24.103.251","macAddress":"08:1F:71:17:ED:8C","osVersion":"windows10","path":"F:/work/code/ElectronicDepository/Branch/PartChainElectronic/build-PartChainClient-Desktop_Qt_5_12_9_MSVC2017_32bit-Release/release/OutPut/网页取证/网页取证测试20220307192532/","str":"{\"code\":\"0000\",\"message\":\"\",\"data\":[{\"id\":\"685568810077659136\",\"fileName\":\"web-2022-03-07-19-25-41-272.png\",\"fileUrl\":\"M00/00/5B/rB4U2GIl67WAM9FOAAEcFipllxE550.png\",\"enabled\":\"0\",\"createTime\":\"1646652341575\",\"fileSuffix\":\"png\",\"fileSize\":\"71.02KB\",\"fileType\":\"02\",\"fileHash\":\"292b696e534787fc8f8088c75227f1149fa2d34fd1dd70ac2bc4f9f3b84e6db6\"},{\"id\":\"685568810258014208\",\"fileName\":\"log2022-03-07-19-25-39-141.txt.aisino\",\"fileUrl\":\"M00/00/5B/rB4U2GIl67WADT1sAAAApnSCOhQ.aisino\",\"enabled\":\"0\",\"createTime\":\"1646652341618\",\"fileSuffix\":\"aisino\",\"fileSize\":\"166.0B\",\"fileType\":\"07\",\"fileHash\":\"fa81337db24de5b5af2ad98b95902f88aa5184e3ff90543c6263fd1905adad94\"}],\"status\":\"200\"}","strBranch":"token","strMain":"GetWebDate"}
+**********
+type : GetWebDate
+key : token
+str : {"hostIp":"{\"code\":\"0000\",\"message\":\"\",\"data\":[{\"id\":\"685568898086739968\",\"fileName\":\"host2022-03-07-19-25-56-660.txt.aisino\",\"fileUrl\":\"M00/00/5B/rB4U2GIl68qAWQbiAAADOHrh9II.aisino\",\"enabled\":\"0\",\"createTime\":\"1646652362558\",\"fileSuffix\":\"aisino\",\"fileSize\":\"824.0B\",\"fileType\":\"07\",\"fileHash\":\"2d6bdfb341be3a6234b24742377f93aa7c7cfb0d9fd64efa9282c87852e57085\"},{\"id\":\"685568898271289344\",\"fileName\":\"IpTrack2022-03-07-19-26-01-708.txt.aisino\",\"fileUrl\":\"M00/00/5B/rB4U2GIl68qAKp-wAAAA_-dFPO4.aisino\",\"enabled\":\"0\",\"createTime\":\"1646652362602\",\"fileSuffix\":\"aisino\",\"fileSize\":\"255.0B\",\"fileType\":\"07\",\"fileHash\":\"7da58ed7c5438181620e2c73a8d07e631cecdf5539971a839a2e759f1332a7ea\"}],\"status\":\"200\"}","ipAddress":"172.24.103.251","macAddress":"08:1F:71:17:ED:8C","osVersion":"windows10","path":"F:/work/code/ElectronicDepository/Branch/PartChainElectronic/build-PartChainClient-Desktop_Qt_5_12_9_MSVC2017_32bit-Release/release/OutPut/网页取证/网页取证测试20220307192556/","str":"{\"code\":\"0000\",\"message\":\"\",\"data\":[{\"id\":\"685568910095032320\",\"fileName\":\"web-2022-03-07-19-26-05-292.png\",\"fileUrl\":\"M00/00/5B/rB4U2GIl682AHE7WAAEcFipllxE478.png\",\"enabled\":\"0\",\"createTime\":\"1646652365421\",\"fileSuffix\":\"png\",\"fileSize\":\"71.02KB\",\"fileType\":\"02\",\"fileHash\":\"292b696e534787fc8f8088c75227f1149fa2d34fd1dd70ac2bc4f9f3b84e6db6\"},{\"id\":\"685568910283776000\",\"fileName\":\"log2022-03-07-19-26-02-954.txt.aisino\",\"fileUrl\":\"M00/00/5B/rB4U2GIl682AOtPgAAAApuQ94wQ.aisino\",\"enabled\":\"0\",\"createTime\":\"1646652365466\",\"fileSuffix\":\"aisino\",\"fileSize\":\"166.0B\",\"fileType\":\"07\",\"fileHash\":\"de173df1f693826c97f4edfc2c630d1c382a7adc9155e4e08f3ba6b91412756d\"}],\"status\":\"200\"}","strBranch":"token","strMain":"GetWebDate"}

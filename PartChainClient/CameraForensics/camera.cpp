@@ -21,8 +21,8 @@ Camera::Camera(QWidget *parent) :
 Camera::~Camera()
 {
     delete capture;
-    delete outputVideo;
-    delete timer;
+    //delete outputVideo;
+    //delete timer;
     delete ui;
 }
 
@@ -116,6 +116,8 @@ void Camera::StopRecordVideo1(void)
     capture->release();
     //frameImg->release();
     outputVideo->release();
+    delete outputVideo;
+    delete timer;
 }
 
 void Camera::DisplayCurrentTime()
@@ -189,6 +191,8 @@ void Camera::StopRecordVideo(void)
     count_timer->stop();
     //capture->release();
     outputVideo->release();
+    delete outputVideo;
+    delete timer;
     //关闭音屏
     Common *pcom = NULL;
     QString filePath = pcom->FileDirPath(CameraRecord);
