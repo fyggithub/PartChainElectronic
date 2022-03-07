@@ -153,10 +153,10 @@ QString SM4Decrypt::DecodeSM4_Base64(const QString& key,const QString& strInput)
     long long len = strInput.length();
     LogRecord wLog;
     wLog.LogTrack(pDownLoadFileName);
-    wLog.LogTrack(strInput);
+    //wLog.LogTrack(strInput);
     qDebug()<<"len:"<<len;
     unsigned char *szBase64 = new unsigned char[len+1];
-    memset(szBase64, 0, len+1);
+    //memset(szBase64, 0, len+1);
 
     //单独定义变量传递，则程序会崩溃
     //Base64_Decode_New(qPrintable(strInput), len, szBase64, nCount);
@@ -173,9 +173,6 @@ QString SM4Decrypt::DecodeSM4_Base64(const QString& key,const QString& strInput)
     szBase64 = nullptr;
 
     qDebug()<<"DecodeSM4_Base643333333333333333333333";
-    //std::string strkey1 = key.toStdString();
-    //char *pStrkey = (char*)strkey1.c_str();
-    //unsigned char *pkey = reinterpret_cast<unsigned char*>(pStrkey);
     const char *pStrkey = key.toLocal8Bit().constData();
     unsigned char *pkey = (unsigned char *)pStrkey;
     sm4_ctx ctx;
@@ -183,8 +180,8 @@ QString SM4Decrypt::DecodeSM4_Base64(const QString& key,const QString& strInput)
     sm4_decrypt_file_test(&ctx);
 
     QString tmpFile = QString(QLatin1String(TEMPFILENAME));
-    Common pCommon;
-    pCommon.RemoveOverageFile(tmpFile);
+    Common *pCommon = NULL;
+    pCommon->RemoveOverageFile(tmpFile);
 
     QFile file(pDownLoadFileName);
     file.open(QIODevice::ReadOnly | QIODevice::Text);
@@ -198,7 +195,6 @@ QString SM4Decrypt::DecodeSM4_Base64(const QString& key,const QString& strInput)
     file.close();
     pList << pDownLoadFileName;
     wLog.LogTrack("decry is over.");
-
     return str;
 }
 

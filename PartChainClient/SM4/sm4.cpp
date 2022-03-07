@@ -51,7 +51,7 @@ static const uint32_t CK[32] = {
 
 
 int sm4_set_key(uint8_t *key , sm4_ctx *ctx) {
-    int K[4];
+    int K[4] = {0};
     K[0] = load_uint32_be(key, 0) ^ FK[0];
     K[1] = load_uint32_be(key, 1) ^ FK[1];
     K[2] = load_uint32_be(key, 2) ^ FK[2];
@@ -173,8 +173,8 @@ void sm4_encrypt(const uint8_t *in, uint8_t *out, const sm4_ctx *ctx) {
 }
 
 void sm4_decrypt(const uint8_t *in, uint8_t *out, const sm4_ctx * ctx) {
-    int blks[4];
-    int decrypt_key[SM4_KEY_SCHEDULE];
+    int blks[4] = {0};
+    int decrypt_key[SM4_KEY_SCHEDULE] = {0};
     for(int i=0;i<SM4_KEY_SCHEDULE;i++) {
         decrypt_key[i] = ctx->rk[SM4_KEY_SCHEDULE-i-1];
     }
@@ -438,19 +438,19 @@ void sm4_decrypt_file_test(sm4_ctx *ctx)
 {
     FILE *file_in = NULL;
     FILE *file_out = NULL;
-    file_in = fopen(TEMPFILENAME,"rb+");
-    //file_out = fopen(pDownLoadFileName.toLocal8Bit().data(),"wb");
+    file_in = fopen(TEMPFILENAME,"rb");
     file_out = fopen(pDownLoadFileName.toLocal8Bit().constData(),"wb");
 
     uint8_t buf1[SM4_BLOCK_SIZE] = {0};
     uint8_t out_buf1[SM4_BLOCK_SIZE] = {0};
-    //uint8_t *buf1 = new uint8_t[SM4_BLOCK_SIZE];
-    //uint8_t *out_buf1 = new uint8_t[SM4_BLOCK_SIZE];
     memset(buf1, 0, SM4_BLOCK_SIZE);
     memset(out_buf1, 0, SM4_BLOCK_SIZE);
     fseek(file_in, -16, SEEK_END);
-    long sz = ftell(file_in) + SM4_BLOCK_SIZE;
+    long sz = 0;
+    sz = ftell(file_in) + SM4_BLOCK_SIZE;
+    qDebug()<<"*************************sz:"<<sz;
     fread(buf1, 1, SM4_BLOCK_SIZE, file_in);
+    qDebug()<<"buf1[]:"<<buf1[SM4_BLOCK_SIZE-1];
     rewind(file_in);
     sm4_decrypt(buf1, out_buf1, ctx);
     uint8_t padding_byte_len = out_buf1[SM4_BLOCK_SIZE-1];
@@ -499,13 +499,8 @@ void sm4_decrypt_file_test(sm4_ctx *ctx)
     qDebug() << "------------ncremain:" << ncremain;
     delete [] buf;
     delete [] out_buf;
-//    delete [] buf1;
-//    delete [] out_buf1;
     buf = nullptr;
     out_buf = nullptr;
-//    buf1 = nullptr;
-//    out_buf1 = nullptr;
-
     fclose(file_in);
     fclose(file_out);
     file_in = NULL;

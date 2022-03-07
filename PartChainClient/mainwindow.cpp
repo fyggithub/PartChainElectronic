@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     //qputenv("QTWEBENGINE_REMOTE_DEBUGGING", "5566");
-    pProgressMaxRange = 40;
+    pProgressMaxRange = 5;
     recvBuff = "";
     sendBuff = "";
 }
@@ -47,9 +47,9 @@ void MainWindow::startweb(void)
 
     QString filePath = QCoreApplication::applicationDirPath() + "/testHtml.html";
     QString urlPath = "file:///" + filePath;
-    //m_webView->page()->load(QUrl(urlPath));
+    m_webView->page()->load(QUrl(urlPath));
     //m_webView->page()->load(QUrl("http://172.24.103.6:8016/"));
-    m_webView->page()->load(QUrl("http://172.16.5.71:8083/"));
+    //m_webView->page()->load(QUrl("http://172.16.5.71:8083/"));
 
     QStackedLayout* layout = new QStackedLayout(ui->widgetMain);
     ui->widgetMain->setLayout(layout);
@@ -186,9 +186,10 @@ void MainWindow::OnReceiveMessageFromJS(QString strMain,QString type,QString str
             recvBuff.append(sourceArray);
 
             LogRecord wLog;
-            wLog.LogTrack("\n");
+            wLog.LogTrack("--------------------------------------------");
             wLog.LogTrack("recv is over starting to decrypt.");
             pDecrypt = new SM4Decrypt;
+            qDebug()<<"****************************recvBuff len:"<<recvBuff.length();
             sendBuff = pDecrypt->DecodeSM4_Base64(keyArray,recvBuff);
             double len = sendBuff.length();
             QString str = sendBuff.left(len/5);
