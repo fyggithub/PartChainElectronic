@@ -6,6 +6,7 @@
 #include <QWebEngineProfile>
 #include <QWebEngineCookieStore>
 #include <QWebEngineDownloadItem>
+#include <QWebEngineSettings>
 #include <QJsonDocument>
 #include <QJsonParseError>
 #include <QJsonObject>
@@ -21,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    //qputenv("QTWEBENGINE_REMOTE_DEBUGGING", "5566");
+    qputenv("QTWEBENGINE_REMOTE_DEBUGGING", "7777");
     pProgressMaxRange = 5;
     recvBuff = "";
     sendBuff = "";
@@ -47,9 +48,9 @@ void MainWindow::startweb(void)
 
     QString filePath = QCoreApplication::applicationDirPath() + "/testHtml.html";
     QString urlPath = "file:///" + filePath;
-    m_webView->page()->load(QUrl(urlPath));
+    //m_webView->page()->load(QUrl(urlPath));
     //m_webView->page()->load(QUrl("http://172.24.103.6:8016/"));
-    //m_webView->page()->load(QUrl("http://172.16.5.71:8083/"));
+    m_webView->page()->load(QUrl("http://172.16.5.71:8083/"));
 
     QStackedLayout* layout = new QStackedLayout(ui->widgetMain);
     ui->widgetMain->setLayout(layout);
@@ -72,7 +73,26 @@ void MainWindow::startweb(void)
         qDebug() << download->path() << download->savePageFormat();
         download->accept();//接收当前下载请求，只有接收后才会开始下载
     });
-    m_webView->setContextMenuPolicy (Qt::NoContextMenu);
+    //m_webView->setContextMenuPolicy (Qt::NoContextMenu);
+    //m_webView->page()->settings()->setAttribute(QWebEngineSettings::LocalContentCanAccessRemoteUrls, true);
+    m_webView->setContextMenuPolicy(Qt::CustomContextMenu);
+    m_inspector = NULL;
+    connect(m_webView, &QWidget::customContextMenuRequested, this, [this]() {
+        QMenu* menu = new QMenu(this);
+        QAction* action = menu->addAction("Inspect");
+        connect(action, &QAction::triggered, this, [this](){
+            if(m_inspector == NULL)
+            {
+                m_inspector = new Inspector(this);
+            }
+            else
+            {
+                m_inspector->show();
+            }
+        });
+        menu->exec(QCursor::pos());
+    });
+
     //获取本地ip及mac地址
     Common *pCommon = NULL;
     pCommon->GetIpAddress();

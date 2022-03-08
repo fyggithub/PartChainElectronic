@@ -30,6 +30,7 @@ SOURCES += \
     ScreenShotForensics/screenshot.cpp \
     ScreenShotForensics/zoompreview.cpp \
     WebForensics/web_forensics.cpp \
+    inspector.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -70,6 +71,7 @@ HEADERS += \
     include/zconf.h \
     include/zip.h \
     include/zlib.h \
+    inspector.h \
     mainwindow.h
 
 FORMS += \
@@ -80,6 +82,7 @@ FORMS += \
     ScreenShotForensics/screenshot.ui \
     ScreenShotForensics/zoompreview.ui \
     WebForensics/web_forensics.ui \
+    inspector.ui \
     mainwindow.ui
 
 INCLUDEPATH += D:\softwarePath\OpenCvPath\opencv\build_msvc\install\include \

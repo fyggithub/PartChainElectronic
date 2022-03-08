@@ -469,7 +469,7 @@ void RecordVideo::replyFinished(QNetworkReply*)    //删除指针，更新和关
             int result = 0;
             if(pTimeoutFlag == 1){
                 pTimeoutFlag = 0;
-                result = QMessageBox::warning(NULL,QString::fromLocal8Bit("消息"),QString::fromLocal8Bit("停止录屏，录制时长不能超过15分钟，<br>已为您保存录制内容。"),\
+                result = QMessageBox::warning(NULL,QString::fromLocal8Bit("消息"),QString::fromLocal8Bit("停止拍摄，录制时长不能超过15分钟，<br>已为您保存录制内容。"),\
                                                     QString::fromLocal8Bit("确定"),0);
             }
             else{

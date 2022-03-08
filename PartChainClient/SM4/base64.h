@@ -2,7 +2,7 @@
 #define BASE64_NeedCRLF	1
 #define BASE64_NotCRLF	0
 
-
+#include <QString>
 /***************************************************************
  *
  * Input
@@ -35,5 +35,7 @@ int Base64_Encode_New(const unsigned char *bin_data,const int& bin_size,
 * Return
 *     0: success; -1: base64 data format error
 ***************************************************************/
-int Base64_Decode_New(const char *base64_data, const long long& base64_size,
-    unsigned char *bin_data, long long& bin_size);
+int Base64_Decode_New(const char *base64_data, const long long &base64_size,
+    unsigned char *bin_data, long long &bin_size);
+//int Base64_Decode_New(const QString& strBase64,const long long &base64_size,
+//                     unsigned char *bin_data,  long long &bin_size);

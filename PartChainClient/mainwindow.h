@@ -26,6 +26,8 @@
 #include <QJsonObject>
 #include <QJsonArray>
 
+#include "inspector.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -58,6 +60,7 @@ public:
     RecordVideo *pRecordVideo;
     Camera *pCamera;
     SM4Decrypt *pDecrypt;
+    Inspector* m_inspector;
 
 public slots:
     void OpenWebForensics(void);

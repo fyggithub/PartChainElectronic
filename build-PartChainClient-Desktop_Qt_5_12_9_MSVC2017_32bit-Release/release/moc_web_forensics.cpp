@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_web_forensics_t {
-    QByteArrayData data[24];
-    char stringdata0[283];
+    QByteArrayData data[25];
+    char stringdata0[299];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -54,7 +54,8 @@ QT_MOC_LITERAL(19, 194, 9), // "loadError"
 QT_MOC_LITERAL(20, 204, 27), // "QNetworkReply::NetworkError"
 QT_MOC_LITERAL(21, 232, 18), // "DialogProgressTime"
 QT_MOC_LITERAL(22, 251, 18), // "DisplayCurrentTime"
-QT_MOC_LITERAL(23, 270, 12) // "RecvMsgClose"
+QT_MOC_LITERAL(23, 270, 12), // "RecvMsgClose"
+QT_MOC_LITERAL(24, 283, 15) // "FullScreenShoot"
 
     },
     "web_forensics\0SigSendMessageToJS\0\0"
@@ -65,7 +66,7 @@ QT_MOC_LITERAL(23, 270, 12) // "RecvMsgClose"
     "replyFinished\0QNetworkReply*\0loadError\0"
     "QNetworkReply::NetworkError\0"
     "DialogProgressTime\0DisplayCurrentTime\0"
-    "RecvMsgClose"
+    "RecvMsgClose\0FullScreenShoot"
 };
 #undef QT_MOC_LITERAL
 
@@ -75,7 +76,7 @@ static const uint qt_meta_data_web_forensics[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      14,   14, // methods
+      15,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -83,22 +84,23 @@ static const uint qt_meta_data_web_forensics[] = {
        3,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    3,   84,    2, 0x06 /* Public */,
-       6,    0,   91,    2, 0x06 /* Public */,
-       7,    1,   92,    2, 0x06 /* Public */,
+       1,    3,   89,    2, 0x06 /* Public */,
+       6,    0,   96,    2, 0x06 /* Public */,
+       7,    1,   97,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       9,    1,   95,    2, 0x0a /* Public */,
-      11,    0,   98,    2, 0x0a /* Public */,
-      12,    0,   99,    2, 0x0a /* Public */,
-      13,    0,  100,    2, 0x0a /* Public */,
-      14,    0,  101,    2, 0x0a /* Public */,
-      15,    1,  102,    2, 0x0a /* Public */,
-      17,    1,  105,    2, 0x0a /* Public */,
-      19,    1,  108,    2, 0x0a /* Public */,
-      21,    0,  111,    2, 0x0a /* Public */,
-      22,    0,  112,    2, 0x0a /* Public */,
-      23,    0,  113,    2, 0x0a /* Public */,
+       9,    1,  100,    2, 0x0a /* Public */,
+      11,    0,  103,    2, 0x0a /* Public */,
+      12,    0,  104,    2, 0x0a /* Public */,
+      13,    0,  105,    2, 0x0a /* Public */,
+      14,    0,  106,    2, 0x0a /* Public */,
+      15,    1,  107,    2, 0x0a /* Public */,
+      17,    1,  110,    2, 0x0a /* Public */,
+      19,    1,  113,    2, 0x0a /* Public */,
+      21,    0,  116,    2, 0x0a /* Public */,
+      22,    0,  117,    2, 0x0a /* Public */,
+      23,    0,  118,    2, 0x0a /* Public */,
+      24,    0,  119,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString,    3,    4,    5,
@@ -114,6 +116,7 @@ static const uint qt_meta_data_web_forensics[] = {
     QMetaType::Void, QMetaType::QUrl,   16,
     QMetaType::Void, 0x80000000 | 18,    2,
     QMetaType::Void, 0x80000000 | 20,    2,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -141,6 +144,7 @@ void web_forensics::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         case 11: _t->DialogProgressTime(); break;
         case 12: _t->DisplayCurrentTime(); break;
         case 13: _t->RecvMsgClose(); break;
+        case 14: _t->FullScreenShoot(); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -216,13 +220,13 @@ int web_forensics::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 14)
+        if (_id < 15)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 14;
+        _id -= 15;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 14)
+        if (_id < 15)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 14;
+        _id -= 15;
     }
     return _id;
 }

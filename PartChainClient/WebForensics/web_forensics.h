@@ -13,12 +13,14 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QHttpMultiPart>
+#include <QWebEngineUrlRequestInterceptor>
 
 namespace Ui {
 class web_forensics;
 }
 
 class web_forensics : public QMainWindow
+        //,public QWebEngineUrlRequestInterceptor
 {
     Q_OBJECT
 
@@ -35,7 +37,9 @@ public:
     void DialogProgressInit();
     void DialogProgressStop();
     void DialogProgressDeal();
-    void FullScreenShoot();
+    virtual bool certificateError(const QWebEngineCertificateError &certificateError);
+    void interceptRequest(QWebEngineUrlRequestInfo &info);
+
 
 signals:
     void SigSendMessageToJS(QString strMain,QString type,QString str);
@@ -54,6 +58,7 @@ public slots:
     void DialogProgressTime();
     void DisplayCurrentTime();
     void RecvMsgClose();
+    void FullScreenShoot();
 
 
 private:

@@ -9,6 +9,8 @@
 #include "base64.h"
 #include "Common/common.h"
 #include "Common/logrecord.h"
+#include <cstring>
+
 #define BUFF_SIZE 256
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1600)
@@ -155,12 +157,22 @@ QString SM4Decrypt::DecodeSM4_Base64(const QString& key,const QString& strInput)
     wLog.LogTrack(pDownLoadFileName);
     //wLog.LogTrack(strInput);
     qDebug()<<"len:"<<len;
-    unsigned char *szBase64 = new unsigned char[len+1];
-    //memset(szBase64, 0, len+1);
+    unsigned char *szBase64 = new unsigned char[len];
+    wLog.LogTrack("start memset.");
+    memset(szBase64, 0, len);
+    wLog.LogTrack("memset success.");
 
+    //wLog.LogTrack("start base64 decode.");
     //单独定义变量传递，则程序会崩溃
     //Base64_Decode_New(qPrintable(strInput), len, szBase64, nCount);
-    Base64_Decode_New(strInput.toLocal8Bit().constData(), len+1, szBase64, nCount);
+//    const char *p = strInput.toLocal8Bit().constData();
+    QByteArray ba = strInput.toLatin1();
+    qDebug()<<"baaaaaaaaaaaaaaaaaaaa0";
+    const char* base64_data = ba.data();
+    qDebug()<<"baaaaaaaaaaaaaaaaaaaa1";
+    Base64_Decode_New(base64_data, len, szBase64, nCount);
+
+    wLog.LogTrack("base64 decode finish.");
     qDebug()<<"nCount:"<<nCount;
 
     qDebug()<<"DecodeSM4_Base642222222222222222";
