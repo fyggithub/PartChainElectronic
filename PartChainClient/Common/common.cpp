@@ -74,7 +74,8 @@ void Common::WriteIpTrack(RecordType recordType, QString str)
 {
     QString filePathDir = FileDirPath(recordType);
     QString getTime = QDateTime::currentDateTime().toString("yyyy-MM-dd-hh-mm-ss-zzz");
-    QString fileName = "IpTrack" + getTime + ".txt.aisino";
+    //QString fileName = "IpTrack" + getTime + ".txt.aisino";
+    QString fileName = "IpTrack" + getTime + ".aisino";
     pIpTrackFileName = fileName;
     QString filePath = filePathDir + fileName;
     isDirExist(filePathDir);
@@ -98,7 +99,8 @@ QString Common::RenameLogFile(RecordType recordType, QString fileName)
     QString filePath = filePathDir + fileName;
     isDirExist(filePathDir);
 
-    QString strName = fileName.append(".aisino");
+    //QString strName = fileName.append(".aisino");
+    QString strName = fileName.replace(QString(".txt"),QString(".aisino"));
     QString strFullName = filePathDir + strName;
 
     QFile file(filePath);

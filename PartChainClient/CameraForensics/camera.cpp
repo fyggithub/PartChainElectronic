@@ -21,8 +21,6 @@ Camera::Camera(QWidget *parent) :
 Camera::~Camera()
 {
     delete capture;
-    //delete outputVideo;
-    //delete timer;
     delete ui;
 }
 
@@ -49,7 +47,6 @@ void Camera::InitPhotographUi()
     pCurrentTime = new QTimer(this);
     connect(pCurrentTime, SIGNAL(timeout()), this, SLOT(DisplayCurrentTime()));
     pCurrentTime->start(100);
-    //QTimer::singleShot(80, this, SLOT(OpenPhotographWeb()));
 
     connect(ui->BtnStart, SIGNAL(clicked()), this, SLOT(StartRecordVideo()));
     connect(ui->BtnReload, SIGNAL(clicked()), this, SLOT(ReloadRecordVideo()));
@@ -167,7 +164,7 @@ void Camera::StartRecordVideo(void)
             //开始录取音屏
             m_Audio = new Audio();
             m_Audio->AudioInit(filePath);
-            m_Audio->OnRecordStart(2);
+            m_Audio->OnRecordStart(1);
 
             ui->BtnReload->setEnabled(false);
             ui->BtnUpload->setEnabled(false);
@@ -189,7 +186,6 @@ void Camera::StopRecordVideo(void)
     pStopFlag = 1;
     timer->stop();
     count_timer->stop();
-    //capture->release();
     outputVideo->release();
     delete outputVideo;
     delete timer;
@@ -210,6 +206,7 @@ void Camera::StopRecordVideo(void)
     }
     getNameMp4 = nameMp4;
     StartMplayerCompress(strWav, strAvi, strMp4);
+    //StartMplayerCompress("", strAvi, strMp4);
     DialogProgressDeal();
 
     ui->BtnStart->setEnabled(false);
@@ -254,8 +251,8 @@ void Camera::MplayerCompressFinished(int exitCode, QProcess::ExitStatus exitStat
     QString strWav = filePath + pAudioName;
     QString strAvi = filePath + FileVideoName;
     QString strRaw = filePath + "record.raw";
-    pcom->RemoveOverageFile(strWav);
-    pcom->RemoveOverageFile(strAvi);
+    //pcom->RemoveOverageFile(strWav);
+    //pcom->RemoveOverageFile(strAvi);
     pcom->RemoveOverageFile(strRaw);
 }
 
@@ -340,7 +337,6 @@ void Camera::closeEvent(QCloseEvent *event)
             }
             pCurrentTime->stop();
             delete pCurrentTime;
-            //capture->release();
             pCloseFlag = 0;
             Common *pCommon = NULL;
             QString strDirPath = pCommon->FileDirPath(CameraRecord);
@@ -406,12 +402,8 @@ void Camera::DialogProgressInit()
     progressDialog->setWindowTitle(QStringLiteral("请稍等"));  //设置进度对话框的窗体标题
     progressDialog->setLabelText(QStringLiteral("正在保存视频文件..."));  //设置进度对话框的显示文字信息
     //设置进度对话框的“取消”按钮的显示文字
-    //progressDialog->setMinimum(0);  // 最小值
-    //progressDialog->setMaximum(0);
     progressDialog->setRange(0,0);     //设置进度对话框的步进范围
     progressDialog->setCancelButton(0);//隐藏取消按钮
-    //progressDialog->setWindowFlags(Qt::FramelessWindowHint);//无边框
-    //progressDialog->setWindowFlags(Qt::Dialog | Qt::WindowCloseButtonHint);
     progressDialog->setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
     progressDialog->show();
 }
@@ -419,27 +411,6 @@ void Camera::DialogProgressInit()
 void Camera::DialogProgressTime()
 {
     timecount++;
-    /*if(timecount < 40)
-    {
-        progressDialog->setValue(timecount);
-    }
-    else if(timecount == 40)
-    {
-        qDebug() << "emit SigIpTrack";
-        pNetworkClean->IpTrackFinish(CameraRecord);
-        progressDialog->setValue(timecount);
-    }
-    else
-    {
-        DialogProgressStop();
-
-        BufferFileName[0] = pFilePathName;
-        BufferFileName[1] = pAudioName;
-        BufferFileName[2] = pHostFileName;
-        BufferFileName[3] = pIpTrackFileName;
-        CameraUploadFile(BufferFileName,4);
-        return;
-    }*/
 }
 
 void Camera::DialogProgressStop()
@@ -509,7 +480,7 @@ void Camera::replyFinished(QNetworkReply*)    //删除指针，更新和关闭�
             int result = 0;
             if(pTimeoutFlag == 1){
                 pTimeoutFlag = 0;
-                result = QMessageBox::warning(NULL,QString::fromLocal8Bit("消息"),QString::fromLocal8Bit("停止录屏，录制时长不能超过10分钟，<br>已为您保存录制内容。"),\
+                result = QMessageBox::warning(NULL,QString::fromLocal8Bit("消息"),QString::fromLocal8Bit("停止拍摄，录制时长不能超过10分钟，<br>已为您保存录制内容。"),\
                                                     QString::fromLocal8Bit("确定"),0);
             }
             else{
@@ -519,10 +490,8 @@ void Camera::replyFinished(QNetworkReply*)    //删除指针，更新和关闭�
 
             if (result == 0)
             {
-                //emit SigSendMessageToJS("GetCameraDate","token",str);
                 getStrMsg = str;
                 pCloseFlag = 3;
-                //this->close();  //关闭子窗口
             }
         }
         else
@@ -619,7 +588,7 @@ void Camera::RemoveFile(QString fileName)
 void Camera::OpenVideo(void)
 {
     //打开本地摄像头
-    capture = new VideoCapture(0);
+    capture = new VideoCapture(0,CAP_DSHOW);
     capture->set(CAP_PROP_FRAME_WIDTH, 960);  //max:960; normal:640
     capture->set(CAP_PROP_FRAME_HEIGHT, 540);  //max:540; normal:480
     if (!capture->isOpened()){
@@ -651,8 +620,8 @@ void Camera::WriteToVideo(void)
     qDebug()<<"fps:"<<fps;
     outputVideo = new VideoWriter;
     //间隔33ms
-    outputVideo->open(fileFullPathName.toLocal8Bit().toStdString(), outputVideo->fourcc('M', 'J', 'P', 'G'), 18, Size(frameWidth, frameHeight), true);
-    //outputVideo->open(fileFullPathName.toLocal8Bit().toStdString(), outputVideo->fourcc('M', 'J', 'P', 'G'), 30, Size(frameWidth, frameHeight), true);
+    //outputVideo->open(fileFullPathName.toLocal8Bit().toStdString(), outputVideo->fourcc('M', 'J', 'P', 'G'), 18, Size(frameWidth, frameHeight), true);
+    outputVideo->open(fileFullPathName.toLocal8Bit().toStdString(), outputVideo->fourcc('M', 'J', 'P', 'G'), 30, Size(frameWidth, frameHeight), true);
 
     //判断open writer对象是否出错
     if (!outputVideo->isOpened()){return;}

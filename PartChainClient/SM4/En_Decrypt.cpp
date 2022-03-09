@@ -12,12 +12,14 @@
 #include <cstring>
 
 #define BUFF_SIZE 256
+#define MAXBUFFSIZE (100*1024*1024)
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1600)
 # pragma execution_character_set("utf-8")
 #endif
 
 QList<QString> pList;
+unsigned char BuffBase64[MAXBUFFSIZE] = {0};
 
 SM4Decrypt::SM4Decrypt()
 {
@@ -152,25 +154,26 @@ QString SM4Decrypt::DecodeSM4_Base64(const QString& key,const QString& strInput)
 {
     qDebug()<<"DecodeSM4_Base641111111111111";
     long long nCount = 0;
-    long long len = strInput.length();
+    long long len = 0;
+    len = strInput.length();
     LogRecord wLog;
     wLog.LogTrack(pDownLoadFileName);
     //wLog.LogTrack(strInput);
     qDebug()<<"len:"<<len;
-    unsigned char *szBase64 = new unsigned char[len];
+    //unsigned char *szBase64 = new unsigned char[len];
     wLog.LogTrack("start memset.");
-    memset(szBase64, 0, len);
+    //memset(szBase64, 0, len);
+    memset(BuffBase64, 0, MAXBUFFSIZE);
     wLog.LogTrack("memset success.");
 
     //wLog.LogTrack("start base64 decode.");
     //单独定义变量传递，则程序会崩溃
     //Base64_Decode_New(qPrintable(strInput), len, szBase64, nCount);
-//    const char *p = strInput.toLocal8Bit().constData();
     QByteArray ba = strInput.toLatin1();
     qDebug()<<"baaaaaaaaaaaaaaaaaaaa0";
     const char* base64_data = ba.data();
     qDebug()<<"baaaaaaaaaaaaaaaaaaaa1";
-    Base64_Decode_New(base64_data, len, szBase64, nCount);
+    Base64_Decode_New(base64_data, len, BuffBase64, nCount);
 
     wLog.LogTrack("base64 decode finish.");
     qDebug()<<"nCount:"<<nCount;
@@ -178,11 +181,12 @@ QString SM4Decrypt::DecodeSM4_Base64(const QString& key,const QString& strInput)
     qDebug()<<"DecodeSM4_Base642222222222222222";
     FILE *file_in = NULL;
     file_in = fopen(TEMPFILENAME,"wb+");
-    fwrite(szBase64, 1, nCount, file_in);
+    //fwrite(szBase64, 1, nCount, file_in);
+    fwrite(BuffBase64, 1, nCount, file_in);
     fclose(file_in);
     file_in = NULL;
-    delete [] szBase64;
-    szBase64 = nullptr;
+    //delete [] szBase64;
+    //szBase64 = nullptr;
 
     qDebug()<<"DecodeSM4_Base643333333333333333333333";
     const char *pStrkey = key.toLocal8Bit().constData();

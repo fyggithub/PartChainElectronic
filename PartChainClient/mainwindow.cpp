@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     qputenv("QTWEBENGINE_REMOTE_DEBUGGING", "7777");
-    pProgressMaxRange = 5;
+    pProgressMaxRange = 40;
     recvBuff = "";
     sendBuff = "";
 }
