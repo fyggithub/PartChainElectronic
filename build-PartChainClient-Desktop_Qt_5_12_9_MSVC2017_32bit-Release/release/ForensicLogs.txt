@@ -322,3 +322,103 @@ str : cancel
 type : GetRecordDate
 key : token
 str : {"hostIp":"{\"code\":\"0000\",\"message\":\"\",\"data\":[{\"id\":\"686231002204610560\",\"fileName\":\"host2022-03-09-15-16-53-384.aisino\",\"fileUrl\":\"M00/00/5D/rB4U2GIoVGyAYGgBAAADOHrh9II.aisino\",\"enabled\":\"0\",\"createTime\":\"1646810220481\",\"fileSuffix\":\"aisino\",\"fileSize\":\"824.0B\",\"fileType\":\"07\",\"fileHash\":\"2d6bdfb341be3a6234b24742377f93aa7c7cfb0d9fd64efa9282c87852e57085\"},{\"id\":\"686231002389159936\",\"fileName\":\"IpTrack2022-03-09-15-16-58-400.aisino\",\"fileUrl\":\"M00/00/5D/rB4U2GIoVGyAf-g1AAABSgLOjF4.aisino\",\"enabled\":\"0\",\"createTime\":\"1646810220525\",\"fileSuffix\":\"aisino\",\"fileSize\":\"330.0B\",\"fileType\":\"07\",\"fileHash\":\"1c02b92588ba12a2e30063575a4ad324758d0cf602d0588fb6c30c106c8dbb2f\"}],\"status\":\"200\"}","ipAddress":"172.24.103.251","macAddress":"08:1F:71:17:ED:8C","osVersion":"windows10","path":"F:/work/code/ElectronicDepository/Branch/PartChainElectronic/build-PartChainClient-Desktop_Qt_5_12_9_MSVC2017_32bit-Release/release/OutPut/录屏取证/w20220309151653/","str":"{\"code\":\"0000\",\"message\":\"\",\"data\":[{\"id\":\"686234949703180288\",\"fileName\":\"mplayer2022-03-09-15-32-05-710.mp4\",\"fileUrl\":\"M00/00/5D/rB4U2GIoWBmASyG7AMH9CU4DtwA989.mp4\",\"enabled\":\"0\",\"createTime\":\"1646811161638\",\"fileSuffix\":\"mp4\",\"fileSize\":\"12.12MB\",\"fileType\":\"04\",\"fileHash\":\"fdee36b39c971d7a15e846069e051561e5b320fb6978f045a3ffcffcb2fec340\"},{\"id\":\"686234949879341056\",\"fileName\":\"log2022-03-09-15-16-59-610.aisino\",\"fileUrl\":\"M00/00/5D/rB4U2GIoWBmASAczAAAApif0ePw.aisino\",\"enabled\":\"0\",\"createTime\":\"1646811161680\",\"fileSuffix\":\"aisino\",\"fileSize\":\"166.0B\",\"fileType\":\"07\",\"fileHash\":\"c6cccc2aeb9f4f0f489474816afcdc473f573d4d2bb6a0a3b26f94e4fa772cce\"}],\"status\":\"200\"}","strBranch":"token","strMain":"GetRecordDate"}
+**********
+type : GetCameraDate
+key : cancel
+str : cancel
+**********
+type : GetCameraDate
+key : token
+str : {"hostIp":"{\"code\":\"0000\",\"message\":\"\",\"data\":[{\"id\":\"686243151291359232\",\"fileName\":\"host2022-03-09-16-05-08-911.aisino\",\"fileUrl\":\"M00/00/5D/rB4U2GIoX72AKUOGAAADOHrh9II.aisino\",\"enabled\":\"0\",\"createTime\":\"1646813117049\",\"fileSuffix\":\"aisino\",\"fileSize\":\"824.0B\",\"fileType\":\"07\",\"fileHash\":\"2d6bdfb341be3a6234b24742377f93aa7c7cfb0d9fd64efa9282c87852e57085\"},{\"id\":\"686243151475908608\",\"fileName\":\"IpTrack2022-03-09-16-05-13-935.aisino\",\"fileUrl\":\"M00/00/5D/rB4U2GIoX72ALVaIAAABSkacre8.aisino\",\"enabled\":\"0\",\"createTime\":\"1646813117093\",\"fileSuffix\":\"aisino\",\"fileSize\":\"330.0B\",\"fileType\":\"07\",\"fileHash\":\"4f6020fec458a73f74b0c315edb84670759b7386e5423267cd93c7ebaac14d22\"}],\"status\":\"200\"}","ipAddress":"172.24.103.251","macAddress":"08:1F:71:17:ED:8C","osVersion":"windows10","path":"F:/work/code/ElectronicDepository/Branch/PartChainElectronic/build-PartChainClient-Desktop_Qt_5_12_9_MSVC2017_32bit-Release/release/OutPut/拍摄取证/a320220309160508/","str":"{\"code\":\"0000\",\"message\":\"\",\"data\":[{\"id\":\"686243236469284864\",\"fileName\":\"mplayer2022-03-09-16-05-33-650.mp4\",\"fileUrl\":\"M00/00/5D/rB4U2GIoX9GARFrPAAvhl_3guds317.mp4\",\"enabled\":\"0\",\"createTime\":\"1646813137357\",\"fileSuffix\":\"mp4\",\"fileSize\":\"760.4KB\",\"fileType\":\"04\",\"fileHash\":\"f1d52facf78eb8d948d283ef08d7ee8a4f96c0ae0748a6413f3c0bd0904632c4\"}],\"status\":\"200\"}","strBranch":"token","strMain":"GetCameraDate"}
+**********
+type : GetCameraDate
+key : cancel
+str : cancel
+**********
+type : GetCameraDate
+key : cancel
+str : cancel
+**********
+type : GetCameraDate
+key : cancel
+str : cancel
+**********
+type : GetCameraDate
+key : cancel
+str : cancel
+**********
+type : GetCameraDate
+key : cancel
+str : cancel
+**********
+type : GetCameraDate
+key : cancel
+str : cancel
+**********
+type : GetCameraDate
+key : cancel
+str : cancel
+**********
+type : GetCameraDate
+key : cancel
+str : cancel
+**********
+type : GetCameraDate
+key : cancel
+str : cancel
+**********
+type : GetCameraDate
+key : token
+str : {"hostIp":"{\"code\":\"0000\",\"message\":\"\",\"data\":[{\"id\":\"686255188188864512\",\"fileName\":\"host2022-03-09-16-52-59-750.aisino\",\"fileUrl\":\"M00/00/5D/rB4U2GIoavKAeNq5AAADOHrh9II.aisino\",\"enabled\":\"0\",\"createTime\":\"1646815986869\",\"fileSuffix\":\"aisino\",\"fileSize\":\"824.0B\",\"fileType\":\"07\",\"fileHash\":\"2d6bdfb341be3a6234b24742377f93aa7c7cfb0d9fd64efa9282c87852e57085\"},{\"id\":\"686255188373413888\",\"fileName\":\"IpTrack2022-03-09-16-53-04-772.aisino\",\"fileUrl\":\"M00/00/5D/rB4U2GIoavKAJk-fAAABR2m4oKg.aisino\",\"enabled\":\"0\",\"createTime\":\"1646815986913\",\"fileSuffix\":\"aisino\",\"fileSize\":\"327.0B\",\"fileType\":\"07\",\"fileHash\":\"577f7224fa61188713feb5e6d4d01c7c1128be8a63520cef9e34e6d29979276d\"}],\"status\":\"200\"}","ipAddress":"172.24.103.251","macAddress":"08:1F:71:17:ED:8C","osVersion":"windows10","path":"F:/work/code/ElectronicDepository/Branch/PartChainElectronic/build-PartChainClient-Desktop_Qt_5_12_9_MSVC2017_32bit-Release/release/OutPut/拍摄取证/mmm20220309165259/","str":"{\"code\":\"0000\",\"message\":\"\",\"data\":[{\"id\":\"686255276692873216\",\"fileName\":\"mplayer2022-03-09-16-53-25-407.mp4\",\"fileUrl\":\"M00/00/5D/rB4U2GIoaweALxO0AAciXdpCJVc751.mp4\",\"enabled\":\"0\",\"createTime\":\"1646816007970\",\"fileSuffix\":\"mp4\",\"fileSize\":\"456.59KB\",\"fileType\":\"04\",\"fileHash\":\"b9657125697fda08905f66829b81cc9c85e3d4e3589c36fa9225cc3e337cb48\"}],\"status\":\"200\"}","strBranch":"token","strMain":"GetCameraDate"}
+**********
+type : GetCameraDate
+key : cancel
+str : cancel
+**********
+type : GetCameraDate
+key : cancel
+str : cancel
+**********
+type : GetCameraDate
+key : cancel
+str : cancel
+**********
+type : GetCameraDate
+key : token
+str : {"hostIp":"{\"code\":\"0000\",\"message\":\"\",\"data\":[{\"id\":\"686258075732287488\",\"fileName\":\"host2022-03-09-17-04-27-809.aisino\",\"fileUrl\":\"M00/00/5D/rB4U2GIobaOAXIFEAAADOHrh9II.aisino\",\"enabled\":\"0\",\"createTime\":\"1646816675313\",\"fileSuffix\":\"aisino\",\"fileSize\":\"824.0B\",\"fileType\":\"07\",\"fileHash\":\"2d6bdfb341be3a6234b24742377f93aa7c7cfb0d9fd64efa9282c87852e57085\"},{\"id\":\"686258075916836864\",\"fileName\":\"IpTrack2022-03-09-17-04-32-819.aisino\",\"fileUrl\":\"M00/00/5D/rB4U2GIobaOASzBaAAABREYjVaw.aisino\",\"enabled\":\"0\",\"createTime\":\"1646816675357\",\"fileSuffix\":\"aisino\",\"fileSize\":\"324.0B\",\"fileType\":\"07\",\"fileHash\":\"f6441b2a4840a047b78c9af8f1a650a99e9cb960a3018e28c8e29968c532d083\"}],\"status\":\"200\"}","ipAddress":"172.24.103.251","macAddress":"08:1F:71:17:ED:8C","osVersion":"windows10","path":"F:/work/code/ElectronicDepository/Branch/PartChainElectronic/build-PartChainClient-Desktop_Qt_5_12_9_MSVC2017_32bit-Release/release/OutPut/拍摄取证/sd20220309170427/","str":"{\"code\":\"0000\",\"message\":\"\",\"data\":[{\"id\":\"686258192963084288\",\"fileName\":\"mplayer2022-03-09-17-04-58-067.mp4\",\"fileUrl\":\"M00/00/5D/rB4U2GIobb-ASMNzABjSwtOr_RA220.mp4\",\"enabled\":\"0\",\"createTime\":\"1646816703263\",\"fileSuffix\":\"mp4\",\"fileSize\":\"1.55MB\",\"fileType\":\"04\",\"fileHash\":\"ead217f9a7fab2b5df6d12f90e47c2830d851754d1d9ba5573713b5c4b54b23\"}],\"status\":\"200\"}","strBranch":"token","strMain":"GetCameraDate"}
+**********
+type : GetCameraDate
+key : cancel
+str : cancel
+**********
+type : GetCameraDate
+key : cancel
+str : cancel
+**********
+type : GetCameraDate
+key : cancel
+str : cancel
+**********
+type : GetCameraDate
+key : cancel
+str : cancel
+**********
+type : GetCameraDate
+key : cancel
+str : cancel
+**********
+type : GetCameraDate
+key : cancel
+str : cancel
+**********
+type : GetCameraDate
+key : token
+str : {"hostIp":"{\"code\":\"0000\",\"message\":\"\",\"data\":[{\"id\":\"686269931804958720\",\"fileName\":\"host2022-03-09-17-51-33-943.aisino\",\"fileUrl\":\"M00/00/5E/rB4U2GIoeK6ABQPxAAADOHrh9II.aisino\",\"enabled\":\"0\",\"createTime\":\"1646819502021\",\"fileSuffix\":\"aisino\",\"fileSize\":\"824.0B\",\"fileType\":\"07\",\"fileHash\":\"2d6bdfb341be3a6234b24742377f93aa7c7cfb0d9fd64efa9282c87852e57085\"},{\"id\":\"686269931989508096\",\"fileName\":\"IpTrack2022-03-09-17-51-38-961.aisino\",\"fileUrl\":\"M00/00/5E/rB4U2GIoeK6ARtbHAAABSmgBH5k.aisino\",\"enabled\":\"0\",\"createTime\":\"1646819502065\",\"fileSuffix\":\"aisino\",\"fileSize\":\"330.0B\",\"fileType\":\"07\",\"fileHash\":\"de12a76fec1e375e5e42f58a38ceaa384c2aa7899c59f8c09a51498f2718e0c0\"}],\"status\":\"200\"}","ipAddress":"172.24.103.251","macAddress":"08:1F:71:17:ED:8C","osVersion":"windows10","path":"F:/work/code/ElectronicDepository/Branch/PartChainElectronic/build-PartChainClient-Desktop_Qt_5_12_9_MSVC2017_32bit-Release/release/OutPut/拍摄取证/n20220309175133/","str":"{\"code\":\"0000\",\"message\":\"\",\"data\":[{\"id\":\"686270022523559936\",\"fileName\":\"mplayer2022-03-09-17-51-57-761.mp4\",\"fileUrl\":\"M00/00/5E/rB4U2GIoeMOANBbUABYCnKTxESM529.mp4\",\"enabled\":\"0\",\"createTime\":\"1646819523650\",\"fileSuffix\":\"mp4\",\"fileSize\":\"1.38MB\",\"fileType\":\"04\",\"fileHash\":\"ea8a6081b264ace2aa48222acd572d7ed82a36c291570179c47c3c73f2877e0d\"}],\"status\":\"200\"}","strBranch":"token","strMain":"GetCameraDate"}
+**********
+type : GetCameraDate
+key : cancel
+str : cancel
+**********
+type : GetCameraDate
+key : cancel
+str : cancel

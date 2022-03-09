@@ -9,6 +9,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include "opencv2/opencv.hpp"
+#include "Common/logrecord.h"
 
 Camera::Camera(QWidget *parent) :
     QMainWindow(parent),    
@@ -53,8 +54,8 @@ void Camera::InitPhotographUi()
     connect(ui->BtnUpload, SIGNAL(clicked()), this, SLOT(UploadRecordVideo()));
     connect(this,SIGNAL(StopRecordVideoSignal()),this,SLOT(StopRecordVideo()));
 
-    //connect(ui->BtnStart, SIGNAL(clicked()), this, SLOT(StartRecordVideo1()));
-    //connect(ui->BtnReload, SIGNAL(clicked()), this, SLOT(StopRecordVideo1()));
+//    connect(ui->BtnStart, SIGNAL(clicked()), this, SLOT(StartRecordVideo1()));
+//    connect(ui->BtnReload, SIGNAL(clicked()), this, SLOT(StopRecordVideo1()));
 }
 
 void Camera::StartRecordVideo1(void)
@@ -111,7 +112,6 @@ void Camera::StopRecordVideo1(void)
     count_timer->stop();
     timer->stop();
     capture->release();
-    //frameImg->release();
     outputVideo->release();
     delete outputVideo;
     delete timer;
@@ -152,24 +152,23 @@ void Camera::StartRecordVideo(void)
             RemoveFile(FileVideoName);
             RemoveFile(pAudioName);
 
+            ui->BtnStart->setText(QString::fromLocal8Bit("停止取证"));
+            ui->BtnReload->setEnabled(false);
+            ui->BtnUpload->setEnabled(false);
+            ui->BtnReload->setStyleSheet("QPushButton{background-image: url(:/new/prefix1/Icon/button_gray.png);border-style: none;padding-left: 8px;padding-top: 8px;padding-right: 8px;padding-bottom: 8px;color:white;}");
+            ui->BtnUpload->setStyleSheet("QPushButton{background-image: url(:/new/prefix1/Icon/button_gray.png);border-style: none;padding-left: 8px;padding-top: 8px;padding-right: 8px;padding-bottom: 8px;color:white;}");
             //生成视频文件
             m_isRun     = true;
             pCloseFlag = 1;
-            WriteToVideo();
             InitTimeTasks();
-            ui->BtnStart->setText(QString::fromLocal8Bit("停止取证"));
 
             Common *pcom = NULL;
             QString filePath = pcom->FileDirPath(CameraRecord);
             //开始录取音屏
             m_Audio = new Audio();
             m_Audio->AudioInit(filePath);
-            m_Audio->OnRecordStart(1);
-
-            ui->BtnReload->setEnabled(false);
-            ui->BtnUpload->setEnabled(false);
-            ui->BtnReload->setStyleSheet("QPushButton{background-image: url(:/new/prefix1/Icon/button_gray.png);border-style: none;padding-left: 8px;padding-top: 8px;padding-right: 8px;padding-bottom: 8px;color:white;}");
-            ui->BtnUpload->setStyleSheet("QPushButton{background-image: url(:/new/prefix1/Icon/button_gray.png);border-style: none;padding-left: 8px;padding-top: 8px;padding-right: 8px;padding-bottom: 8px;color:white;}");
+            m_Audio->OnRecordStart(2);
+            WriteToVideo();
         }
         else
         {
@@ -193,6 +192,7 @@ void Camera::StopRecordVideo(void)
     Common *pcom = NULL;
     QString filePath = pcom->FileDirPath(CameraRecord);
     m_Audio->OnRecordSave(filePath);
+    delete m_Audio;
 
     QString strWav = filePath + pAudioName;
     QString strAvi = filePath + FileVideoName;
@@ -589,8 +589,9 @@ void Camera::OpenVideo(void)
 {
     //打开本地摄像头
     capture = new VideoCapture(0,CAP_DSHOW);
-    capture->set(CAP_PROP_FRAME_WIDTH, 960);  //max:960; normal:640
-    capture->set(CAP_PROP_FRAME_HEIGHT, 540);  //max:540; normal:480
+    //设置的值如果大于编辑框大小，录取的视频就会变快
+    capture->set(CAP_PROP_FRAME_WIDTH, 800);  //max:960; normal:640
+    capture->set(CAP_PROP_FRAME_HEIGHT, 450);  //max:540; normal:480
     if (!capture->isOpened()){
         QMessageBox::warning(this,QString::fromLocal8Bit("提示"),QString::fromLocal8Bit("摄像头打开失败！"),QString::fromLocal8Bit("确定"),0);
         return;
@@ -627,11 +628,14 @@ void Camera::WriteToVideo(void)
     if (!outputVideo->isOpened()){return;}
     int rate = 1000/fps;
     qDebug()<<"rate:"<<rate;
+    QString strRate = QString("fps:%1").arg(rate);
+    LogRecord wLog;
+    wLog.LogTrack(strRate);
 
     timer = new QTimer();
     //timer->setInterval(6);
     //timer->setInterval(8);
-    timer->setInterval(33);
+    timer->setInterval(8);
     timer->start();
     connect(timer, SIGNAL(timeout()), this, SLOT(RecordTime()));
 }

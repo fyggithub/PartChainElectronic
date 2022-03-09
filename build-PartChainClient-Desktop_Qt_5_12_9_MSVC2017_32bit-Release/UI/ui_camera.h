@@ -117,6 +117,7 @@ public:
 
         photo_widget = new QWidget(centralwidget);
         photo_widget->setObjectName(QString::fromUtf8("photo_widget"));
+        photo_widget->setMaximumSize(QSize(16777215, 16777215));
         horizontalLayout_4 = new QHBoxLayout(photo_widget);
         horizontalLayout_4->setSpacing(7);
         horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
@@ -126,6 +127,7 @@ public:
 
         label_display = new QLabel(photo_widget);
         label_display->setObjectName(QString::fromUtf8("label_display"));
+        label_display->setMaximumSize(QSize(16777215, 16777215));
         label_display->setStyleSheet(QString::fromUtf8("background-image: url(:/new/prefix1/Icon/camera.png);"));
 
         horizontalLayout_4->addWidget(label_display);
@@ -237,7 +239,7 @@ public:
         Camera->setCentralWidget(centralwidget);
         menubar = new QMenuBar(Camera);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 800, 26));
+        menubar->setGeometry(QRect(0, 0, 800, 23));
         Camera->setMenuBar(menubar);
         statusbar = new QStatusBar(Camera);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));

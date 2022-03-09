@@ -212,6 +212,7 @@ void RecordVideo::StopButtonClicked()
         Common *pcom = NULL;
         QString filePath = pcom->FileDirPath(VideoRecord);
         m_Audio->OnRecordSave(filePath);
+        delete m_Audio;
         pLog->SaveForensicsLog(VideoRecord, FileLogName);
         pCloseFlag = 2;
 

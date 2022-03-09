@@ -3312,7 +3312,8 @@ debug\camera.obj: ..\PartChainClient\CameraForensics\camera.cpp ..\PartChainClie
 		D:\sotfwarePath\OpenCvPath\opencv\build\include\opencv2\stitching\detail\blenders.hpp \
 		D:\sotfwarePath\OpenCvPath\opencv\build\include\opencv2\video.hpp \
 		D:\sotfwarePath\OpenCvPath\opencv\build\include\opencv2\video\tracking.hpp \
-		D:\sotfwarePath\OpenCvPath\opencv\build\include\opencv2\video\background_segm.hpp
+		D:\sotfwarePath\OpenCvPath\opencv\build\include\opencv2\video\background_segm.hpp \
+		..\PartChainClient\Common\logrecord.h
 
 debug\common.obj: ..\PartChainClient\Common\common.cpp ..\PartChainClient\Common\common.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QWidget \
