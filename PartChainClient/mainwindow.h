@@ -76,6 +76,7 @@ private slots:
     void loadError(QNetworkReply::NetworkError);
     void RecvMsgCloseWnd(RecordType type);
     void DownLoadFinish();
+    void MsgInspector();
 
 signals:
     void SigSendMessageToJS(QString strMain,QString type,QString str);

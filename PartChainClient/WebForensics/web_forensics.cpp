@@ -23,6 +23,8 @@
 #include "Common/common.h"
 #include "Common/networkclean.h"
 #include <QTextCodec>
+#include <QWebEngineHttpRequest>
+#include "weburlrequestinterceptor.h"
 
 web_forensics::web_forensics(QWidget *parent) :
     QMainWindow(parent)
@@ -58,6 +60,13 @@ void web_forensics::OpenWebForensics(void)
     ui->webwidget->setLayout(layout);
     layout->addWidget(m_webView);
 
+//    httpR.setHeader("Content-Security-Policy", "upgrade-insecure-requests");
+//    httpR.setUrl(url1);
+//    m_webView->page()->load(httpR);
+//    QStackedLayout* layout = new QStackedLayout(ui->webwidget);
+//    ui->webwidget->setLayout(layout);
+//    layout->addWidget(m_webView);
+
     pLog = new Common();
     QString getTime = QDateTime::currentDateTime().toString("yyyy-MM-dd-hh-mm-ss-zzz");
     FileLogName = "log" + getTime + ".txt";
@@ -65,6 +74,11 @@ void web_forensics::OpenWebForensics(void)
     connect(m_webView, SIGNAL(urlChanged(QUrl)),this, SLOT(OnUrlChanged(QUrl)));
     m_webView->setContextMenuPolicy (Qt::NoContextMenu);
     m_webView->page()->settings()->setAttribute(QWebEngineSettings::LocalContentCanAccessRemoteUrls, true);
+    //m_webView->page()->profile()->setRequestInterceptor(interceptRequest);
+    wuri = new WebUrlRequestInterceptor();
+//    //QWebEngineProfile::defaultProfile()->setRequestInterceptor(wuri);
+    m_webView->page()->profile()->setRequestInterceptor(wuri);
+
     /*connect(m_webView->page()->profile(), &QWebEngineProfile::downloadRequested, [this](QWebEngineDownloadItem *download) {
         if (download->savePageFormat() != QWebEngineDownloadItem::UnknownSaveFormat){}
         QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), download->path());//选择下载路径
@@ -115,7 +129,13 @@ void web_forensics::LoadWebOver(bool tmp)
     qDebug()<<"bool:"<<tmp;
     if(tmp == true)
     {
-        QTimer::singleShot(1000, this, SLOT(FullScreenShoot()));
+        //QTimer::singleShot(1000, this, SLOT(FullScreenShoot()));
+        QString filePath = pLog->FileDirPath(WebRecord);
+        QString getTime = QDateTime::currentDateTime().toString("yyyy-MM-dd-hh-mm-ss-zzz");
+        QString filePathName = "web-" + getTime + ".png";
+        QString fileFullPathName = filePath + filePathName;
+        pLog->isDirExist(filePath);
+        m_webView->grab().save(fileFullPathName, "PNG");
     }
 }
 
@@ -129,100 +149,16 @@ void web_forensics::FullScreenShoot()
     m_webView->page()->settings()->setAttribute(QWebEngineSettings::LocalContentCanAccessRemoteUrls, true);
     //m_webView->page()->settings()->setAttribute(QWebEngineSettings::AllowAllUnknownUrlSchemes);
     //m_webView->page()->settings()->unknownUrlSchemePolicy();
-    m_webView->page()->settings()->unknownUrlSchemePolicy();
+    //m_webView->page()->settings()->unknownUrlSchemePolicy();
+    //WebUrlRequestInterceptor *wuri = new WebUrlRequestInterceptor();
+    m_webView->page()->settings()->setAttribute(QWebEngineSettings::PluginsEnabled, true);
+    m_webView->page()->profile()->setRequestInterceptor(wuri);
 
     m_webView->show();
 
     QSize size = m_webView->page()->contentsSize().toSize();
     m_webView->resize(size);
     QTimer::singleShot(1200, this, SLOT(FullScreenSave()));
-}
-
-void web_forensics::interceptRequest(QWebEngineUrlRequestInfo &info)
-{
-    qDebug()<<"********************************web_forensics";
-    QString strInfo = "";
-    switch (info.resourceType())
-    {
-    case 0:  //Top level page
-        strInfo = "ResourceTypeMainFrame";
-        break;
-
-    case 1:  //Frame
-        strInfo = "ResourceTypeSubFrame";
-        break;
-
-    case 2:  //CSS stylesheet
-        strInfo = "ResourceTypeStylesheet";
-        break;
-
-    case 3:  //External script
-        strInfo = "ResourceTypeScript";
-        break;
-
-    case 4:  //Image
-        strInfo = "ResourceTypeImage";
-        break;
-
-    case 5:  //Font
-        strInfo = "ResourceTypeFontResource";
-        break;
-
-    case 6:  //Sub-resource
-        strInfo = "ResourceTypeSubResource";
-        break;
-
-    case 7:  //Plugin object
-        strInfo = "ResourceTypeObject";
-        break;
-
-    case 8:  //Media resource
-        strInfo = "ResourceTypeMedia";
-        break;
-
-    case 9:  //Resource of dedicated worker
-        strInfo = "ResourceTypeWorker";
-        break;
-
-    case 10:  //Resource of shared worker
-        strInfo = "ResourceTypeSharedWorker";
-        break;
-
-    case 11:  //Explicitly requested prefetch
-        strInfo = "ResourceTypePrefetch";
-        break;
-
-    case 12:  //Favicon
-        strInfo = "ResourceTypeFavicon";
-        break;
-
-    case 13: //XML http request
-        strInfo = "ResourceTypeXhr";
-        break;
-
-    case 14: //Ping request
-        strInfo = "ResourceTypePing";
-        break;
-
-    case 15: //Resource of service worker
-        strInfo = "ResourceTypeServiceWorker";
-        break;
-
-    case 16: //Unknown resource
-        strInfo = "ResourceTypeUnknown";
-        break;
-
-    default:
-        strInfo = "Unknown type";
-        break;
-    }
-
-    qDebug() << "RequestMethod===" << info.requestMethod() << "\n"
-        << "RequestUrl===" << info.requestUrl() << "\n"
-        << "RequestType===" << strInfo;
-
-    //Set the value of the Accept-Language HTTP request-header.
-    //info.setHttpHeader("Accept-Language", "zh-CN");
 }
 
 void web_forensics::FullScreenSave()

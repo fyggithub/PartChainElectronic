@@ -422,3 +422,55 @@ str : cancel
 type : GetCameraDate
 key : cancel
 str : cancel
+**********
+type : GetWebDate
+key : cancel
+str : 
+**********
+type : GetWebDate
+key : cancel
+str : 
+**********
+type : GetWebDate
+key : cancel
+str : 
+**********
+type : GetWebDate
+key : cancel
+str : 
+**********
+type : GetWebDate
+key : cancel
+str : 
+**********
+type : GetWebDate
+key : cancel
+str : 
+**********
+type : GetWebDate
+key : cancel
+str : 
+**********
+type : GetWebDate
+key : cancel
+str : 
+**********
+type : GetWebDate
+key : cancel
+str : 
+**********
+type : GetWebDate
+key : cancel
+str : 
+**********
+type : GetRecordDate
+key : token
+str : {"hostIp":"{\"code\":\"0000\",\"message\":\"\",\"data\":[{\"id\":\"686512639836430336\",\"fileName\":\"host2022-03-10-09-55-59-992.aisino\",\"fileUrl\":\"M00/00/5E/rB4U2GIpWriACMHrAAADOHrh9II.aisino\",\"enabled\":\"0\",\"createTime\":\"1646877368125\",\"fileSuffix\":\"aisino\",\"fileSize\":\"824.0B\",\"fileType\":\"07\",\"fileHash\":\"2d6bdfb341be3a6234b24742377f93aa7c7cfb0d9fd64efa9282c87852e57085\"},{\"id\":\"686512640020979712\",\"fileName\":\"IpTrack2022-03-10-09-56-05-039.aisino\",\"fileUrl\":\"M00/00/5E/rB4U2GIpWriAHmUSAAAAe2sVw_E.aisino\",\"enabled\":\"0\",\"createTime\":\"1646877368169\",\"fileSuffix\":\"aisino\",\"fileSize\":\"123.0B\",\"fileType\":\"07\",\"fileHash\":\"b8dd5609927d7c04d68ec547dc635542a0543d292a0a30d4aedf8d70c068aa10\"}],\"status\":\"200\"}","ipAddress":"172.24.103.251","macAddress":"08:1F:71:17:ED:8C","osVersion":"windows10","path":"F:/work/code/ElectronicDepository/Branch/PartChainElectronic/build-PartChainClient-Desktop_Qt_5_12_9_MSVC2017_32bit-Release/release/OutPut/录屏取证/a20220310095559/","str":"{\"code\":\"0000\",\"message\":\"\",\"data\":[{\"id\":\"686512950454001664\",\"fileName\":\"mplayer2022-03-10-09-57-14-994.mp4\",\"fileUrl\":\"M00/00/5E/rB4U2GIpWwKAIEmQAAOI1Vv3WVg538.mp4\",\"enabled\":\"0\",\"createTime\":\"1646877442182\",\"fileSuffix\":\"mp4\",\"fileSize\":\"226.21KB\",\"fileType\":\"04\",\"fileHash\":\"2c3968ba980eddb4a98e19e54899a47fef0916dfb57c95aac00a16fddb5c0a83\"},{\"id\":\"686512950634356736\",\"fileName\":\"log2022-03-10-09-56-06-327.aisino\",\"fileUrl\":\"M00/00/5E/rB4U2GIpWwKAYvfOAAAApg4gDew.aisino\",\"enabled\":\"0\",\"createTime\":\"1646877442225\",\"fileSuffix\":\"aisino\",\"fileSize\":\"166.0B\",\"fileType\":\"07\",\"fileHash\":\"4cc0ee48bf495107deaf29e0472de5232f53868210c616cc988836228f08ae20\"}],\"status\":\"200\"}","strBranch":"token","strMain":"GetRecordDate"}
+**********
+type : GetRecordDate
+key : token
+str : {"hostIp":"{\"code\":\"0000\",\"message\":\"\",\"data\":[{\"id\":\"686513313290657792\",\"fileName\":\"host2022-03-10-09-58-40-598.aisino\",\"fileUrl\":\"M00/00/5E/rB4U2GIpW1iAQHEqAAADOHrh9II.aisino\",\"enabled\":\"0\",\"createTime\":\"1646877528689\",\"fileSuffix\":\"aisino\",\"fileSize\":\"824.0B\",\"fileType\":\"07\",\"fileHash\":\"2d6bdfb341be3a6234b24742377f93aa7c7cfb0d9fd64efa9282c87852e57085\"},{\"id\":\"686513313475207168\",\"fileName\":\"IpTrack2022-03-10-09-58-45-689.aisino\",\"fileUrl\":\"M00/00/5E/rB4U2GIpW1iAYaBKAAABU4b0aUg.aisino\",\"enabled\":\"0\",\"createTime\":\"1646877528733\",\"fileSuffix\":\"aisino\",\"fileSize\":\"339.0B\",\"fileType\":\"07\",\"fileHash\":\"4bc3a1f25417e629a445e14c5d11fede8a20a0cafb596a8028d6a25fde56e49f\"}],\"status\":\"200\"}","ipAddress":"172.24.103.251","macAddress":"08:1F:71:17:ED:8C","osVersion":"windows10","path":"F:/work/code/ElectronicDepository/Branch/PartChainElectronic/build-PartChainClient-Desktop_Qt_5_12_9_MSVC2017_32bit-Release/release/OutPut/录屏取证/aaa20220310095840/","str":"{\"code\":\"0000\",\"message\":\"\",\"data\":[{\"id\":\"686517405660487680\",\"fileName\":\"mplayer2022-03-10-10-13-50-428.mp4\",\"fileUrl\":\"M00/00/5E/rB4U2GIpXyiAZVeeAOhI0PSLE5M573.mp4\",\"enabled\":\"0\",\"createTime\":\"1646878504386\",\"fileSuffix\":\"mp4\",\"fileSize\":\"14.52MB\",\"fileType\":\"04\",\"fileHash\":\"2ebe6729fdb384b7a21d399fe60db58496566a59ef909a97a1ab9ad874d5464b\"},{\"id\":\"686517405840842752\",\"fileName\":\"log2022-03-10-09-58-46-850.aisino\",\"fileUrl\":\"M00/00/5E/rB4U2GIpXyiASGdKAAAApqaw3UI.aisino\",\"enabled\":\"0\",\"createTime\":\"1646878504429\",\"fileSuffix\":\"aisino\",\"fileSize\":\"166.0B\",\"fileType\":\"07\",\"fileHash\":\"a66a2bc558c10ca1b1911dafd59fff431c71b1cd6176ed160ca5526f8aca7d12\"}],\"status\":\"200\"}","strBranch":"token","strMain":"GetRecordDate"}
+**********
+type : GetRecordDate
+key : cancel
+str : cancel

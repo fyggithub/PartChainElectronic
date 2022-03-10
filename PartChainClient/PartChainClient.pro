@@ -30,6 +30,7 @@ SOURCES += \
     ScreenShotForensics/screenshot.cpp \
     ScreenShotForensics/zoompreview.cpp \
     WebForensics/web_forensics.cpp \
+    WebForensics/weburlrequestinterceptor.cpp \
     inspector.cpp \
     main.cpp \
     mainwindow.cpp
@@ -53,6 +54,7 @@ HEADERS += \
     ScreenShotForensics/screenshot.h \
     ScreenShotForensics/zoompreview.h \
     WebForensics/web_forensics.h \
+    WebForensics/weburlrequestinterceptor.h \
     include/JlCompress.h \
     include/ioapi.h \
     include/minizip_crypt.h \

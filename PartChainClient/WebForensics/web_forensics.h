@@ -14,6 +14,7 @@
 #include <QNetworkReply>
 #include <QHttpMultiPart>
 #include <QWebEngineUrlRequestInterceptor>
+#include "weburlrequestinterceptor.h"
 
 namespace Ui {
 class web_forensics;
@@ -38,7 +39,6 @@ public:
     void DialogProgressStop();
     void DialogProgressDeal();
     virtual bool certificateError(const QWebEngineCertificateError &certificateError);
-    void interceptRequest(QWebEngineUrlRequestInfo &info);
 
 
 signals:
@@ -75,6 +75,8 @@ private:
     int timecount;
     int pCloseFlag;
     QString getStrMsg;
+    QWebEngineHttpRequest httpR;
+    WebUrlRequestInterceptor *wuri;
 };
 
 #endif // WEB_FORENSICS_H

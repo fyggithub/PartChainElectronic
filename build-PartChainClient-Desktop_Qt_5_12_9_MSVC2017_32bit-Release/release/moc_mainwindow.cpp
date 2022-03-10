@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[21];
-    char stringdata0[295];
+    QByteArrayData data[22];
+    char stringdata0[308];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -51,7 +51,8 @@ QT_MOC_LITERAL(16, 215, 9), // "loadError"
 QT_MOC_LITERAL(17, 225, 27), // "QNetworkReply::NetworkError"
 QT_MOC_LITERAL(18, 253, 15), // "RecvMsgCloseWnd"
 QT_MOC_LITERAL(19, 269, 10), // "RecordType"
-QT_MOC_LITERAL(20, 280, 14) // "DownLoadFinish"
+QT_MOC_LITERAL(20, 280, 14), // "DownLoadFinish"
+QT_MOC_LITERAL(21, 295, 12) // "MsgInspector"
 
     },
     "MainWindow\0SigSendMessageToJS\0\0strMain\0"
@@ -61,7 +62,7 @@ QT_MOC_LITERAL(20, 280, 14) // "DownLoadFinish"
     "update_network_state\0state\0replyFinished\0"
     "QNetworkReply*\0loadError\0"
     "QNetworkReply::NetworkError\0RecvMsgCloseWnd\0"
-    "RecordType\0DownLoadFinish"
+    "RecordType\0DownLoadFinish\0MsgInspector"
 };
 #undef QT_MOC_LITERAL
 
@@ -71,7 +72,7 @@ static const uint qt_meta_data_MainWindow[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      12,   14, // methods
+      13,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -79,20 +80,21 @@ static const uint qt_meta_data_MainWindow[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    3,   74,    2, 0x06 /* Public */,
+       1,    3,   79,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       6,    0,   81,    2, 0x0a /* Public */,
-       7,    0,   82,    2, 0x0a /* Public */,
-       8,    0,   83,    2, 0x0a /* Public */,
-       9,    0,   84,    2, 0x0a /* Public */,
-      10,    0,   85,    2, 0x0a /* Public */,
-      11,    3,   86,    2, 0x0a /* Public */,
-      12,    1,   93,    2, 0x0a /* Public */,
-      14,    1,   96,    2, 0x08 /* Private */,
-      16,    1,   99,    2, 0x08 /* Private */,
-      18,    1,  102,    2, 0x08 /* Private */,
-      20,    0,  105,    2, 0x08 /* Private */,
+       6,    0,   86,    2, 0x0a /* Public */,
+       7,    0,   87,    2, 0x0a /* Public */,
+       8,    0,   88,    2, 0x0a /* Public */,
+       9,    0,   89,    2, 0x0a /* Public */,
+      10,    0,   90,    2, 0x0a /* Public */,
+      11,    3,   91,    2, 0x0a /* Public */,
+      12,    1,   98,    2, 0x0a /* Public */,
+      14,    1,  101,    2, 0x08 /* Private */,
+      16,    1,  104,    2, 0x08 /* Private */,
+      18,    1,  107,    2, 0x08 /* Private */,
+      20,    0,  110,    2, 0x08 /* Private */,
+      21,    0,  111,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString,    3,    4,    5,
@@ -108,6 +110,7 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void, 0x80000000 | 15,    2,
     QMetaType::Void, 0x80000000 | 17,    2,
     QMetaType::Void, 0x80000000 | 19,    4,
+    QMetaType::Void,
     QMetaType::Void,
 
        0        // eod
@@ -131,6 +134,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 9: _t->loadError((*reinterpret_cast< QNetworkReply::NetworkError(*)>(_a[1]))); break;
         case 10: _t->RecvMsgCloseWnd((*reinterpret_cast< RecordType(*)>(_a[1]))); break;
         case 11: _t->DownLoadFinish(); break;
+        case 12: _t->MsgInspector(); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -192,13 +196,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 12)
+        if (_id < 13)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 12;
+        _id -= 13;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 12)
+        if (_id < 13)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 12;
+        _id -= 13;
     }
     return _id;
 }

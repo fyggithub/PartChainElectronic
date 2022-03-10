@@ -22,17 +22,15 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    qputenv("QTWEBENGINE_REMOTE_DEBUGGING", "7777");
+
     pProgressMaxRange = 40;
     recvBuff = "";
     sendBuff = "";
+    qputenv("QTWEBENGINE_REMOTE_DEBUGGING", "7777");
 }
 
 MainWindow::~MainWindow()
 {
-    //delete detect_thread;
-    //delete pNetworkClean;
-
     delete m_webView;
     delete ui;
 }
@@ -62,40 +60,47 @@ void MainWindow::startweb(void)
 
     connect(m_webView->page()->profile(), &QWebEngineProfile::downloadRequested, [this](QWebEngineDownloadItem *download) {
         connect(download, &QWebEngineDownloadItem::finished,this,&MainWindow::DownLoadFinish);
+        LogRecord wLog;
         //if (download->savePageFormat() != QWebEngineDownloadItem::UnknownSaveFormat){
         //}
         QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), download->path());//选择下载路径
-        if (fileName.isEmpty())
+        if (fileName.isEmpty()){
+            wLog.LogTrack("Warning:the downLoad fileName is empty.");
             return;
-
+        }
         download->setPath(fileName);//设置文件下载路径
         downLoadPath = fileName;
         qDebug() << download->path() << download->savePageFormat();
         download->accept();//接收当前下载请求，只有接收后才会开始下载
+        wLog.LogTrack("download accept ok.");
     });
     //m_webView->setContextMenuPolicy (Qt::NoContextMenu);
     //m_webView->page()->settings()->setAttribute(QWebEngineSettings::LocalContentCanAccessRemoteUrls, true);
     m_webView->setContextMenuPolicy(Qt::CustomContextMenu);
     m_inspector = NULL;
-    connect(m_webView, &QWidget::customContextMenuRequested, this, [this]() {
-        QMenu* menu = new QMenu(this);
-        QAction* action = menu->addAction("Inspect");
-        connect(action, &QAction::triggered, this, [this](){
-            if(m_inspector == NULL)
-            {
-                m_inspector = new Inspector(this);
-            }
-            else
-            {
-                m_inspector->show();
-            }
-        });
-        menu->exec(QCursor::pos());
-    });
+    connect(m_webView, &QWidget::customContextMenuRequested, this, &MainWindow::MsgInspector);
 
     //获取本地ip及mac地址
     Common *pCommon = NULL;
     pCommon->GetIpAddress();
+}
+
+//调出控制台
+void MainWindow::MsgInspector()
+{
+    QMenu* menu = new QMenu(this);
+    QAction* action = menu->addAction("Inspect");
+    connect(action, &QAction::triggered, this, [this](){
+        if(m_inspector == NULL)
+        {
+            m_inspector = new Inspector(this);
+        }
+        else
+        {
+            m_inspector->show();
+        }
+    });
+    menu->exec(QCursor::pos());
 }
 
 void MainWindow::DownLoadFinish()
@@ -141,6 +146,7 @@ void MainWindow::DownLoadFinish()
         pBatchSingle = "";
         pList.clear();
     }
+    wLog.LogTrack("downLoad over.");
     return;
 }
 
@@ -302,7 +308,6 @@ void MainWindow::OnReceiveMessageFromJS(QString strMain,QString type,QString str
     pNetworkClean = new networkclean();
     pNetworkClean->HostFile(pRecordType);
     pNetworkClean->IpTrack();
-    //delete pNetworkClean;
 }
 
 void MainWindow::UploadFile(QString *filename,int num)
@@ -573,7 +578,8 @@ void MainWindow::DialogProgressTime()
     else if(timecount == pProgressMaxRange)
     {
         progressDialog->setValue(timecount);
-        pNetworkClean->IpTrackFinish(pRecordType);        
+        pNetworkClean->IpTrackFinish(pRecordType);
+        delete pNetworkClean;
         if(pRecordType == CameraRecord)
         {
             pCamera = new Camera;

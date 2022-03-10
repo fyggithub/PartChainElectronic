@@ -171,14 +171,15 @@ void RecordVideo::RecordTime()
         QString display_time = QString::fromLocal8Bit("录制时长：");
         QString time_count = QString("%1%2:%3%4:%5%6").arg(hour_h).arg(hour_l).arg(minute_h).arg(minute_l).arg(second_h).arg(second_l);
         display_time = display_time + time_count;
-        ui->label_time->setText(display_time);
-        ui->label_time->setStyleSheet("color:red;");
 
-        if ((minute_h >= 1) && (minute_l >= 5)) //如果超过15分钟，则弹框并关闭定时器
+        if ((minute_h >= 1) && (minute_l >= 5) && (second_l > 0)) //如果超过15分钟，则弹框并关闭定时器
         {
             pTimeoutFlag = 1;
             emit StopTimeSignal(); //关闭定时器
+            return;
         }
+        ui->label_time->setText(display_time);
+        ui->label_time->setStyleSheet("color:red;");
     }
 }
 
