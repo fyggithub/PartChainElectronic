@@ -474,3 +474,15 @@ str : {"hostIp":"{\"code\":\"0000\",\"message\":\"\",\"data\":[{\"id\":\"6865133
 type : GetRecordDate
 key : cancel
 str : cancel
+**********
+type : GetWebDate
+key : cancel
+str : 
+**********
+type : GetWebDate
+key : cancel
+str : 
+**********
+type : GetWebDate
+key : cancel
+str : 

@@ -25,6 +25,7 @@
 #include <QTextCodec>
 #include <QWebEngineHttpRequest>
 #include "weburlrequestinterceptor.h"
+#include "Common/logrecord.h"
 
 web_forensics::web_forensics(QWidget *parent) :
     QMainWindow(parent)
@@ -96,6 +97,8 @@ void web_forensics::OpenWebForensics(void)
         qDebug() << "is not valid.";
         QMessageBox::information(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("输入的网址无效！"),\
                                                        QString::fromLocal8Bit("确定"), 0);
+        LogRecord wLog;
+        wLog.LogTrack("Warning:the url is no valid!");
     }
 }
 
@@ -129,13 +132,7 @@ void web_forensics::LoadWebOver(bool tmp)
     qDebug()<<"bool:"<<tmp;
     if(tmp == true)
     {
-        //QTimer::singleShot(1000, this, SLOT(FullScreenShoot()));
-        QString filePath = pLog->FileDirPath(WebRecord);
-        QString getTime = QDateTime::currentDateTime().toString("yyyy-MM-dd-hh-mm-ss-zzz");
-        QString filePathName = "web-" + getTime + ".png";
-        QString fileFullPathName = filePath + filePathName;
-        pLog->isDirExist(filePath);
-        m_webView->grab().save(fileFullPathName, "PNG");
+        QTimer::singleShot(1000, this, SLOT(FullScreenShoot()));
     }
 }
 
