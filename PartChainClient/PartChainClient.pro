@@ -94,7 +94,7 @@ INCLUDEPATH += D:\softwarePath\OpenCvPath\opencv\build_msvc\install\include \
 # LIBS += D:\sotfwarePath\OpenCvPath\opencv\build_msvc\install\x86\vc15\lib\opencv_img_hash453.lib \
 #         D:\sotfwarePath\OpenCvPath\opencv\build_msvc\install\x86\vc15\lib\opencv_world453.lib
 INCLUDEPATH += $$PWD/include
-LIBS += -L$$PWD/lib -lQt5Quazip1
+LIBS += -L$$PWD/lib -lquazip
 
 LIBS += user32.lib
 

@@ -19,7 +19,7 @@ CXXFLAGS      = -nologo -Zc:wchar_t -FS -Zc:rvalueCast -Zc:inline -Zc:strictStri
 INCPATH       = -I..\PartChainClient -I. -ID:\softwarePath\OpenCvPath\opencv\build_msvc\install\include -ID:\softwarePath\OpenCvPath\opencv\build_msvc\install\include\opencv2 -ID:\sotfwarePath\OpenCvPath\opencv\build\include -I..\PartChainClient\include -ID:\sotfwarePath\OpenCvPath\opencv\build_msvc\install\x86\vc15 -ID:\sotfwarePath\OpenCvPath\opencv\build_msvc\install\x86\vc15 -ID:\sotfwarePath\QT\5.12.9\msvc2017\include -ID:\sotfwarePath\QT\5.12.9\msvc2017\include\QtMultimediaWidgets -ID:\sotfwarePath\QT\5.12.9\msvc2017\include\QtMultimedia -ID:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWebEngineWidgets -ID:\sotfwarePath\QT\5.12.9\msvc2017\include\QtPrintSupport -ID:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets -ID:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWebEngineCore -ID:\sotfwarePath\QT\5.12.9\msvc2017\include\QtQuick -ID:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui -ID:\sotfwarePath\QT\5.12.9\msvc2017\include\QtANGLE -ID:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWebChannel -ID:\sotfwarePath\QT\5.12.9\msvc2017\include\QtQml -ID:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork -ID:\sotfwarePath\QT\5.12.9\msvc2017\include\QtScript -ID:\sotfwarePath\QT\5.12.9\msvc2017\include\QtPositioning -ID:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore -Irelease -IUI -I/include -ID:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\win32-msvc 
 LINKER        = link
 LFLAGS        = /NOLOGO /DYNAMICBASE /NXCOMPAT /INCREMENTAL:NO /SUBSYSTEM:WINDOWS "/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'"
-LIBS          = /LIBPATH:F:\work\code\ElectronicDepository\Branch\PartChainElectronic\PartChainClient\lib F:\work\code\ElectronicDepository\Branch\PartChainElectronic\PartChainClient\lib\Qt5Quazip1.lib user32.lib /LIBPATH:D:\sotfwarePath\OpenCvPath\opencv\build_msvc\install\x86\vc15\lib D:\sotfwarePath\OpenCvPath\opencv\build_msvc\install\x86\vc15\lib\opencv_img_hash453.lib D:\sotfwarePath\OpenCvPath\opencv\build_msvc\install\x86\vc15\lib\opencv_world453.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5MultimediaWidgets.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Multimedia.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5WebEngineWidgets.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5PrintSupport.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Widgets.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5WebEngineCore.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Quick.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Gui.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5WebChannel.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Qml.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Network.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Script.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Positioning.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Core.lib  D:\sotfwarePath\QT\5.12.9\msvc2017\lib\qtmain.lib /LIBPATH:C:\opensslx86\lib /LIBPATH:C:\Utils\my_sql\mysql-5.6.11-win32\lib /LIBPATH:C:\Utils\postgresqlx86\pgsql\lib shell32.lib 
+LIBS          = /LIBPATH:F:\work\code\ElectronicDepository\Branch\PartChainElectronic\PartChainClient\lib F:\work\code\ElectronicDepository\Branch\PartChainElectronic\PartChainClient\lib\quazip.lib user32.lib /LIBPATH:D:\sotfwarePath\OpenCvPath\opencv\build_msvc\install\x86\vc15\lib D:\sotfwarePath\OpenCvPath\opencv\build_msvc\install\x86\vc15\lib\opencv_img_hash453.lib D:\sotfwarePath\OpenCvPath\opencv\build_msvc\install\x86\vc15\lib\opencv_world453.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5MultimediaWidgets.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Multimedia.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5WebEngineWidgets.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5PrintSupport.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Widgets.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5WebEngineCore.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Quick.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Gui.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5WebChannel.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Qml.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Network.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Script.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Positioning.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Core.lib  D:\sotfwarePath\QT\5.12.9\msvc2017\lib\qtmain.lib /LIBPATH:C:\opensslx86\lib /LIBPATH:C:\Utils\my_sql\mysql-5.6.11-win32\lib /LIBPATH:C:\Utils\postgresqlx86\pgsql\lib shell32.lib 
 QMAKE         = D:\sotfwarePath\QT\5.12.9\msvc2017\bin\qmake.exe
 IDC           = idc
 IDL           = midl
@@ -2163,6 +2163,7 @@ release\moc_web_forensics.cpp: ..\PartChainClient\WebForensics\web_forensics.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWebEngineCore\QWebEngineUrlRequestInterceptor \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWebEngineCore\qwebengineurlrequestinterceptor.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWebEngineCore\qwebengineurlrequestinfo.h \
+		..\PartChainClient\WebForensics\weburlrequestinterceptor.h \
 		release\moc_predefs.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\bin\moc.exe
 	D:\sotfwarePath\QT\5.12.9\msvc2017\bin\moc.exe $(DEFINES) --compiler-flavor=msvc --include F:/work/code/ElectronicDepository/Branch/PartChainElectronic/build-PartChainClient-Desktop_Qt_5_12_9_MSVC2017_32bit-Release/release/moc_predefs.h -ID:/sotfwarePath/QT/5.12.9/msvc2017/mkspecs/win32-msvc -IF:/work/code/ElectronicDepository/Branch/PartChainElectronic/PartChainClient -ID:/softwarePath/OpenCvPath/opencv/build_msvc/install/include -ID:/softwarePath/OpenCvPath/opencv/build_msvc/install/include/opencv2 -ID:/sotfwarePath/OpenCvPath/opencv/build/include -IF:/work/code/ElectronicDepository/Branch/PartChainElectronic/PartChainClient/include -ID:/sotfwarePath/OpenCvPath/opencv/build_msvc/install/x86/vc15 -ID:/sotfwarePath/OpenCvPath/opencv/build_msvc/install/x86/vc15 -ID:/sotfwarePath/QT/5.12.9/msvc2017/include -ID:/sotfwarePath/QT/5.12.9/msvc2017/include/QtMultimediaWidgets -ID:/sotfwarePath/QT/5.12.9/msvc2017/include/QtMultimedia -ID:/sotfwarePath/QT/5.12.9/msvc2017/include/QtWebEngineWidgets -ID:/sotfwarePath/QT/5.12.9/msvc2017/include/QtPrintSupport -ID:/sotfwarePath/QT/5.12.9/msvc2017/include/QtWidgets -ID:/sotfwarePath/QT/5.12.9/msvc2017/include/QtWebEngineCore -ID:/sotfwarePath/QT/5.12.9/msvc2017/include/QtQuick -ID:/sotfwarePath/QT/5.12.9/msvc2017/include/QtGui -ID:/sotfwarePath/QT/5.12.9/msvc2017/include/QtANGLE -ID:/sotfwarePath/QT/5.12.9/msvc2017/include/QtWebChannel -ID:/sotfwarePath/QT/5.12.9/msvc2017/include/QtQml -ID:/sotfwarePath/QT/5.12.9/msvc2017/include/QtNetwork -ID:/sotfwarePath/QT/5.12.9/msvc2017/include/QtScript -ID:/sotfwarePath/QT/5.12.9/msvc2017/include/QtPositioning -ID:/sotfwarePath/QT/5.12.9/msvc2017/include/QtCore -I. -ID:\sotfwarePath\VisualStudio2017\VC\Tools\MSVC\14.16.27023\ATLMFC\include -ID:\sotfwarePath\VisualStudio2017\VC\Tools\MSVC\14.16.27023\include -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt" ..\PartChainClient\WebForensics\web_forensics.h -o release\moc_web_forensics.cpp
@@ -2789,6 +2790,7 @@ release\moc_mainwindow.cpp: ..\PartChainClient\mainwindow.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWebEngineCore\QWebEngineUrlRequestInterceptor \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWebEngineCore\qwebengineurlrequestinterceptor.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWebEngineCore\qwebengineurlrequestinfo.h \
+		..\PartChainClient\WebForensics\weburlrequestinterceptor.h \
 		..\PartChainClient\ScreenShotForensics\screenshot.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QMessageBox \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qmessagebox.h \
@@ -5624,6 +5626,7 @@ release\web_forensics.obj: ..\PartChainClient\WebForensics\web_forensics.cpp ..\
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWebEngineCore\QWebEngineUrlRequestInterceptor \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWebEngineCore\qwebengineurlrequestinterceptor.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWebEngineCore\qwebengineurlrequestinfo.h \
+		..\PartChainClient\WebForensics\weburlrequestinterceptor.h \
 		UI\ui_web_forensics.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\QIcon \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QApplication \
@@ -5684,7 +5687,7 @@ release\web_forensics.obj: ..\PartChainClient\WebForensics\web_forensics.cpp ..\
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QTextCodec \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qtextcodec.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWebEngineCore\QWebEngineHttpRequest \
-		..\PartChainClient\WebForensics\weburlrequestinterceptor.h
+		..\PartChainClient\Common\logrecord.h
 
 release\weburlrequestinterceptor.obj: ..\PartChainClient\WebForensics\weburlrequestinterceptor.cpp ..\PartChainClient\WebForensics\weburlrequestinterceptor.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QDebug \
@@ -6127,6 +6130,7 @@ release\main.obj: ..\PartChainClient\main.cpp ..\PartChainClient\mainwindow.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWebEngineCore\QWebEngineUrlRequestInterceptor \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWebEngineCore\qwebengineurlrequestinterceptor.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWebEngineCore\qwebengineurlrequestinfo.h \
+		..\PartChainClient\WebForensics\weburlrequestinterceptor.h \
 		..\PartChainClient\ScreenShotForensics\screenshot.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QMessageBox \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qmessagebox.h \
@@ -6414,6 +6418,7 @@ release\mainwindow.obj: ..\PartChainClient\mainwindow.cpp ..\PartChainClient\mai
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWebEngineCore\QWebEngineUrlRequestInterceptor \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWebEngineCore\qwebengineurlrequestinterceptor.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWebEngineCore\qwebengineurlrequestinfo.h \
+		..\PartChainClient\WebForensics\weburlrequestinterceptor.h \
 		..\PartChainClient\ScreenShotForensics\screenshot.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QMessageBox \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qmessagebox.h \

@@ -77,6 +77,7 @@ private:
     QString getStrMsg;
     QWebEngineHttpRequest httpR;
     WebUrlRequestInterceptor *wuri;
+    int m_loadFinishFlag;
 };
 
 #endif // WEB_FORENSICS_H

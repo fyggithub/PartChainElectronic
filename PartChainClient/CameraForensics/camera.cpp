@@ -206,7 +206,6 @@ void Camera::StopRecordVideo(void)
     }
     getNameMp4 = nameMp4;
     StartMplayerCompress(strWav, strAvi, strMp4);
-    //StartMplayerCompress("", strAvi, strMp4);
     DialogProgressDeal();
 
     ui->BtnStart->setEnabled(false);
@@ -251,8 +250,8 @@ void Camera::MplayerCompressFinished(int exitCode, QProcess::ExitStatus exitStat
     QString strWav = filePath + pAudioName;
     QString strAvi = filePath + FileVideoName;
     QString strRaw = filePath + "record.raw";
-    //pcom->RemoveOverageFile(strWav);
-    //pcom->RemoveOverageFile(strAvi);
+    pcom->RemoveOverageFile(strWav);
+    pcom->RemoveOverageFile(strAvi);
     pcom->RemoveOverageFile(strRaw);
 }
 

@@ -36,6 +36,7 @@ web_forensics::web_forensics(QWidget *parent) :
     timecount = 0;
     pCloseFlag = 0;
     pFilePathName = "";
+    m_loadFinishFlag = 0;
     connect(this, SIGNAL(SendMsgClose()),this, SLOT(RecvMsgClose()));
 }
 
@@ -132,7 +133,18 @@ void web_forensics::LoadWebOver(bool tmp)
     qDebug()<<"bool:"<<tmp;
     if(tmp == true)
     {
-        QTimer::singleShot(1000, this, SLOT(FullScreenShoot()));
+        //避免多次加载进入
+        if(m_loadFinishFlag == 0){
+            m_loadFinishFlag = 1;
+            QTimer::singleShot(1000, this, SLOT(FullScreenShoot()));
+        }
+    }
+    else
+    {
+        QMessageBox::information(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("网页加载失败，请重新取证！"),\
+                                           QString::fromLocal8Bit("确定"), 0);
+        pCloseFlag = 2;
+        this->close();//关闭窗口界面
     }
 }
 
@@ -219,6 +231,7 @@ void web_forensics::closeEvent(QCloseEvent *event)
         default:break;
     }
     pCloseFlag = 0;
+    m_loadFinishFlag = 0;
     event->accept();
     emit SendMsgCloseWnd(WebRecord);
 }

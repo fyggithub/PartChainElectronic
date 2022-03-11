@@ -278,8 +278,8 @@ void RecordVideo::MplayerCompressFinished(int exitCode, QProcess::ExitStatus exi
     QString strWav = filePath + pAudioName;
     QString strAvi = filePath + pRecordVideoName;
     QString strRaw = filePath + "record.raw";
-    //pcom->RemoveOverageFile(strWav);
-    //pcom->RemoveOverageFile(strAvi);
+    pcom->RemoveOverageFile(strWav);
+    pcom->RemoveOverageFile(strAvi);
     pcom->RemoveOverageFile(strRaw);
 }
 
