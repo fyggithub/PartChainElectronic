@@ -214,6 +214,46 @@ QString SM4Decrypt::DecodeSM4_Base64(const QString& key,const QString& strInput)
     return str;
 }
 
+QString SM4Decrypt::DecodeSM4_Base64Test(const QString& key,const char* strInput,int len)
+{
+    qDebug()<<"DecodeSM4_Base641111111111111";
+    long long nCount = 0;
+    LogRecord wLog;
+    wLog.LogTrack(pDownLoadFileName);
+    qDebug()<<"len:"<<len;
+    wLog.LogTrack("start memset.");
+    memset(BuffBase64, 0, MAXBUFFSIZE);
+    wLog.LogTrack("memset success.");
+
+    qDebug()<<"baaaaaaaaaaaaaaaaaaaa1";
+    Base64_Decode_New(strInput, len, BuffBase64, nCount);
+    wLog.LogTrack("base64 decode finish.");
+    qDebug()<<"nCount:"<<nCount;
+
+    qDebug()<<"DecodeSM4_Base642222222222222222";
+    FILE *file_in = NULL;
+    file_in = fopen(TEMPFILENAME,"wb+");
+    fwrite(BuffBase64, 1, nCount, file_in);
+    fclose(file_in);
+    file_in = NULL;
+
+    qDebug()<<"DecodeSM4_Base643333333333333333333333";
+    const char *pStrkey = key.toLocal8Bit().constData();
+    unsigned char *pkey = (unsigned char *)pStrkey;
+    sm4_ctx ctx;
+    sm4_set_key(pkey, &ctx);
+    sm4_decrypt_file_test(&ctx);
+
+    QString tmpFile = QString(QLatin1String(TEMPFILENAME));
+    Common *pCommon = NULL;
+    pCommon->RemoveOverageFile(tmpFile);
+
+    pList << pDownLoadFileName;
+    wLog.LogTrack("decry is over.");
+    qDebug()<<"ready end.";
+    return "";
+}
+
 void SM4Decrypt::Encrypt_String(QByteArray& source_array, QByteArray& result_array, unsigned char key[16] )
 {
     /*result_array.resize( source_array.length( ) );

@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
     QByteArrayData data[22];
-    char stringdata0[308];
+    char stringdata0[311];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -47,12 +47,12 @@ QT_MOC_LITERAL(12, 159, 20), // "update_network_state"
 QT_MOC_LITERAL(13, 180, 5), // "state"
 QT_MOC_LITERAL(14, 186, 13), // "replyFinished"
 QT_MOC_LITERAL(15, 200, 14), // "QNetworkReply*"
-QT_MOC_LITERAL(16, 215, 9), // "loadError"
-QT_MOC_LITERAL(17, 225, 27), // "QNetworkReply::NetworkError"
-QT_MOC_LITERAL(18, 253, 15), // "RecvMsgCloseWnd"
-QT_MOC_LITERAL(19, 269, 10), // "RecordType"
-QT_MOC_LITERAL(20, 280, 14), // "DownLoadFinish"
-QT_MOC_LITERAL(21, 295, 12) // "MsgInspector"
+QT_MOC_LITERAL(16, 215, 17), // "DownReplyFinished"
+QT_MOC_LITERAL(17, 233, 9), // "loadError"
+QT_MOC_LITERAL(18, 243, 27), // "QNetworkReply::NetworkError"
+QT_MOC_LITERAL(19, 271, 15), // "RecvMsgCloseWnd"
+QT_MOC_LITERAL(20, 287, 10), // "RecordType"
+QT_MOC_LITERAL(21, 298, 12) // "MsgInspector"
 
     },
     "MainWindow\0SigSendMessageToJS\0\0strMain\0"
@@ -60,9 +60,9 @@ QT_MOC_LITERAL(21, 295, 12) // "MsgInspector"
     "OpenWebRecordVideo\0OpenWebCamera\0"
     "DialogProgressTime\0OnReceiveMessageFromJS\0"
     "update_network_state\0state\0replyFinished\0"
-    "QNetworkReply*\0loadError\0"
-    "QNetworkReply::NetworkError\0RecvMsgCloseWnd\0"
-    "RecordType\0DownLoadFinish\0MsgInspector"
+    "QNetworkReply*\0DownReplyFinished\0"
+    "loadError\0QNetworkReply::NetworkError\0"
+    "RecvMsgCloseWnd\0RecordType\0MsgInspector"
 };
 #undef QT_MOC_LITERAL
 
@@ -92,9 +92,9 @@ static const uint qt_meta_data_MainWindow[] = {
       12,    1,   98,    2, 0x0a /* Public */,
       14,    1,  101,    2, 0x08 /* Private */,
       16,    1,  104,    2, 0x08 /* Private */,
-      18,    1,  107,    2, 0x08 /* Private */,
-      20,    0,  110,    2, 0x08 /* Private */,
-      21,    0,  111,    2, 0x08 /* Private */,
+      17,    1,  107,    2, 0x08 /* Private */,
+      19,    1,  110,    2, 0x08 /* Private */,
+      21,    0,  113,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString,    3,    4,    5,
@@ -108,9 +108,9 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString,    3,    4,    5,
     QMetaType::Void, QMetaType::Int,   13,
     QMetaType::Void, 0x80000000 | 15,    2,
-    QMetaType::Void, 0x80000000 | 17,    2,
-    QMetaType::Void, 0x80000000 | 19,    4,
-    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 15,    2,
+    QMetaType::Void, 0x80000000 | 18,    2,
+    QMetaType::Void, 0x80000000 | 20,    4,
     QMetaType::Void,
 
        0        // eod
@@ -131,9 +131,9 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 6: _t->OnReceiveMessageFromJS((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3]))); break;
         case 7: _t->update_network_state((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 8: _t->replyFinished((*reinterpret_cast< QNetworkReply*(*)>(_a[1]))); break;
-        case 9: _t->loadError((*reinterpret_cast< QNetworkReply::NetworkError(*)>(_a[1]))); break;
-        case 10: _t->RecvMsgCloseWnd((*reinterpret_cast< RecordType(*)>(_a[1]))); break;
-        case 11: _t->DownLoadFinish(); break;
+        case 9: _t->DownReplyFinished((*reinterpret_cast< QNetworkReply*(*)>(_a[1]))); break;
+        case 10: _t->loadError((*reinterpret_cast< QNetworkReply::NetworkError(*)>(_a[1]))); break;
+        case 11: _t->RecvMsgCloseWnd((*reinterpret_cast< RecordType(*)>(_a[1]))); break;
         case 12: _t->MsgInspector(); break;
         default: ;
         }
@@ -148,6 +148,13 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
             }
             break;
         case 9:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QNetworkReply* >(); break;
+            }
+            break;
+        case 10:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:

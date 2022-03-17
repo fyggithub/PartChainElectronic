@@ -54,6 +54,9 @@ SOURCES       = ..\PartChainClient\CameraForensics\audio.cpp \
 		..\PartChainClient\Common\logrecord.cpp \
 		..\PartChainClient\Common\networkclean.cpp \
 		..\PartChainClient\Common\widget.cpp \
+		..\PartChainClient\Json\lib_json\json_reader.cpp \
+		..\PartChainClient\Json\lib_json\json_value.cpp \
+		..\PartChainClient\Json\lib_json\json_writer.cpp \
 		..\PartChainClient\RecordForensics\avilib.cpp \
 		..\PartChainClient\RecordForensics\head.cpp \
 		..\PartChainClient\RecordForensics\mywin.cpp \
@@ -93,6 +96,9 @@ OBJECTS       = release\audio.obj \
 		release\logrecord.obj \
 		release\networkclean.obj \
 		release\widget.obj \
+		release\json_reader.obj \
+		release\json_value.obj \
+		release\json_writer.obj \
 		release\avilib.obj \
 		release\head.obj \
 		release\mywin.obj \
@@ -134,6 +140,14 @@ DIST          =  ..\PartChainClient\CameraForensics\audio.h \
 		..\PartChainClient\Common\logrecord.h \
 		..\PartChainClient\Common\networkclean.h \
 		..\PartChainClient\Common\widget.h \
+		..\PartChainClient\Json\json\autolink.h \
+		..\PartChainClient\Json\json\config.h \
+		..\PartChainClient\Json\json\features.h \
+		..\PartChainClient\Json\json\forwards.h \
+		..\PartChainClient\Json\json\json.h \
+		..\PartChainClient\Json\json\reader.h \
+		..\PartChainClient\Json\json\value.h \
+		..\PartChainClient\Json\json\writer.h \
 		..\PartChainClient\RecordForensics\avilib.h \
 		..\PartChainClient\RecordForensics\head.h \
 		..\PartChainClient\RecordForensics\mywin.h \
@@ -172,6 +186,9 @@ DIST          =  ..\PartChainClient\CameraForensics\audio.h \
 		..\PartChainClient\Common\logrecord.cpp \
 		..\PartChainClient\Common\networkclean.cpp \
 		..\PartChainClient\Common\widget.cpp \
+		..\PartChainClient\Json\lib_json\json_reader.cpp \
+		..\PartChainClient\Json\lib_json\json_value.cpp \
+		..\PartChainClient\Json\lib_json\json_writer.cpp \
 		..\PartChainClient\RecordForensics\avilib.cpp \
 		..\PartChainClient\RecordForensics\head.cpp \
 		..\PartChainClient\RecordForensics\mywin.cpp \
@@ -272,6 +289,26 @@ DESTDIR_TARGET = release\PartChainClient.exe
 <<
 
 {..\PartChainClient\SM4}.c{release\}.obj::
+	$(CC) -c $(CFLAGS) $(INCPATH) -Forelease\ @<<
+	$<
+<<
+
+{..\PartChainClient\Json\lib_json}.cpp{release\}.obj::
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Forelease\ @<<
+	$<
+<<
+
+{..\PartChainClient\Json\lib_json}.cc{release\}.obj::
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Forelease\ @<<
+	$<
+<<
+
+{..\PartChainClient\Json\lib_json}.cxx{release\}.obj::
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Forelease\ @<<
+	$<
+<<
+
+{..\PartChainClient\Json\lib_json}.c{release\}.obj::
 	$(CC) -c $(CFLAGS) $(INCPATH) -Forelease\ @<<
 	$<
 <<
@@ -403,7 +440,8 @@ all: Makefile.Release  release\PartChainClient.exe
 
 release\PartChainClient.exe: D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5MultimediaWidgets.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Multimedia.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5WebEngineWidgets.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5PrintSupport.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Widgets.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5WebEngineCore.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Quick.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Gui.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5WebChannel.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Qml.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Network.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Script.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Positioning.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Core.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\qtmain.lib UI\ui_camera.h UI\ui_widget.h UI\ui_recordvideo.h UI\ui_previewwindow.h UI\ui_screenshot.h UI\ui_zoompreview.h UI\ui_web_forensics.h UI\ui_inspector.h UI\ui_mainwindow.h $(OBJECTS) 
 	$(LINKER) $(LFLAGS) /MANIFEST:embed /OUT:$(DESTDIR_TARGET) @<<
-release\audio.obj release\camera.obj release\common.obj release\jscommunicate.obj release\logrecord.obj release\networkclean.obj release\widget.obj release\avilib.obj release\head.obj release\mywin.obj release\recordvideo.obj release\En_Decrypt.obj release\base64.obj release\sm4.obj release\previewwindow.obj release\screenshot.obj release\zoompreview.obj release\web_forensics.obj release\weburlrequestinterceptor.obj release\inspector.obj release\main.obj release\mainwindow.obj release\qrc_Icon.obj release\moc_audio.obj release\moc_camera.obj release\moc_jscommunicate.obj release\moc_networkclean.obj release\moc_widget.obj release\moc_mywin.obj release\moc_recordvideo.obj release\moc_previewwindow.obj release\moc_screenshot.obj release\moc_zoompreview.obj release\moc_web_forensics.obj release\moc_weburlrequestinterceptor.obj release\moc_quagzipfile.obj release\moc_quaziodevice.obj release\moc_quazipfile.obj release\moc_inspector.obj release\moc_mainwindow.obj
+release\audio.obj release\camera.obj release\common.obj release\jscommunicate.obj release\logrecord.obj release\networkclean.obj release\widget.obj release\json_reader.obj release\json_value.obj release\json_writer.obj release\avilib.obj release\head.obj release\mywin.obj release\recordvideo.obj release\En_Decrypt.obj release\base64.obj release\sm4.obj release\previewwindow.obj release\screenshot.obj release\zoompreview.obj release\web_forensics.obj release\weburlrequestinterceptor.obj release\inspector.obj release\main.obj release\mainwindow.obj release\qrc_Icon.obj release\moc_audio.obj release\moc_camera.obj release\moc_jscommunicate.obj release\moc_networkclean.obj release\moc_widget.obj release\moc_mywin.obj release\moc_recordvideo.obj release\moc_previewwindow.obj release\moc_screenshot.obj release\moc_zoompreview.obj release\moc_web_forensics.obj release\moc_weburlrequestinterceptor.obj release\moc_quagzipfile.obj release\moc_quaziodevice.obj release\moc_quazipfile.obj
+release\moc_inspector.obj release\moc_mainwindow.obj
 $(LIBS)
 <<
 
@@ -413,10 +451,10 @@ qmake: FORCE
 qmake_all: FORCE
 
 dist:
-	$(ZIP) PartChainClient.zip $(SOURCES) $(DIST) ..\PartChainClient\PartChainClient.pro D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\spec_pre.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\common\angle.conf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\win32\windows_vulkan_sdk.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\common\windows-vulkan.conf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\common\msvc-desktop.conf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\qconfig.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3danimation.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3danimation_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dcore.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dcore_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dextras.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dextras_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dinput.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dinput_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dlogic.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dlogic_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dquick.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dquick_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dquickanimation.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dquickanimation_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dquickextras.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dquickextras_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dquickinput.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dquickinput_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dquickrender.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dquickrender_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dquickscene2d.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dquickscene2d_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3drender.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3drender_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_accessibility_support_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_axbase.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_axbase_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_axcontainer.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_axcontainer_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_axserver.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_axserver_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_bluetooth.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_bluetooth_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_bootstrap_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_charts.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_charts_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_concurrent.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_concurrent_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_core.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_core_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_datavisualization.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_datavisualization_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_dbus.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_dbus_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_designer.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_designer_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_designercomponents_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_devicediscovery_support_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_edid_support_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_egl_support_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_eventdispatcher_support_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_fb_support_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_fontdatabase_support_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_gamepad.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_gamepad_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_gui.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_gui_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_help.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_help_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_location.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_location_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_multimedia.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_multimedia_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_multimediawidgets.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_multimediawidgets_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_network.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_network_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_networkauth.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_networkauth_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_nfc.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_nfc_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_opengl.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_opengl_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_openglextensions.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_openglextensions_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_packetprotocol_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_platformcompositor_support_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_positioning.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_positioning_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_positioningquick.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_positioningquick_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_printsupport.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_printsupport_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_purchasing.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_purchasing_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_qml.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_qml_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_qmldebug_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_qmldevtools_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_qmltest.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_qmltest_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_quick.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_quick_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_quickcontrols2.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_quickcontrols2_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_quickparticles_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_quickshapes_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_quicktemplates2.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_quicktemplates2_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_quickwidgets.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_quickwidgets_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_remoteobjects.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_remoteobjects_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_repparser.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_repparser_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_script.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_script_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_scripttools.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_scripttools_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_scxml.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_scxml_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_sensors.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_sensors_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_serialbus.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_serialbus_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_serialport.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_serialport_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_sql.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_sql_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_svg.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_svg_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_testlib.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_testlib_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_texttospeech.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_texttospeech_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_theme_support_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_uiplugin.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_uitools.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_uitools_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_virtualkeyboard.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_virtualkeyboard_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_vulkan_support_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_webchannel.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_webchannel_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_webengine.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_webengine_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_webenginecore.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_webenginecore_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_webenginecoreheaders_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_webenginewidgets.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_webenginewidgets_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_websockets.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_websockets_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_webview.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_webview_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_widgets.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_widgets_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_windowsuiautomation_support_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_winextras.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_winextras_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_xml.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_xml_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_xmlpatterns.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_xmlpatterns_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_zlib_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\qt_functions.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\qt_config.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\win32-msvc\qmake.conf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\spec_post.prf .qmake.stash D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\exclusive_builds.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\common\msvc-version.conf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\toolchain.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\default_pre.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\win32\default_pre.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\resolve_config.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\exclusive_builds_post.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\default_post.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\build_pass.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\resources.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\qtquickcompiler.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\precompile_header.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\warn_on.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\qt.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\moc.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\win32\opengl.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\uic.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\qmake_use.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\file_copies.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\win32\windows.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\testcase_targets.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\exceptions.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\yacc.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\lex.prf ..\PartChainClient\PartChainClient.pro ..\PartChainClient\Icon.qrc D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5MultimediaWidgets.prl D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Multimedia.prl D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5WebEngineWidgets.prl D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5PrintSupport.prl D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Widgets.prl D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5WebEngineCore.prl D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Quick.prl D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Gui.prl D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5WebChannel.prl D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Qml.prl D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Network.prl D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Script.prl D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Positioning.prl D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Core.prl D:\sotfwarePath\QT\5.12.9\msvc2017\lib\qtmain.prl  ..\PartChainClient\Icon.qrc    D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\data\dummy.cpp ..\PartChainClient\CameraForensics\audio.h ..\PartChainClient\CameraForensics\camera.h ..\PartChainClient\Common\common.h ..\PartChainClient\Common\jscommunicate.h ..\PartChainClient\Common\logrecord.h ..\PartChainClient\Common\networkclean.h ..\PartChainClient\Common\widget.h ..\PartChainClient\RecordForensics\avilib.h ..\PartChainClient\RecordForensics\head.h ..\PartChainClient\RecordForensics\mywin.h ..\PartChainClient\RecordForensics\recordvideo.h ..\PartChainClient\SM4\En_Decrypt.h ..\PartChainClient\SM4\base64.h ..\PartChainClient\SM4\sm4.h ..\PartChainClient\ScreenShotForensics\previewwindow.h ..\PartChainClient\ScreenShotForensics\screenshot.h ..\PartChainClient\ScreenShotForensics\zoompreview.h ..\PartChainClient\WebForensics\web_forensics.h ..\PartChainClient\WebForensics\weburlrequestinterceptor.h ..\PartChainClient\include\JlCompress.h ..\PartChainClient\include\ioapi.h ..\PartChainClient\include\minizip_crypt.h ..\PartChainClient\include\quaadler32.h ..\PartChainClient\include\quachecksum32.h ..\PartChainClient\include\quacrc32.h ..\PartChainClient\include\quagzipfile.h ..\PartChainClient\include\quaziodevice.h ..\PartChainClient\include\quazip.h ..\PartChainClient\include\quazip_global.h ..\PartChainClient\include\quazipdir.h ..\PartChainClient\include\quazipfile.h ..\PartChainClient\include\quazipfileinfo.h ..\PartChainClient\include\quazipnewinfo.h ..\PartChainClient\include\unzip.h ..\PartChainClient\include\zconf.h ..\PartChainClient\include\zip.h ..\PartChainClient\include\zlib.h ..\PartChainClient\inspector.h ..\PartChainClient\mainwindow.h  ..\PartChainClient\CameraForensics\audio.cpp ..\PartChainClient\CameraForensics\camera.cpp ..\PartChainClient\Common\common.cpp ..\PartChainClient\Common\jscommunicate.cpp ..\PartChainClient\Common\logrecord.cpp ..\PartChainClient\Common\networkclean.cpp ..\PartChainClient\Common\widget.cpp ..\PartChainClient\RecordForensics\avilib.cpp ..\PartChainClient\RecordForensics\head.cpp ..\PartChainClient\RecordForensics\mywin.cpp ..\PartChainClient\RecordForensics\recordvideo.cpp ..\PartChainClient\SM4\En_Decrypt.cpp ..\PartChainClient\SM4\base64.cpp ..\PartChainClient\SM4\sm4.cpp ..\PartChainClient\ScreenShotForensics\previewwindow.cpp ..\PartChainClient\ScreenShotForensics\screenshot.cpp ..\PartChainClient\ScreenShotForensics\zoompreview.cpp ..\PartChainClient\WebForensics\web_forensics.cpp ..\PartChainClient\WebForensics\weburlrequestinterceptor.cpp ..\PartChainClient\inspector.cpp ..\PartChainClient\main.cpp ..\PartChainClient\mainwindow.cpp ..\PartChainClient\CameraForensics\camera.ui ..\PartChainClient\Common\widget.ui ..\PartChainClient\RecordForensics\recordvideo.ui ..\PartChainClient\ScreenShotForensics\previewwindow.ui ..\PartChainClient\ScreenShotForensics\screenshot.ui ..\PartChainClient\ScreenShotForensics\zoompreview.ui ..\PartChainClient\WebForensics\web_forensics.ui ..\PartChainClient\inspector.ui ..\PartChainClient\mainwindow.ui    
+	$(ZIP) PartChainClient.zip $(SOURCES) $(DIST) ..\PartChainClient\PartChainClient.pro D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\spec_pre.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\common\angle.conf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\win32\windows_vulkan_sdk.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\common\windows-vulkan.conf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\common\msvc-desktop.conf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\qconfig.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3danimation.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3danimation_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dcore.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dcore_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dextras.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dextras_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dinput.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dinput_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dlogic.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dlogic_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dquick.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dquick_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dquickanimation.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dquickanimation_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dquickextras.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dquickextras_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dquickinput.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dquickinput_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dquickrender.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dquickrender_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dquickscene2d.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3dquickscene2d_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3drender.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_3drender_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_accessibility_support_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_axbase.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_axbase_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_axcontainer.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_axcontainer_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_axserver.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_axserver_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_bluetooth.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_bluetooth_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_bootstrap_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_charts.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_charts_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_concurrent.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_concurrent_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_core.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_core_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_datavisualization.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_datavisualization_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_dbus.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_dbus_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_designer.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_designer_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_designercomponents_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_devicediscovery_support_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_edid_support_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_egl_support_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_eventdispatcher_support_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_fb_support_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_fontdatabase_support_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_gamepad.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_gamepad_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_gui.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_gui_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_help.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_help_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_location.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_location_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_multimedia.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_multimedia_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_multimediawidgets.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_multimediawidgets_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_network.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_network_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_networkauth.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_networkauth_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_nfc.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_nfc_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_opengl.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_opengl_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_openglextensions.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_openglextensions_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_packetprotocol_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_platformcompositor_support_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_positioning.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_positioning_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_positioningquick.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_positioningquick_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_printsupport.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_printsupport_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_purchasing.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_purchasing_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_qml.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_qml_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_qmldebug_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_qmldevtools_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_qmltest.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_qmltest_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_quick.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_quick_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_quickcontrols2.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_quickcontrols2_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_quickparticles_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_quickshapes_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_quicktemplates2.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_quicktemplates2_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_quickwidgets.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_quickwidgets_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_remoteobjects.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_remoteobjects_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_repparser.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_repparser_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_script.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_script_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_scripttools.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_scripttools_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_scxml.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_scxml_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_sensors.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_sensors_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_serialbus.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_serialbus_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_serialport.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_serialport_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_sql.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_sql_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_svg.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_svg_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_testlib.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_testlib_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_texttospeech.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_texttospeech_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_theme_support_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_uiplugin.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_uitools.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_uitools_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_virtualkeyboard.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_virtualkeyboard_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_vulkan_support_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_webchannel.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_webchannel_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_webengine.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_webengine_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_webenginecore.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_webenginecore_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_webenginecoreheaders_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_webenginewidgets.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_webenginewidgets_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_websockets.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_websockets_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_webview.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_webview_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_widgets.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_widgets_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_windowsuiautomation_support_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_winextras.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_winextras_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_xml.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_xml_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_xmlpatterns.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_xmlpatterns_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\modules\qt_lib_zlib_private.pri D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\qt_functions.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\qt_config.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\win32-msvc\qmake.conf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\spec_post.prf .qmake.stash D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\exclusive_builds.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\common\msvc-version.conf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\toolchain.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\default_pre.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\win32\default_pre.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\resolve_config.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\exclusive_builds_post.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\default_post.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\build_pass.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\resources.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\qtquickcompiler.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\precompile_header.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\warn_on.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\qt.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\moc.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\win32\opengl.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\uic.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\qmake_use.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\file_copies.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\win32\windows.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\testcase_targets.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\exceptions.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\yacc.prf D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\lex.prf ..\PartChainClient\PartChainClient.pro ..\PartChainClient\Icon.qrc D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5MultimediaWidgets.prl D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Multimedia.prl D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5WebEngineWidgets.prl D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5PrintSupport.prl D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Widgets.prl D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5WebEngineCore.prl D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Quick.prl D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Gui.prl D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5WebChannel.prl D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Qml.prl D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Network.prl D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Script.prl D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Positioning.prl D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Core.prl D:\sotfwarePath\QT\5.12.9\msvc2017\lib\qtmain.prl  ..\PartChainClient\Icon.qrc    D:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\features\data\dummy.cpp ..\PartChainClient\CameraForensics\audio.h ..\PartChainClient\CameraForensics\camera.h ..\PartChainClient\Common\common.h ..\PartChainClient\Common\jscommunicate.h ..\PartChainClient\Common\logrecord.h ..\PartChainClient\Common\networkclean.h ..\PartChainClient\Common\widget.h ..\PartChainClient\Json\json\autolink.h ..\PartChainClient\Json\json\config.h ..\PartChainClient\Json\json\features.h ..\PartChainClient\Json\json\forwards.h ..\PartChainClient\Json\json\json.h ..\PartChainClient\Json\json\reader.h ..\PartChainClient\Json\json\value.h ..\PartChainClient\Json\json\writer.h ..\PartChainClient\RecordForensics\avilib.h ..\PartChainClient\RecordForensics\head.h ..\PartChainClient\RecordForensics\mywin.h ..\PartChainClient\RecordForensics\recordvideo.h ..\PartChainClient\SM4\En_Decrypt.h ..\PartChainClient\SM4\base64.h ..\PartChainClient\SM4\sm4.h ..\PartChainClient\ScreenShotForensics\previewwindow.h ..\PartChainClient\ScreenShotForensics\screenshot.h ..\PartChainClient\ScreenShotForensics\zoompreview.h ..\PartChainClient\WebForensics\web_forensics.h ..\PartChainClient\WebForensics\weburlrequestinterceptor.h ..\PartChainClient\include\JlCompress.h ..\PartChainClient\include\ioapi.h ..\PartChainClient\include\minizip_crypt.h ..\PartChainClient\include\quaadler32.h ..\PartChainClient\include\quachecksum32.h ..\PartChainClient\include\quacrc32.h ..\PartChainClient\include\quagzipfile.h ..\PartChainClient\include\quaziodevice.h ..\PartChainClient\include\quazip.h ..\PartChainClient\include\quazip_global.h ..\PartChainClient\include\quazipdir.h ..\PartChainClient\include\quazipfile.h ..\PartChainClient\include\quazipfileinfo.h ..\PartChainClient\include\quazipnewinfo.h ..\PartChainClient\include\unzip.h ..\PartChainClient\include\zconf.h ..\PartChainClient\include\zip.h ..\PartChainClient\include\zlib.h ..\PartChainClient\inspector.h ..\PartChainClient\mainwindow.h  ..\PartChainClient\CameraForensics\audio.cpp ..\PartChainClient\CameraForensics\camera.cpp ..\PartChainClient\Common\common.cpp ..\PartChainClient\Common\jscommunicate.cpp ..\PartChainClient\Common\logrecord.cpp ..\PartChainClient\Common\networkclean.cpp ..\PartChainClient\Common\widget.cpp ..\PartChainClient\Json\lib_json\json_reader.cpp ..\PartChainClient\Json\lib_json\json_value.cpp ..\PartChainClient\Json\lib_json\json_writer.cpp ..\PartChainClient\RecordForensics\avilib.cpp ..\PartChainClient\RecordForensics\head.cpp ..\PartChainClient\RecordForensics\mywin.cpp ..\PartChainClient\RecordForensics\recordvideo.cpp ..\PartChainClient\SM4\En_Decrypt.cpp ..\PartChainClient\SM4\base64.cpp ..\PartChainClient\SM4\sm4.cpp ..\PartChainClient\ScreenShotForensics\previewwindow.cpp ..\PartChainClient\ScreenShotForensics\screenshot.cpp ..\PartChainClient\ScreenShotForensics\zoompreview.cpp ..\PartChainClient\WebForensics\web_forensics.cpp ..\PartChainClient\WebForensics\weburlrequestinterceptor.cpp ..\PartChainClient\inspector.cpp ..\PartChainClient\main.cpp ..\PartChainClient\mainwindow.cpp ..\PartChainClient\CameraForensics\camera.ui ..\PartChainClient\Common\widget.ui ..\PartChainClient\RecordForensics\recordvideo.ui ..\PartChainClient\ScreenShotForensics\previewwindow.ui ..\PartChainClient\ScreenShotForensics\screenshot.ui ..\PartChainClient\ScreenShotForensics\zoompreview.ui ..\PartChainClient\WebForensics\web_forensics.ui ..\PartChainClient\inspector.ui ..\PartChainClient\mainwindow.ui    
 
 clean: compiler_clean 
-	-$(DEL_FILE) release\audio.obj release\camera.obj release\common.obj release\jscommunicate.obj release\logrecord.obj release\networkclean.obj release\widget.obj release\avilib.obj release\head.obj release\mywin.obj release\recordvideo.obj release\En_Decrypt.obj release\base64.obj release\sm4.obj release\previewwindow.obj release\screenshot.obj release\zoompreview.obj release\web_forensics.obj release\weburlrequestinterceptor.obj release\inspector.obj release\main.obj release\mainwindow.obj release\qrc_Icon.obj release\moc_audio.obj release\moc_camera.obj release\moc_jscommunicate.obj release\moc_networkclean.obj release\moc_widget.obj release\moc_mywin.obj release\moc_recordvideo.obj release\moc_previewwindow.obj release\moc_screenshot.obj release\moc_zoompreview.obj release\moc_web_forensics.obj release\moc_weburlrequestinterceptor.obj release\moc_quagzipfile.obj release\moc_quaziodevice.obj release\moc_quazipfile.obj release\moc_inspector.obj release\moc_mainwindow.obj
+	-$(DEL_FILE) release\audio.obj release\camera.obj release\common.obj release\jscommunicate.obj release\logrecord.obj release\networkclean.obj release\widget.obj release\json_reader.obj release\json_value.obj release\json_writer.obj release\avilib.obj release\head.obj release\mywin.obj release\recordvideo.obj release\En_Decrypt.obj release\base64.obj release\sm4.obj release\previewwindow.obj release\screenshot.obj release\zoompreview.obj release\web_forensics.obj release\weburlrequestinterceptor.obj release\inspector.obj release\main.obj release\mainwindow.obj release\qrc_Icon.obj release\moc_audio.obj release\moc_camera.obj release\moc_jscommunicate.obj release\moc_networkclean.obj release\moc_widget.obj release\moc_mywin.obj release\moc_recordvideo.obj release\moc_previewwindow.obj release\moc_screenshot.obj release\moc_zoompreview.obj release\moc_web_forensics.obj release\moc_weburlrequestinterceptor.obj release\moc_quagzipfile.obj release\moc_quaziodevice.obj release\moc_quazipfile.obj release\moc_inspector.obj release\moc_mainwindow.obj
 
 distclean: clean 
 	-$(DEL_FILE) .qmake.stash
@@ -3303,29 +3341,6 @@ release\camera.obj: ..\PartChainClient\CameraForensics\camera.cpp ..\PartChainCl
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QProgressDialog \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qprogressdialog.h \
 		UI\ui_camera.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\QIcon \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QApplication \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qapplication.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qdesktopwidget.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qguiapplication.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qinputmethod.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QHBoxLayout \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qboxlayout.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlayout.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlayoutitem.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qgridlayout.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QLabel \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlabel.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qframe.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QMenuBar \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qmenubar.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qmenu.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qaction.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qactiongroup.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QSpacerItem \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QStatusBar \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qstatusbar.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QVBoxLayout \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QJsonDocument \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qjsondocument.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qjsonvalue.h \
@@ -4039,13 +4054,28 @@ release\widget.obj: ..\PartChainClient\Common\widget.cpp ..\PartChainClient\Comm
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qnetworkinterface.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qhostaddress.h \
 		UI\ui_widget.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QApplication \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qapplication.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qdesktopwidget.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qguiapplication.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qinputmethod.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QMessageBox \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qmessagebox.h
+
+release\json_reader.obj: ..\PartChainClient\Json\lib_json\json_reader.cpp ..\PartChainClient\Json\json\reader.h \
+		..\PartChainClient\Json\json\features.h \
+		..\PartChainClient\Json\json\forwards.h \
+		..\PartChainClient\Json\json\config.h \
+		..\PartChainClient\Json\json\value.h
+
+release\json_value.obj: ..\PartChainClient\Json\lib_json\json_value.cpp ..\PartChainClient\Json\json\value.h \
+		..\PartChainClient\Json\json\forwards.h \
+		..\PartChainClient\Json\json\config.h \
+		..\PartChainClient\Json\json\writer.h \
+		..\PartChainClient\Json\lib_json\json_batchallocator.h \
+		..\PartChainClient\Json\lib_json\json_internalarray.inl \
+		..\PartChainClient\Json\lib_json\json_internalmap.inl \
+		..\PartChainClient\Json\lib_json\json_valueiterator.inl
+
+release\json_writer.obj: ..\PartChainClient\Json\lib_json\json_writer.cpp ..\PartChainClient\Json\json\writer.h \
+		..\PartChainClient\Json\json\value.h \
+		..\PartChainClient\Json\json\forwards.h \
+		..\PartChainClient\Json\json\config.h
 
 release\avilib.obj: ..\PartChainClient\RecordForensics\avilib.cpp ..\PartChainClient\RecordForensics\avilib.h
 
@@ -4514,35 +4544,12 @@ release\recordvideo.obj: ..\PartChainClient\RecordForensics\recordvideo.cpp ..\P
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QProgressDialog \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qprogressdialog.h \
 		UI\ui_recordvideo.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\QIcon \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QApplication \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qapplication.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qdesktopwidget.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qguiapplication.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qinputmethod.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QHBoxLayout \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qboxlayout.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlayout.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlayoutitem.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qgridlayout.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QLabel \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlabel.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qframe.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QLineEdit \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlineedit.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qtextcursor.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qtextformat.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QMenuBar \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qmenubar.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qmenu.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qaction.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qactiongroup.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QSpacerItem \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QStatusBar \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qstatusbar.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QVBoxLayout \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QStackedLayout \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qstackedlayout.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlayout.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlayoutitem.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qboxlayout.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qgridlayout.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\QScreen \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qscreen.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QList \
@@ -5007,33 +5014,14 @@ release\previewwindow.obj: ..\PartChainClient\ScreenShotForensics\previewwindow.
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QWidget \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QDebug \
 		UI\ui_previewwindow.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QVariant \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\QIcon \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QApplication \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qapplication.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qcoreapplication.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qeventloop.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qdesktopwidget.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qguiapplication.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qinputmethod.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QHBoxLayout \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QBoxLayout \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qboxlayout.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlayout.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlayoutitem.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qgridlayout.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QMenuBar \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qmenubar.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qmenu.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qaction.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qactiongroup.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QPushButton \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qpushbutton.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qabstractbutton.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QSpacerItem \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QStatusBar \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qstatusbar.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QVBoxLayout \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QBoxLayout \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QLineEdit \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlineedit.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qtextcursor.h \
@@ -5048,6 +5036,8 @@ release\previewwindow.obj: ..\PartChainClient\ScreenShotForensics\previewwindow.
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qdialog.h \
 		..\PartChainClient\Common\common.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QCoreApplication \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qcoreapplication.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qeventloop.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\QNetworkInterface \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qnetworkinterface.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qtnetworkglobal.h \
@@ -5269,37 +5259,12 @@ release\screenshot.obj: ..\PartChainClient\ScreenShotForensics\screenshot.cpp ..
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qrubberband.h \
 		..\PartChainClient\ScreenShotForensics\zoompreview.h \
 		UI\ui_screenshot.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\QIcon \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QApplication \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qapplication.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qdesktopwidget.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qguiapplication.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qinputmethod.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QHBoxLayout \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qboxlayout.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlayout.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlayoutitem.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qgridlayout.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QLabel \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlabel.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QLineEdit \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlineedit.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qtextcursor.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qtextformat.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QMenuBar \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qmenubar.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qmenu.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qaction.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qactiongroup.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QPushButton \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qpushbutton.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qabstractbutton.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QSpacerItem \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QStatusBar \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qstatusbar.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QVBoxLayout \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QStackedLayout \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qstackedlayout.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlayout.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlayoutitem.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qboxlayout.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qgridlayout.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\QScreen \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qscreen.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QList \
@@ -5420,25 +5385,7 @@ release\zoompreview.obj: ..\PartChainClient\ScreenShotForensics\zoompreview.cpp 
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qvector2d.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qtouchdevice.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QDebug \
-		UI\ui_zoompreview.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QVariant \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\QIcon \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qicon.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QApplication \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qapplication.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qcoreapplication.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qeventloop.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qdesktopwidget.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qguiapplication.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qinputmethod.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QLabel \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlabel.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qframe.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QVBoxLayout \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qboxlayout.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlayout.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlayoutitem.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qgridlayout.h
+		UI\ui_zoompreview.h
 
 release\web_forensics.obj: ..\PartChainClient\WebForensics\web_forensics.cpp ..\PartChainClient\WebForensics\web_forensics.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QMainWindow \
@@ -5628,27 +5575,15 @@ release\web_forensics.obj: ..\PartChainClient\WebForensics\web_forensics.cpp ..\
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWebEngineCore\qwebengineurlrequestinfo.h \
 		..\PartChainClient\WebForensics\weburlrequestinterceptor.h \
 		UI\ui_web_forensics.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\QIcon \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QApplication \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qapplication.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qdesktopwidget.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qguiapplication.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qinputmethod.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QMenuBar \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qmenubar.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qmenu.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qaction.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qactiongroup.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QStatusBar \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qstatusbar.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QVBoxLayout \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qboxlayout.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlayout.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlayoutitem.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qgridlayout.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QStackedLayout \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qstackedlayout.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlayout.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlayoutitem.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qboxlayout.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qgridlayout.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\QGuiApplication \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qguiapplication.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qinputmethod.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\QScreen \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qscreen.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QList \
@@ -5912,25 +5847,16 @@ release\inspector.obj: ..\PartChainClient\inspector.cpp ..\PartChainClient\inspe
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qpagelayout.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qpagesize.h \
 		UI\ui_inspector.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QApplication \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qapplication.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qcoreapplication.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qeventloop.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qdesktopwidget.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qguiapplication.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qinputmethod.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QVBoxLayout \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qboxlayout.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlayout.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlayoutitem.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qgridlayout.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QWidget \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QPushButton \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qpushbutton.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qabstractbutton.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qicon.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QStackedLayout \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qstackedlayout.h
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qstackedlayout.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlayout.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlayoutitem.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qboxlayout.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qgridlayout.h
 
 release\main.obj: ..\PartChainClient\main.cpp ..\PartChainClient\mainwindow.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QLibrary \
@@ -6501,29 +6427,15 @@ release\mainwindow.obj: ..\PartChainClient\mainwindow.cpp ..\PartChainClient\mai
 		..\PartChainClient\inspector.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QDialog \
 		UI\ui_mainwindow.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\QIcon \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QApplication \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qapplication.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qdesktopwidget.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qguiapplication.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qinputmethod.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QMenuBar \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qmenubar.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qmenu.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qaction.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qactiongroup.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QStatusBar \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qstatusbar.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QVBoxLayout \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qboxlayout.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlayout.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlayoutitem.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qgridlayout.h \
 		..\PartChainClient\Common\widget.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QTabWidget \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\QList \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QStackedLayout \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qstackedlayout.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlayout.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qlayoutitem.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qboxlayout.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qgridlayout.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWebEngineWidgets\QWebEngineProfile \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWebEngineWidgets\qwebengineprofile.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWebEngineCore\QWebEngineCookieStore \
@@ -6554,7 +6466,15 @@ release\mainwindow.obj: ..\PartChainClient\mainwindow.cpp ..\PartChainClient\mai
 		..\PartChainClient\Common\logrecord.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\QDesktopServices \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qdesktopservices.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qstandardpaths.h
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qstandardpaths.h \
+		..\PartChainClient\Json\json\json.h \
+		..\PartChainClient\Json\json\autolink.h \
+		..\PartChainClient\Json\json\config.h \
+		..\PartChainClient\Json\json\value.h \
+		..\PartChainClient\Json\json\forwards.h \
+		..\PartChainClient\Json\json\reader.h \
+		..\PartChainClient\Json\json\features.h \
+		..\PartChainClient\Json\json\writer.h
 
 release\qrc_Icon.obj: release\qrc_Icon.cpp 
 

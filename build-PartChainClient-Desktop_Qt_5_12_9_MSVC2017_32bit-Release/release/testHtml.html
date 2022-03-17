@@ -133,6 +133,16 @@
 					//msg.path = "C:/Users/fyg/Downloads";
 					//var json = JSON.stringify(msg);
 					//interactObj.JSSendMessage(json,"","");
+					
+					var msg = new Object();
+					msg.type = "GetDownLoadData";
+					msg.url = "";
+					msg.token = "";
+					msg.parame = "";
+					msg.key = "";
+					msg.filename = "";
+					var json = JSON.stringify(msg);
+					interactObj.JSSendMessage(json,"","");
 				})
 
                 //Web connect the Qt signal, then Qt can call "output" function

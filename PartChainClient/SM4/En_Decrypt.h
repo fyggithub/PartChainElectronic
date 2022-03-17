@@ -18,6 +18,7 @@ public:
     void Decrypt_Test();
     QString EncodeSM4_Base64(QString key,const QString strInput);
     QString DecodeSM4_Base64(const QString& key,const QString& strInput);
+    QString DecodeSM4_Base64Test(const QString& key,const char* strInput,int len);
 };
 
 extern QList<QString> pList;

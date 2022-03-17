@@ -16,6 +16,7 @@
 #include "include/JlCompress.h"
 #include "Common/logrecord.h"
 #include <QDesktopServices>
+#include "Json/json/json.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -47,8 +48,8 @@ void MainWindow::startweb(void)
     QString filePath = QCoreApplication::applicationDirPath() + "/testHtml.html";
     QString urlPath = "file:///" + filePath;
     //m_webView->page()->load(QUrl(urlPath));
-    //m_webView->page()->load(QUrl("http://172.24.103.6:8016/"));
-    m_webView->page()->load(QUrl("http://172.16.5.71:8083/"));
+    m_webView->page()->load(QUrl("http://172.24.103.6:8016/"));
+    //m_webView->page()->load(QUrl("http://172.16.5.71:8083/"));
 
     QStackedLayout* layout = new QStackedLayout(ui->widgetMain);
     ui->widgetMain->setLayout(layout);
@@ -59,7 +60,7 @@ void MainWindow::startweb(void)
     connect(this, &MainWindow::SigSendMessageToJS,pJsCommunicate, &JSCommunicate::SigSendMessageToJS);
 
     connect(m_webView->page()->profile(), &QWebEngineProfile::downloadRequested, [this](QWebEngineDownloadItem *download) {
-        connect(download, &QWebEngineDownloadItem::finished,this,&MainWindow::DownLoadFinish);
+        //connect(download, &QWebEngineDownloadItem::finished,this,&MainWindow::DownLoadFinish);
         LogRecord wLog;
         //if (download->savePageFormat() != QWebEngineDownloadItem::UnknownSaveFormat){
         //}
@@ -256,6 +257,17 @@ void MainWindow::OnReceiveMessageFromJS(QString strMain,QString type,QString str
                 sendBuff = "";
                 LogRecord wLog;
                 wLog.LogTrack("message send to finish.");
+
+                QString downloadName = "";
+                if(pBatchSingle == "batch"){
+                    downloadName = QString::fromLocal8Bit("证据文件集.zip");
+                }
+                else{
+                    downloadName = pDownLoadFileName;
+                }
+                downLoadPath = QFileDialog::getSaveFileName(this, QString::fromLocal8Bit("保存文件"), downloadName);//选择下载路径
+                qDebug()<<"downLoadPath:"<<downLoadPath << pBatchSingle;
+                DownLoadFinish();
             }
             obj.insert("strMain", "sm4");
             obj.insert("str", str);
@@ -290,6 +302,49 @@ void MainWindow::OnReceiveMessageFromJS(QString strMain,QString type,QString str
         QDesktopServices::openUrl(QUrl::fromLocalFile(path));
         QJsonObject obj;
         obj.insert("strMain", "openResourceManagement");
+        QByteArray byteArray = QJsonDocument(obj).toJson(QJsonDocument::Compact);
+        QString strJson(byteArray);
+        SigSendMessageToJS(strJson,"","");
+        return;
+    }
+    else if(forensicsType == "GetDownLoadData")
+    {
+        QString downloadUrl = jsonObject["url"].toString();
+        QString downloadToken = jsonObject["token"].toString();
+        QJsonObject objParame = jsonObject["parame"].toObject();
+        QByteArray byteArrayParame = QJsonDocument(objParame).toJson(QJsonDocument::Compact);
+        QString strJsonParame(byteArrayParame);
+        qDebug() << downloadUrl << downloadToken << strJsonParame;
+
+        QJsonValue arrayValue = jsonObject.value(QStringLiteral("key"));
+        if(arrayValue.isArray())
+        {
+            QJsonArray array = arrayValue.toArray();
+            for(int i=0;i<array.size();i++)
+            {
+                QString kk = array.at(i).toString();
+                qDebug()<<"kk:"<<kk;
+                keyList << kk;
+            }
+        }
+
+        QJsonValue arrayFilename = jsonObject.value(QStringLiteral("filename"));
+        if(arrayFilename.isArray())
+        {
+            QJsonArray arrFilename = arrayFilename.toArray();
+            for(int j = 0;j < arrFilename.size(); j++)
+            {
+                QString filename = arrFilename.at(j).toString();
+                qDebug()<<"filename:"<<filename;
+                fileList << filename;
+            }
+        }
+
+        PostDownloadData(downloadUrl,downloadToken,byteArrayParame);
+
+        QJsonObject obj;
+        obj.insert("strMain", "GetDownLoadData");
+        obj.insert("strBranch", "DownLoadFinish");
         QByteArray byteArray = QJsonDocument(obj).toJson(QJsonDocument::Compact);
         QString strJson(byteArray);
         SigSendMessageToJS(strJson,"","");
@@ -350,6 +405,7 @@ void MainWindow::replyFinished(QNetworkReply*)    //删除指针，更新和关�
 {
     if(reply->error() == QNetworkReply::NoError)
     {
+        qDebug()<<"**********************replyFinished";
         QString str = reply->readAll();
         reply->deleteLater();
         //qDebug() << str;
@@ -428,6 +484,79 @@ void MainWindow::replyFinished(QNetworkReply*)    //删除指针，更新和关�
 void MainWindow::loadError(QNetworkReply::NetworkError)    //传输中的错误输出
 {
      qDebug()<<"Error: "<<reply->error();
+}
+
+void MainWindow::PostDownloadData(const QString& url,const QString& token,const QByteArray& parame)
+{
+    QUrl getUrl(url);
+    QNetworkRequest request(getUrl);
+    QString tokenStr = token;
+    QString tokenHeaderData = QString("Bearer ") + tokenStr;
+    request.setRawHeader("Authorization", tokenHeaderData.toLatin1());
+    request.setRawHeader("Content-Type", "application/json");
+    request.setRawHeader("responseType", "blob");    
+    QByteArray postData = parame;
+
+    QNetworkAccessManager *accessManager = new QNetworkAccessManager(this);    //往该目录中上传文件
+    accessManager->setNetworkAccessible(QNetworkAccessManager::Accessible);
+    accessManager->setRedirectPolicy(QNetworkRequest::NoLessSafeRedirectPolicy);
+    reply = accessManager->post(request, postData);
+
+    connect(accessManager,SIGNAL(finished(QNetworkReply*)),this,SLOT(DownReplyFinished(QNetworkReply*)));
+    connect(reply, SIGNAL(error(QNetworkReply::NetworkError)),this,SLOT(loadError(QNetworkReply::NetworkError)));
+}
+
+void MainWindow::DownReplyFinished(QNetworkReply*)    //删除指针，更新和关闭文件
+{
+    qDebug()<<"-------------------**************---";
+    if(reply->error() == QNetworkReply::NoError)
+    {
+        QByteArray strJson = reply->readAll();
+        reply->deleteLater();
+
+        QJsonParseError parseJsonErr;
+        QJsonDocument document = QJsonDocument::fromJson(strJson, &parseJsonErr);
+        if (!(parseJsonErr.error == QJsonParseError::NoError))
+        {
+            qDebug() << "Parsing failed"<<parseJsonErr.error;
+        }
+        qDebug()<<"*************************fyg1";
+        QJsonObject jsonObject = document.object();
+        QString code = jsonObject["code"].toString();
+        QString msg = jsonObject["message"].toString();
+        qDebug()<<code<<msg;
+        if(code == "0000"){
+            QJsonValue arrayValue = jsonObject.value(QStringLiteral("data"));
+            QString strBase64 = "";
+            if(arrayValue.isArray())
+            {
+                qDebug()<<"isArray1";
+                QJsonArray array = arrayValue.toArray();
+                for(int i = 0;i < array.size();i++)
+                {
+                    qDebug()<<"isArray2"<<array.size();
+                    QJsonValue iconArray = array.at(i);
+                    qDebug()<<"isArray3";
+                    QJsonObject icon = iconArray.toObject();
+                    qDebug()<<"icon:";
+                    strBase64 = icon["base64"].toString();
+                    qDebug()<<"base64:";
+                    QString strkey = keyList.at(i);
+                    qDebug()<<"tmp ="<< strkey;
+                    pDownLoadFileName = fileList.at(i);
+                    pDecrypt = new SM4Decrypt;
+                    pDecrypt->DecodeSM4_Base64(strkey,strBase64);
+                    delete pDecrypt;
+                }
+            }
+        }
+        fileList.clear();
+        keyList.clear();
+    }
+    else
+    {
+        qDebug() << "**********************1111111111";
+    }
 }
 
 void MainWindow::NetworkTest()

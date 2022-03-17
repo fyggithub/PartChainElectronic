@@ -19,6 +19,9 @@ SOURCES += \
     Common/logrecord.cpp \
     Common/networkclean.cpp \
     Common/widget.cpp \
+    Json/lib_json/json_reader.cpp \
+    Json/lib_json/json_value.cpp \
+    Json/lib_json/json_writer.cpp \
     RecordForensics/avilib.cpp \
     RecordForensics/head.cpp \
     RecordForensics/mywin.cpp \
@@ -43,6 +46,14 @@ HEADERS += \
     Common/logrecord.h \
     Common/networkclean.h \
     Common/widget.h \
+    Json/json/autolink.h \
+    Json/json/config.h \
+    Json/json/features.h \
+    Json/json/forwards.h \
+    Json/json/json.h \
+    Json/json/reader.h \
+    Json/json/value.h \
+    Json/json/writer.h \
     RecordForensics/avilib.h \
     RecordForensics/head.h \
     RecordForensics/mywin.h \

@@ -53,6 +53,7 @@ public:
     void DialogProgressStart();
     void UploadFile(QString *filename,int num);
     void SendPathMessage(QString mode);
+    void PostDownloadData(const QString& url,const QString& token,const QByteArray& parame);
 
 public:
     web_forensics *pWebForensics;
@@ -73,11 +74,12 @@ public slots:
 
 private slots:
     void replyFinished(QNetworkReply*);
+    void DownReplyFinished(QNetworkReply*);
     void loadError(QNetworkReply::NetworkError);
     void RecvMsgCloseWnd(RecordType type);
-    void DownLoadFinish();
     void MsgInspector();
-
+private:
+    void DownLoadFinish();
 signals:
     void SigSendMessageToJS(QString strMain,QString type,QString str);
 
@@ -96,6 +98,8 @@ private:
     QString downLoadPath;
     QString recvBuff;
     QString sendBuff;
+    QStringList keyList;
+    QStringList fileList;
 };
 
 #endif // MAINWINDOW_H
