@@ -89,6 +89,8 @@ private:
     networkclean *detect_thread;
     QString pStrMain,pType,pStr;
     networkclean* pNetworkClean;
+    QFile *pfile0;
+    QFile *pfile1;
     QTimer* timerProgress;
     QProgressDialog* progressDialog;
     int timecount;
@@ -96,10 +98,12 @@ private:
     RecordType pRecordType;
     Common* pLog;
     QString downLoadPath;
-    QString recvBuff;
+    QByteArray recvBuff;
     QString sendBuff;
     QStringList keyList;
     QStringList fileList;
+    int fileSum;
+    int countBuff;
 };
 
 #endif // MAINWINDOW_H

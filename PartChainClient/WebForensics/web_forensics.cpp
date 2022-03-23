@@ -183,6 +183,7 @@ void web_forensics::FullScreenSave()
     pFilePathName = filePathName;
     QString strRenameFile = pLog->RenameLogFile(WebRecord,FileLogName);
     pLog->RemoveWebLogFile(WebRecord,FileLogName);
+    qDebug()<<"FileLogName:"<<FileLogName;
     BufferFileName[0] = pFilePathName;
     BufferFileName[1] = strRenameFile;
     WebUploadFile(BufferFileName,2);

@@ -42,7 +42,7 @@ public:
     QString RenameLogFile(RecordType recordType, QString fileName);
     void RemoveScnLogFile(QString fileName);
     void RemoveWebLogFile(RecordType recordType,QString fileName);
-
+    void RemoveFailFiles(RecordType recordType);
 };
 
 extern QString pGetJsToken,pGetJsUrl,pGetForensicsName,pGetNameNoTime,pGetHostIp,pGetDirPath;

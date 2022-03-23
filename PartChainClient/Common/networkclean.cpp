@@ -52,15 +52,15 @@ void networkclean::stop()
  * ************************************/
 void networkclean::HostFile(RecordType recordType)
 {
-    Common *pcom = NULL;
-    QString filePath = pcom->FileDirPath(recordType);
+    Common pcom;
+    QString filePath = pcom.FileDirPath(recordType);
     QString getTime = QDateTime::currentDateTime().toString("yyyy-MM-dd-hh-mm-ss-zzz");
     //QString fileName = "host" + getTime + ".txt.aisino";
     QString fileName = "host" + getTime + ".aisino";
     pHostFileName = fileName;
     QString fileFullPathName = filePath + fileName;
 
-    pcom->isDirExist(filePath);
+    pcom.isDirExist(filePath);
 
     QString hostPath = QString("C:/Windows/System32/drivers/etc/hosts");
     bool ok = QFile::copy(hostPath, fileFullPathName);

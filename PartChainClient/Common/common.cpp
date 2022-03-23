@@ -398,7 +398,16 @@ void Common::RemoveDirFile(QString &folderDir)
             if(curFile.isFile())//如果是文件，删除文件
             {               
                 QFile fileTemp(curFile.filePath());                
-                fileTemp.remove();
+                //fileTemp.remove();
+                if(fileTemp.remove())
+                {
+                    qDebug() << "删除成功";
+                }
+                else
+                {
+                    qDebug() << "删除失败";
+                }
+
                 fileList.removeAt(i);
             }
             if(curFile.isDir())//如果是文件夹
@@ -427,6 +436,16 @@ void Common::RemoveDirFile(QString &folderDir)
     dir.rmdir(folderDir);
 }
 
+void Common::RemoveFailFiles(RecordType recordType)
+{
+    QString strDirPath = FileDirPath(recordType);
+    //QString strDirPath = "F:/work/code/ElectronicDepository/SecondIteration/PartChainElectronic/build-PartChainClient-Desktop_Qt_5_12_9_MSVC2017_32bit-Release/release/OutPut/网页取证/kkk20220322184129/";
+    //QString path = QString::fromLocal8Bit(strDirPath);
+    //qDebug()<<"strDirPath:"<<strDirPath;
+    qDebug()<<"strDirPath111:"<<strDirPath;
+    RemoveDirFile(strDirPath);
+}
+
 void Common::RemoveOverageFile(QString &filePathName)
 {
     QFile fileTemp(filePathName);
@@ -446,3 +465,4 @@ void Common::RemoveOverageFile(QString &filePathName)
         qDebug()<<"is not exists.";
     }
 }
+

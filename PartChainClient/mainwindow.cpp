@@ -17,6 +17,11 @@
 #include "Common/logrecord.h"
 #include <QDesktopServices>
 #include "Json/json/json.h"
+#include <fstream>
+#include <string.h>
+
+#define MAXBUFFSIZE (100*1024*1024)
+char BuffData[MAXBUFFSIZE] = {0};
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -25,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     pProgressMaxRange = 40;
+    countBuff = 0;
     recvBuff = "";
     sendBuff = "";
     qputenv("QTWEBENGINE_REMOTE_DEBUGGING", "7777");
@@ -48,8 +54,8 @@ void MainWindow::startweb(void)
     QString filePath = QCoreApplication::applicationDirPath() + "/testHtml.html";
     QString urlPath = "file:///" + filePath;
     //m_webView->page()->load(QUrl(urlPath));
-    m_webView->page()->load(QUrl("http://172.24.103.6:8016/"));
-    //m_webView->page()->load(QUrl("http://172.16.5.71:8083/"));
+    //m_webView->page()->load(QUrl("http://172.24.103.6:8016/"));
+    m_webView->page()->load(QUrl("http://172.16.5.71:8083/"));
 
     QStackedLayout* layout = new QStackedLayout(ui->widgetMain);
     ui->widgetMain->setLayout(layout);
@@ -132,7 +138,7 @@ void MainWindow::DownLoadFinish()
             fileLists << fullPath;
         }
 
-        if(pBatchSingle == "batch"){//为批量就进行压缩
+        if((pBatchSingle == "batch") && (downLoadPath != "")){//为批量就进行压缩
             std::string::size_type zipPos = dir.find(".zip");
             QString zipPath = downLoadPath;
             if(zipPos == dir.npos){
@@ -183,12 +189,30 @@ void MainWindow::OnReceiveMessageFromJS(QString strMain,QString type,QString str
     {
         qDebug()<<"sm411111111111111111";
         static int countNum = 0;
-        QString state = jsonObject["state"].toString();        
-        qDebug()<<"state:"<<state;        
+        QString state = jsonObject["state"].toString();
+        qDebug()<<"state:"<<state;
         if(state == "start")
         {
+            LogRecord wLog;
+            wLog.LogTrack("--------------------------------------------startRecv");
+            qDebug()<<"start0";
             QString sourceArray = jsonObject["encry"].toString();
-            recvBuff.append(sourceArray);
+            int strlen1 = sourceArray.length();
+            countBuff += strlen1;
+            qDebug()<<"start1";
+            QByteArray bytes1 = sourceArray.toLatin1();
+            qDebug()<<"start3";
+            //const char* BuffEncry = bytes1.data();
+            char* p_buff1 = new char[MAXBUFFSIZE/4];
+            memset(p_buff1,0,MAXBUFFSIZE/4);
+            std::memcpy(p_buff1,bytes1.data(),strlen1);
+            qDebug()<<"start4";
+            //sprintf(BuffData, "%s", BuffEncry);
+            recvBuff.append(p_buff1);
+            delete [] p_buff1;
+            p_buff1 = nullptr;
+            qDebug()<<"start2";
+            wLog.LogTrack("--------------------------------------------recv over.");
 
             QJsonObject obj;
             obj.insert("strMain", "sm4");
@@ -197,27 +221,48 @@ void MainWindow::OnReceiveMessageFromJS(QString strMain,QString type,QString str
             QByteArray byteArray = QJsonDocument(obj).toJson(QJsonDocument::Compact);
             QString strJson(byteArray);
             SigSendMessageToJS(strJson,"","");
+            qDebug()<<"SigSend over.";
+            wLog.LogTrack("--------------------------------------------SigSend over.");
             return;
         }
         else if(state == "finish")
         {
+            LogRecord wLog;
+            wLog.LogTrack("--------------------------------------------");
             qDebug()<<"finish111111111111111111111111111";
             pDownLoadFileName = "";
             pBatchSingle = "";
             pDownLoadFileName = jsonObject["filename"].toString();
             pBatchSingle = jsonObject["batchSingle"].toString();
+            fileSum = jsonObject["fileSum"].toInt();
+            qDebug()<<"pBatchSingle:"<<pBatchSingle;
             qDebug()<<"pDownLoadFileName:"<<pDownLoadFileName;
+            qDebug()<< "fileSum:" << fileSum;
             QString keyArray = jsonObject["key"].toString();
             qDebug()<<"key:"<<keyArray;
-            QString sourceArray = jsonObject["encry"].toString();
-            recvBuff.append(sourceArray);
+            QString sourceArray1 = jsonObject["encry"].toString();
+            int strlen2 = sourceArray1.length();
+            countBuff += strlen2;
+            QByteArray bytes2 = sourceArray1.toLatin1();
+            qDebug()<<"sourceArray:";
+            //const char* BuffEncry2 = bytes2.data();
+            char* p_buff2 = new char[MAXBUFFSIZE/4];
+            memset(p_buff2,0,MAXBUFFSIZE/4);
+            std::memcpy(p_buff2,bytes2.data(),strlen2);
 
-            LogRecord wLog;
-            wLog.LogTrack("--------------------------------------------");
+            //sprintf(BuffData, "%s", BuffEncry2);
+            recvBuff.append(p_buff2);
+            qDebug()<<"recvBuff.append";
+            delete [] p_buff2;
+            p_buff2 = nullptr;
+
             wLog.LogTrack("recv is over starting to decrypt.");
             pDecrypt = new SM4Decrypt;
             qDebug()<<"****************************recvBuff len:"<<recvBuff.length();
-            sendBuff = pDecrypt->DecodeSM4_Base64(keyArray,recvBuff);
+            //sendBuff = pDecrypt->DecodeSM4_Base64(keyArray,recvBuff);
+            //sendBuff = pDecrypt->DecodeSM4_Base64Test(keyArray,BuffData,countBuff);
+            sendBuff = pDecrypt->DecodeSM4_Base64Test2(keyArray,recvBuff);
+
             double len = sendBuff.length();
             QString str = sendBuff.left(len/5);
             QJsonObject obj;
@@ -228,7 +273,10 @@ void MainWindow::OnReceiveMessageFromJS(QString strMain,QString type,QString str
             QString strJson(byteArray);
             SigSendMessageToJS(strJson,"","");            
             countNum = 0; //避免异常情况
-            recvBuff = "";//清空缓存
+            //recvBuff = "";//清空缓存
+            recvBuff.clear();
+            countBuff = 0;
+            memset(BuffData, 0, MAXBUFFSIZE);
             qDebug()<<"finish222222222222222222";
             qDebug()<<"len:"<<len;
             qDebug()<<str;
@@ -258,16 +306,21 @@ void MainWindow::OnReceiveMessageFromJS(QString strMain,QString type,QString str
                 LogRecord wLog;
                 wLog.LogTrack("message send to finish.");
 
-                QString downloadName = "";
-                if(pBatchSingle == "batch"){
-                    downloadName = QString::fromLocal8Bit("证据文件集.zip");
+                qDebug()<< pList << pList.size()<<fileSum;
+                if(pList.size() >= fileSum){            //文件个数
+                    QString downloadName = "";
+                    QString appPath = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation) + "/";
+                    qDebug()<< "appPath:"<<appPath;
+                    if(pBatchSingle == "batch"){
+                        downloadName = appPath + QString::fromLocal8Bit("证据文件集.zip");
+                    }
+                    else{
+                        downloadName = appPath + pDownLoadFileName;
+                    }
+                    downLoadPath = QFileDialog::getSaveFileName(this, QString::fromLocal8Bit("保存文件"), downloadName);//选择下载路径
+                    qDebug()<<"downLoadPath:"<<downLoadPath << pBatchSingle;
+                    DownLoadFinish();
                 }
-                else{
-                    downloadName = pDownLoadFileName;
-                }
-                downLoadPath = QFileDialog::getSaveFileName(this, QString::fromLocal8Bit("保存文件"), downloadName);//选择下载路径
-                qDebug()<<"downLoadPath:"<<downLoadPath << pBatchSingle;
-                DownLoadFinish();
             }
             obj.insert("strMain", "sm4");
             obj.insert("str", str);
@@ -372,19 +425,39 @@ void MainWindow::UploadFile(QString *filename,int num)
 
     Common *pcom = NULL;
     QString strDirPath = pcom->FileDirPath(pRecordType);
-    for(int i = 0;i < num;i++)
-    {
-        QString filePath = strDirPath + filename[i];
-        QFile *pfile = new QFile(filePath);
-        pfile->open(QIODevice::ReadOnly);
+//    for(int i = 0;i < num;i++)
+//    {
+//        QString filePath = strDirPath + filename[i];
+//        QFile *pfile = new QFile(filePath);
+//        pfile->open(QIODevice::ReadOnly);
 
-        QHttpPart *textPart = new QHttpPart;
-        textPart->setHeader(QNetworkRequest::ContentDispositionHeader, QVariant(QString(formData+filename[i])));
-        textPart->setBodyDevice(pfile);
-        pfile->setParent(multi_part);
-        multi_part->append(*textPart);
-        delete textPart;
-    }
+//        QHttpPart *textPart = new QHttpPart;
+//        textPart->setHeader(QNetworkRequest::ContentDispositionHeader, QVariant(QString(formData+filename[i])));
+//        textPart->setBodyDevice(pfile);
+//        pfile->setParent(multi_part);
+//        multi_part->append(*textPart);
+//        delete textPart;
+//        //pfile->close();
+//    }
+    QString filePath0 = strDirPath + filename[0];
+    pfile0 = new QFile(filePath0);
+    pfile0->open(QIODevice::ReadOnly);
+    QHttpPart *textPart0 = new QHttpPart;
+    textPart0->setHeader(QNetworkRequest::ContentDispositionHeader, QVariant(QString(formData+filename[0])));
+    textPart0->setBodyDevice(pfile0);
+    pfile0->setParent(multi_part);
+    multi_part->append(*textPart0);
+    delete textPart0;
+
+    QString filePath1 = strDirPath + filename[1];
+    pfile1 = new QFile(filePath1);
+    pfile1->open(QIODevice::ReadOnly);
+    QHttpPart *textPart1 = new QHttpPart;
+    textPart1->setHeader(QNetworkRequest::ContentDispositionHeader, QVariant(QString(formData+filename[1])));
+    textPart1->setBodyDevice(pfile1);
+    pfile1->setParent(multi_part);
+    multi_part->append(*textPart1);
+    delete textPart1;
 
     QUrl url("http://172.16.5.71:8080/api/file/uploadFile");
     QNetworkRequest request(url);
@@ -403,6 +476,11 @@ void MainWindow::UploadFile(QString *filename,int num)
 
 void MainWindow::replyFinished(QNetworkReply*)    //删除指针，更新和关闭文件
 {
+    pfile0->close();
+    pfile1->close();
+    delete pfile0;
+    delete pfile1;
+
     if(reply->error() == QNetworkReply::NoError)
     {
         qDebug()<<"**********************replyFinished";
@@ -452,8 +530,12 @@ void MainWindow::replyFinished(QNetworkReply*)    //删除指针，更新和关�
                 pCamera->ClosePhotograph();//关闭摄像头
                 delete pCamera;
             }
+            pLog = new Common();
+            pLog->RemoveFailFiles(pRecordType);
+            delete pLog;
             //上传服务器失败
-            QMessageBox::warning(NULL, QString::fromLocal8Bit("提示"), msg, QString::fromLocal8Bit("确定"), 0);
+            QMessageBox::warning(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("网络清洁性检测失败，<br>请重新取证！"),\
+                                            QString::fromLocal8Bit("确定"), 0);
         }
     }
     else
@@ -461,7 +543,7 @@ void MainWindow::replyFinished(QNetworkReply*)    //删除指针，更新和关�
         QJsonObject obj;
         switch(pRecordType)
         {
-            case WebRecord:     obj.insert("strMain", "GetWebDate");break;
+            case WebRecord: obj.insert("strMain", "GetWebDate");break;
             case CameraRecord:  obj.insert("strMain", "GetCameraDate"); break;
             case VideoRecord:   obj.insert("strMain", "GetRecordDate");break;
             case ScreenShotRecord:obj.insert("strMain", "GetScreenshotDate");break;
@@ -476,8 +558,12 @@ void MainWindow::replyFinished(QNetworkReply*)    //删除指针，更新和关�
             pCamera->ClosePhotograph();//关闭摄像头
             delete pCamera;
         }
+
         QMessageBox::critical(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("网络清洁性检测失败，<br>请重新取证！"),\
                                         QString::fromLocal8Bit("确定"), 0);
+        pLog = new Common();
+        pLog->RemoveFailFiles(pRecordType);
+        delete pLog;
     }
 }
 
@@ -494,7 +580,7 @@ void MainWindow::PostDownloadData(const QString& url,const QString& token,const 
     QString tokenHeaderData = QString("Bearer ") + tokenStr;
     request.setRawHeader("Authorization", tokenHeaderData.toLatin1());
     request.setRawHeader("Content-Type", "application/json");
-    request.setRawHeader("responseType", "blob");    
+    //request.setRawHeader("responseType", "blob");
     QByteArray postData = parame;
 
     QNetworkAccessManager *accessManager = new QNetworkAccessManager(this);    //往该目录中上传文件
@@ -513,49 +599,46 @@ void MainWindow::DownReplyFinished(QNetworkReply*)    //删除指针，更新和
     {
         QByteArray strJson = reply->readAll();
         reply->deleteLater();
-
-        QJsonParseError parseJsonErr;
-        QJsonDocument document = QJsonDocument::fromJson(strJson, &parseJsonErr);
-        if (!(parseJsonErr.error == QJsonParseError::NoError))
+        const char* buff = strJson.data();
+        std::string strbuff = buff;
+        qDebug()<<"data is readying0.";
+        Json::Reader reader;// 解析json用Json::Reader
+        Json::Value root;
+        qDebug()<<"data is readying1.";
+        if (reader.parse(strbuff, root))
         {
-            qDebug() << "Parsing failed"<<parseJsonErr.error;
-        }
-        qDebug()<<"*************************fyg1";
-        QJsonObject jsonObject = document.object();
-        QString code = jsonObject["code"].toString();
-        QString msg = jsonObject["message"].toString();
-        qDebug()<<code<<msg;
-        if(code == "0000"){
-            QJsonValue arrayValue = jsonObject.value(QStringLiteral("data"));
-            QString strBase64 = "";
-            if(arrayValue.isArray())
-            {
-                qDebug()<<"isArray1";
-                QJsonArray array = arrayValue.toArray();
-                for(int i = 0;i < array.size();i++)
+            qDebug()<<"reader parse success.";
+            std::string code = root.get("code", "null").asString();// 访问节点，Return the member named key if it exist, defaultValue otherwise.
+            QString stateCode = QString::fromStdString(code);
+            qDebug()<<"stateCode:"<<stateCode;
+
+            if(stateCode == "0000"){
+                int file_size = root["data"].size();  // 得到"files"的数组个数
+                qDebug()<<"file_size:"<<file_size;
+                for(int i = 0; i < file_size; ++i)  // 遍历数组
                 {
-                    qDebug()<<"isArray2"<<array.size();
-                    QJsonValue iconArray = array.at(i);
-                    qDebug()<<"isArray3";
-                    QJsonObject icon = iconArray.toObject();
-                    qDebug()<<"icon:";
-                    strBase64 = icon["base64"].toString();
-                    qDebug()<<"base64:";
+                    qDebug()<<"qstrBase64:0";
+                    std::string strBase64 = root["data"][i]["base64"].asString();
+                    qDebug()<<"qstrBase64:1";
+
                     QString strkey = keyList.at(i);
                     qDebug()<<"tmp ="<< strkey;
                     pDownLoadFileName = fileList.at(i);
                     pDecrypt = new SM4Decrypt;
-                    pDecrypt->DecodeSM4_Base64(strkey,strBase64);
+                    pDecrypt->DecodeSM4_Base64Test(strkey,strBase64.c_str(),strBase64.length());
                     delete pDecrypt;
                 }
             }
+        }
+        else{
+            qDebug() << "reader parse Error.";
         }
         fileList.clear();
         keyList.clear();
     }
     else
     {
-        qDebug() << "**********************1111111111";
+        qDebug() << "QNetworkReply Error.";
     }
 }
 

@@ -254,6 +254,70 @@ QString SM4Decrypt::DecodeSM4_Base64Test(const QString& key,const char* strInput
     return "";
 }
 
+QString SM4Decrypt::DecodeSM4_Base64Test2(const QString& key,const QByteArray& strInput)
+{
+    qDebug()<<"DecodeSM4_Base641111111111111";
+    long long nCount = 0;
+    long long len = 0;
+    len = strInput.length();
+    LogRecord wLog;
+    wLog.LogTrack(pDownLoadFileName);
+    //wLog.LogTrack(strInput);
+    qDebug()<<"len:"<<len;
+    //unsigned char *szBase64 = new unsigned char[len];
+    wLog.LogTrack("start memset.");
+    //memset(szBase64, 0, len);
+    memset(BuffBase64, 0, MAXBUFFSIZE);
+    wLog.LogTrack("memset success.");
+
+    //wLog.LogTrack("start base64 decode.");
+    //单独定义变量传递，则程序会崩溃
+    //Base64_Decode_New(qPrintable(strInput), len, szBase64, nCount);
+    //QByteArray ba = strInput;
+    qDebug()<<"baaaaaaaaaaaaaaaaaaaa0";
+    //const char* base64_data = strInput.data();
+    qDebug()<<"baaaaaaaaaaaaaaaaaaaa1";
+    Base64_Decode_New(strInput.data(), len, BuffBase64, nCount);
+
+    wLog.LogTrack("base64 decode finish.");
+    qDebug()<<"nCount:"<<nCount;
+
+    qDebug()<<"DecodeSM4_Base642222222222222222";
+    FILE *file_in = NULL;
+    file_in = fopen(TEMPFILENAME,"wb+");
+    //fwrite(szBase64, 1, nCount, file_in);
+    fwrite(BuffBase64, 1, nCount, file_in);
+    fclose(file_in);
+    file_in = NULL;
+    //delete [] szBase64;
+    //szBase64 = nullptr;
+
+    qDebug()<<"DecodeSM4_Base643333333333333333333333";
+    const char *pStrkey = key.toLocal8Bit().constData();
+    unsigned char *pkey = (unsigned char *)pStrkey;
+    sm4_ctx ctx;
+    sm4_set_key(pkey, &ctx);
+    sm4_decrypt_file_test(&ctx);
+
+    QString tmpFile = QString(QLatin1String(TEMPFILENAME));
+    Common *pCommon = NULL;
+    pCommon->RemoveOverageFile(tmpFile);
+
+    QFile file(pDownLoadFileName);
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
+    //QByteArray encrypted_data = file.readAll().toBase64();
+    //QTextStream stream(&encrypted_data);
+    //stream.seek(0);//将当前读取文件指针移动到文件开始
+    QString str = "";
+    //str = stream.readAll();//为了节省通信时长，直接返回一个固定字符串
+    str = "I5Zfz235g7H37KKdoE0ruVHKhBE/6yR99rDLQlbTC8u9pobmy325JBbmosjIljlKyzqkX9mbiysmW1zWzke0wBWlLZt364al2qXrQ6Ky9Ie2Jz9uu4rSeVYivmtR+WI9/XLhEAYr2MHrO/xSNEHPrQ==";
+    qDebug()<<"ready end.";
+    file.close();
+    pList << pDownLoadFileName;
+    wLog.LogTrack("decry is over.");
+    return str;
+}
+
 void SM4Decrypt::Encrypt_String(QByteArray& source_array, QByteArray& result_array, unsigned char key[16] )
 {
     /*result_array.resize( source_array.length( ) );

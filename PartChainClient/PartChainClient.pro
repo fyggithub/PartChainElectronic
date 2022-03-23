@@ -66,24 +66,6 @@ HEADERS += \
     ScreenShotForensics/zoompreview.h \
     WebForensics/web_forensics.h \
     WebForensics/weburlrequestinterceptor.h \
-    include/JlCompress.h \
-    include/ioapi.h \
-    include/minizip_crypt.h \
-    include/quaadler32.h \
-    include/quachecksum32.h \
-    include/quacrc32.h \
-    include/quagzipfile.h \
-    include/quaziodevice.h \
-    include/quazip.h \
-    include/quazip_global.h \
-    include/quazipdir.h \
-    include/quazipfile.h \
-    include/quazipfileinfo.h \
-    include/quazipnewinfo.h \
-    include/unzip.h \
-    include/zconf.h \
-    include/zip.h \
-    include/zlib.h \
     inspector.h \
     mainwindow.h
 
