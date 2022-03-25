@@ -362,6 +362,7 @@ void MainWindow::OnReceiveMessageFromJS(QString strMain,QString type,QString str
     }
     else if(forensicsType == "GetDownLoadData")
     {
+        pBatchSingle = jsonObject["batchSingle"].toString();
         QString downloadUrl = jsonObject["url"].toString();
         QString downloadToken = jsonObject["token"].toString();
         QJsonObject objParame = jsonObject["parame"].toObject();
@@ -369,15 +370,30 @@ void MainWindow::OnReceiveMessageFromJS(QString strMain,QString type,QString str
         QString strJsonParame(byteArrayParame);
         qDebug() << downloadUrl << downloadToken << strJsonParame;
 
-        QJsonValue arrayValue = jsonObject.value(QStringLiteral("key"));
+        QJsonValue arrayValue = jsonObject.value(QStringLiteral("key"));        
         if(arrayValue.isArray())
         {
-            QJsonArray array = arrayValue.toArray();
+            QJsonArray array = arrayValue.toArray();            
             for(int i=0;i<array.size();i++)
             {
-                QString kk = array.at(i).toString();
-                qDebug()<<"kk:"<<kk;
-                keyList << kk;
+                QString key = array.at(i).toString();
+                qDebug()<<"key:"<<key;
+                keyList << key;
+            }
+        }
+
+        QJsonValue arrayFileId = objParame.value(QStringLiteral("fileInfoVos"));
+        if(arrayFileId.isArray())
+        {
+            QJsonArray arrFileId = arrayFileId.toArray();
+            for(int m = 0;m < arrFileId.size(); m++)
+            {
+                QJsonValue idArray = arrFileId.at(m);
+                QJsonObject idObject = idArray.toObject();
+                QString fileId = idObject["file_id"].toString();
+
+                qDebug()<<"fileId:"<<fileId;
+                keyMap.insert(fileId,keyList.at(m));
             }
         }
 
@@ -394,13 +410,6 @@ void MainWindow::OnReceiveMessageFromJS(QString strMain,QString type,QString str
         }
 
         PostDownloadData(downloadUrl,downloadToken,byteArrayParame);
-
-        QJsonObject obj;
-        obj.insert("strMain", "GetDownLoadData");
-        obj.insert("strBranch", "DownLoadFinish");
-        QByteArray byteArray = QJsonDocument(obj).toJson(QJsonDocument::Compact);
-        QString strJson(byteArray);
-        SigSendMessageToJS(strJson,"","");
         return;
     }
 
@@ -465,12 +474,12 @@ void MainWindow::UploadFile(QString *filename,int num)
     QString tokenHeaderData = QString("Bearer ") + tokenStr;
     request.setRawHeader("Authorization", tokenHeaderData.toLatin1());
 
-    QNetworkAccessManager *accessManager = new QNetworkAccessManager(this);    //往该目录中上传文件
-    accessManager->setNetworkAccessible(QNetworkAccessManager::Accessible);
-    reply = accessManager->post(request, multi_part);
+    mAccessManager = new QNetworkAccessManager(this);    //往该目录中上传文件
+    mAccessManager->setNetworkAccessible(QNetworkAccessManager::Accessible);
+    reply = mAccessManager->post(request, multi_part);
     multi_part->setParent(reply);
 
-    connect(accessManager,SIGNAL(finished(QNetworkReply*)),this,SLOT(replyFinished(QNetworkReply*)));
+    connect(mAccessManager,SIGNAL(finished(QNetworkReply*)),this,SLOT(replyFinished(QNetworkReply*)));
     connect(reply, SIGNAL(error(QNetworkReply::NetworkError)),this,SLOT(loadError(QNetworkReply::NetworkError)));
 }
 
@@ -486,6 +495,7 @@ void MainWindow::replyFinished(QNetworkReply*)    //删除指针，更新和关�
         qDebug()<<"**********************replyFinished";
         QString str = reply->readAll();
         reply->deleteLater();
+        mAccessManager->deleteLater();
         //qDebug() << str;
 
         QJsonParseError parseJsonErr;
@@ -583,13 +593,130 @@ void MainWindow::PostDownloadData(const QString& url,const QString& token,const 
     //request.setRawHeader("responseType", "blob");
     QByteArray postData = parame;
 
-    QNetworkAccessManager *accessManager = new QNetworkAccessManager(this);    //往该目录中上传文件
-    accessManager->setNetworkAccessible(QNetworkAccessManager::Accessible);
-    accessManager->setRedirectPolicy(QNetworkRequest::NoLessSafeRedirectPolicy);
-    reply = accessManager->post(request, postData);
+    //QNetworkAccessManager *accessManager = new QNetworkAccessManager(this);    //往该目录中上传文件
+    mAccessManager = new QNetworkAccessManager(this);
+    mAccessManager->setNetworkAccessible(QNetworkAccessManager::Accessible);
+    mAccessManager->setRedirectPolicy(QNetworkRequest::NoLessSafeRedirectPolicy);
+    reply = mAccessManager->post(request, postData);
 
-    connect(accessManager,SIGNAL(finished(QNetworkReply*)),this,SLOT(DownReplyFinished(QNetworkReply*)));
+    LogRecord wLog;
+    wLog.LogTrack("------------------------------------------");
+    wLog.LogTrack("start post download.");
+    mFile = fopen(TEMPFILEZIPNAME,"wb+");
+    connect(mAccessManager,SIGNAL(finished(QNetworkReply*)),this,SLOT(DownReplyFinishedTest(QNetworkReply*)));
     connect(reply, SIGNAL(error(QNetworkReply::NetworkError)),this,SLOT(loadError(QNetworkReply::NetworkError)));
+    connect( reply, SIGNAL( readyRead() ), this, SLOT( WriteToFile() ) );
+}
+
+void MainWindow::WriteToFile()
+{
+    if (reply->bytesAvailable()>100000)
+    {
+        QByteArray tempArry = reply->readAll();
+        fwrite(tempArry.data(), 1, tempArry.length(), mFile);
+    }
+}
+
+void MainWindow::DownReplyFinishedTest(QNetworkReply *)
+{
+    qDebug()<<"-------------------DownReplyFinishedTest";
+    LogRecord wLog;
+    wLog.LogTrack("start recv download data.");
+    if(reply->error() == QNetworkReply::NoError){
+        qDebug()<<"reply->readAll1.";
+        wLog.LogTrack("start read download data.");
+        QByteArray strData = reply->readAll();
+        wLog.LogTrack("start read download data1.");
+        reply->close();
+        reply->deleteLater();
+        mAccessManager->deleteLater();
+        wLog.LogTrack("read download file over.");
+
+        fwrite(strData.data(), 1, strData.length(), mFile);
+        fclose(mFile);
+        mFile = NULL;
+
+        pDecrypt = new SM4Decrypt;
+        pDecrypt->DecodeSM4_StreamTest(keyList,fileList,strData.data(),strData.length());
+        delete pDecrypt;
+        wLog.LogTrack("DecodeSM4 over.");
+
+        QString downloadName = "";
+        QString appPath = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation) + "/";
+        qDebug()<< "appPath:"<<appPath;
+        if(pBatchSingle == "batch"){            
+            downloadName = appPath + QString::fromLocal8Bit("证据文件集.zip");
+        }
+        else{
+            downloadName = appPath + pDownLoadFileName;
+        }
+        downLoadPath = QFileDialog::getSaveFileName(this, QString::fromLocal8Bit("保存文件"), downloadName);//选择下载路径
+        qDebug()<<"downLoadPath:"<<downLoadPath << pBatchSingle;
+        QString getPath = QString("downLoadPath:%1").arg(downLoadPath);
+        QString getBatchSingle = QString("pBatchSingle:%1").arg(pBatchSingle);
+        wLog.LogTrack(getPath);
+        wLog.LogTrack(getBatchSingle);
+        if(pBatchSingle == "batch"){
+            std::string dir = downLoadPath.toStdString();
+            std::string::size_type zipPos = dir.find(".zip");
+            QString zipPath = downLoadPath;
+            if(zipPos == dir.npos){
+                downLoadPath = QString("%1.zip").arg(downLoadPath);
+            }
+        }
+
+        QFile fileTemp(downLoadPath);
+        if(fileTemp.exists())//解决下载文件直接替换相同名的问题
+        {
+            qDebug()<<"file exists.";
+            wLog.LogTrack("file download exists.");
+            if(fileTemp.remove()){
+                wLog.LogTrack("exists file remove success.");
+            }
+            else{
+                wLog.LogTrack("exists file remove fail.");
+            }
+        }
+
+        if(!QFile::copy(pDownLoadFileName, downLoadPath))
+        {
+            wLog.LogTrack("file download copy fail!");
+            qDebug()<< "file copy fail.";
+
+            QMessageBox::warning(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("文件被占用！"), QString::fromLocal8Bit("确定"), 0);
+            QJsonObject obj;
+            obj.insert("strMain", "GetDownLoadData");
+            obj.insert("strBranch", "DownLoadFail");
+            QByteArray byteArray = QJsonDocument(obj).toJson(QJsonDocument::Compact);
+            QString strJson(byteArray);
+            SigSendMessageToJS(strJson,"","");
+            return;
+        }
+        else{
+            Common *pCommon = NULL;
+            pCommon->RemoveOverageFile(pDownLoadFileName);
+        }
+        pBatchSingle = "";
+        fileList.clear();
+        keyList.clear();
+        wLog.LogTrack("file download over.");
+
+        QJsonObject obj;
+        obj.insert("strMain", "GetDownLoadData");
+        obj.insert("strBranch", "DownLoadSuccess");
+        QByteArray byteArray = QJsonDocument(obj).toJson(QJsonDocument::Compact);
+        QString strJson(byteArray);
+        SigSendMessageToJS(strJson,"","");
+    }
+    else{
+        qDebug() << "QNetworkReply Error.";
+        QJsonObject obj;
+        obj.insert("strMain", "GetDownLoadData");
+        obj.insert("strBranch", "DownLoadFail");
+        QByteArray byteArray = QJsonDocument(obj).toJson(QJsonDocument::Compact);
+        QString strJson(byteArray);
+        SigSendMessageToJS(strJson,"","");
+    }
 }
 
 void MainWindow::DownReplyFinished(QNetworkReply*)    //删除指针，更新和关闭文件

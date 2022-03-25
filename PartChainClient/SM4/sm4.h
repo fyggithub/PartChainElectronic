@@ -14,7 +14,9 @@
 #define SM4_BLOCK_SIZE    16
 #define SM4_KEY_SCHEDULE  32
 
-#define TEMPFILENAME    "tempDb.txt"
+#define TEMPFILENAME        "tempDb.txt"
+#define TEMPFILEZIPNAME     "tmp.zip"
+#define BatchCompressFileName   "证据合集.zip"
 
 typedef struct {
     int mode; // ENCRYPT OR DECRYPT
@@ -50,6 +52,7 @@ extern "C" {
     //void sm4_cbc_encrypt_file(FILE *in, FILE *out, sm4_ctx *ctx);
     //void sm4_cbc_decrypt_file(FILE *in, FILE *out, sm4_ctx *ctx);
     void sm4_decrypt_file_test(sm4_ctx *ctx);
+    void sm4_decrypt_file_test2(sm4_ctx *ctx,const QString& inName,const QString& outName);
 
 
 #ifdef __cplusplus

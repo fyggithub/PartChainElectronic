@@ -20,9 +20,11 @@ public:
     QString DecodeSM4_Base64(const QString& key,const QString& strInput);
     QString DecodeSM4_Base64Test(const QString& key,const char* strInput,int len);
     QString DecodeSM4_Base64Test2(const QString& key,const QByteArray& strInput);
+    QString DecodeSM4_StreamTest(const QStringList& key,const QStringList& fileNameList,const char* strInput,int len);
 };
 
 extern QList<QString> pList;
+extern QMap<QString, QString> keyMap;
 
 #endif // !EN_DECRYPT_H_
 

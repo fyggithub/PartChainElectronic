@@ -507,6 +507,79 @@ void sm4_decrypt_file_test(sm4_ctx *ctx)
     file_out = NULL;
 }
 
+void sm4_decrypt_file_test2(sm4_ctx *ctx,const QString& inName,const QString& outName)
+{
+    FILE *file_in = NULL;
+    FILE *file_out = NULL;
+    file_in = fopen(inName.toLocal8Bit().constData(),"rb");
+    file_out = fopen(outName.toLocal8Bit().constData(),"wb");
+
+    uint8_t buf1[SM4_BLOCK_SIZE] = {0};
+    uint8_t out_buf1[SM4_BLOCK_SIZE] = {0};
+    memset(buf1, 0, SM4_BLOCK_SIZE);
+    memset(out_buf1, 0, SM4_BLOCK_SIZE);
+    fseek(file_in, -16, SEEK_END);
+    long sz = 0;
+    sz = ftell(file_in) + SM4_BLOCK_SIZE;
+    qDebug()<<"*************************sz:"<<sz;
+    fread(buf1, 1, SM4_BLOCK_SIZE, file_in);
+    qDebug()<<"buf1[]:"<<buf1[SM4_BLOCK_SIZE-1];
+    rewind(file_in);
+    sm4_decrypt(buf1, out_buf1, ctx);
+    uint8_t padding_byte_len = out_buf1[SM4_BLOCK_SIZE-1];
+    uint8_t remain_len = SM4_BLOCK_SIZE - padding_byte_len;
+    qDebug()<<"padding_byte_len:"<<padding_byte_len;
+
+    long n = 0;
+    long ncremain = sz;
+    long countNum = 0;
+    qDebug()<<"ncremain:"<<ncremain;
+    uint8_t *buf = new uint8_t[SM4_BLOCK_SIZE];
+    uint8_t *out_buf = new uint8_t[SM4_BLOCK_SIZE];
+    memset(buf, 0, SM4_BLOCK_SIZE);
+    memset(out_buf, 0, SM4_BLOCK_SIZE);
+
+    while(ncremain >= SM4_BLOCK_SIZE) {
+        n = fread(buf, 1, SM4_BLOCK_SIZE, file_in);
+        if(n == 0){
+            break;
+        }
+        else if(n != 16)
+        {
+            qDebug()<<"n:"<<n;
+        }
+        ncremain -= n;
+        sm4_decrypt(buf, out_buf, ctx);
+        if(ncremain == 0){
+            if((remain_len != 0) && (remain_len < SM4_BLOCK_SIZE)){
+                qDebug()<<"countNum:"<<countNum;
+                qDebug()<<"remain_len:"<<remain_len;
+                fwrite(out_buf, 1, remain_len, file_out);
+            }
+            else{
+                fwrite(out_buf, 1, SM4_BLOCK_SIZE, file_out);
+            }
+        }
+        else
+        {
+            countNum += SM4_BLOCK_SIZE;
+            fwrite(out_buf, 1, SM4_BLOCK_SIZE, file_out);
+        }
+        memset(buf, 0, SM4_BLOCK_SIZE);
+        memset(out_buf, 0, SM4_BLOCK_SIZE);
+    }
+
+    qDebug() << "------------ncremain:" << ncremain;
+    delete [] buf;
+    delete [] out_buf;
+    buf = nullptr;
+    out_buf = nullptr;
+    fclose(file_in);
+    fclose(file_out);
+    file_in = NULL;
+    file_out = NULL;
+}
+
 QString sm4_encrypt_string(QString strEnc,sm4_ctx *ctx)
 {
     long sz = strEnc.length();

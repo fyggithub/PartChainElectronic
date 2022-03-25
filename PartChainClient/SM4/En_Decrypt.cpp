@@ -10,6 +10,7 @@
 #include "Common/common.h"
 #include "Common/logrecord.h"
 #include <cstring>
+#include "include/JlCompress.h"
 
 #define BUFF_SIZE 256
 #define MAXBUFFSIZE (100*1024*1024)
@@ -19,6 +20,7 @@
 #endif
 
 QList<QString> pList;
+QMap<QString, QString> keyMap;
 unsigned char BuffBase64[MAXBUFFSIZE] = {0};
 
 SM4Decrypt::SM4Decrypt()
@@ -316,6 +318,96 @@ QString SM4Decrypt::DecodeSM4_Base64Test2(const QString& key,const QByteArray& s
     pList << pDownLoadFileName;
     wLog.LogTrack("decry is over.");
     return str;
+}
+
+QString SM4Decrypt::DecodeSM4_StreamTest(const QStringList& key,const QStringList& fileNameList,const char* strInput,int len)
+{
+    qDebug()<<"DecodeSM4_Base641111111111111";
+    LogRecord wLog;
+    wLog.LogTrack("start write download file become to zip file.");
+//    FILE *file_in = NULL;
+//    file_in = fopen(TEMPFILEZIPNAME,"wb+");
+//    fwrite(strInput, 1, len, file_in);
+//    fclose(file_in);
+//    file_in = NULL;
+    wLog.LogTrack("write download file become to zip file over.");
+
+    QString tmpCompressName = QCoreApplication::applicationDirPath() + "/tmp";
+    JlCompress::extractDir(TEMPFILEZIPNAME,tmpCompressName);
+    QDir dir(tmpCompressName);
+    QFileInfoList fileList;
+    QFileInfo curFile;
+    if(!dir.exists())
+    {
+        wLog.LogTrack("JlCompress::extractDir fail, dir no exists!");
+        qDebug()<<"dir no exists.";
+        return "";   //文件不存，则返回false
+    }
+    fileList = dir.entryInfoList(QDir::Dirs | QDir::Files \
+                               |QDir::Readable|QDir::Writable \
+                               |QDir::Hidden|QDir::NoDotAndDotDot \
+                               ,QDir::Name);
+    wLog.LogTrack("JlCompress::extractDir success.");
+    if(fileList.size() > 0)
+    {
+        int infoNum = fileList.size();
+        QString strPath = "";
+        QStringList RecvfilesList;
+        for(int i = infoNum - 1; i >= 0; i--)
+        {
+            curFile = fileList[i];
+            qDebug()<<curFile.filePath();
+            fileList.removeAt(i);
+            strPath = curFile.filePath();
+
+            QString tmpKey,tmpFileName;
+            for(QMap<QString,QString>::ConstIterator ite=keyMap.constBegin(); ite!=keyMap.constEnd(); ++ite)
+            {
+                //qDebug()<<ite.key()<<": "<<ite.value();
+                bool temp = strPath.contains(ite.key(), Qt::CaseInsensitive);
+                if(temp == true){
+                    tmpKey = ite.value();
+                    for(int j = 0; j < key.size(); ++j){
+                            if(key.at(j) == tmpKey){
+                                tmpFileName = fileNameList.at(j);
+                                break;
+                            }
+                    }
+                    break;
+                }
+            }
+            qDebug()<<tmpKey<<tmpFileName;
+            RecvfilesList << tmpFileName;
+
+            const char *pStrkey = tmpKey.toLocal8Bit().constData();
+            unsigned char *pkey = (unsigned char *)pStrkey;
+            sm4_ctx ctx;
+            sm4_set_key(pkey, &ctx);
+            sm4_decrypt_file_test2(&ctx,curFile.filePath(),tmpFileName);
+        }
+
+        if(pBatchSingle == "batch"){
+            JlCompress::compressFiles(BatchCompressFileName, RecvfilesList);
+            for(int i = 0; i < RecvfilesList.size(); ++i){
+                Common *pCommon = NULL;
+                QString getName = RecvfilesList.at(i);
+                pCommon->RemoveOverageFile(getName);
+            }
+            pDownLoadFileName = BatchCompressFileName;
+        }
+        else{
+            pDownLoadFileName = RecvfilesList.at(0);
+        }
+        RecvfilesList.clear();
+    }
+
+    QString tmpFile = QString(QLatin1String(TEMPFILEZIPNAME));
+    Common *pCommon = NULL;
+    pCommon->RemoveOverageFile(tmpFile);
+    pCommon->RemoveDirFile(tmpCompressName);
+
+    qDebug()<<"ready end.";
+    return "";
 }
 
 void SM4Decrypt::Encrypt_String(QByteArray& source_array, QByteArray& result_array, unsigned char key[16] )

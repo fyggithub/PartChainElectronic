@@ -27,6 +27,7 @@
 #include <QJsonArray>
 
 #include "inspector.h"
+#include <QMap>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -75,9 +76,11 @@ public slots:
 private slots:
     void replyFinished(QNetworkReply*);
     void DownReplyFinished(QNetworkReply*);
+    void DownReplyFinishedTest(QNetworkReply *);
     void loadError(QNetworkReply::NetworkError);
     void RecvMsgCloseWnd(RecordType type);
     void MsgInspector();
+    void WriteToFile();
 private:
     void DownLoadFinish();
 signals:
@@ -86,6 +89,8 @@ signals:
 private:
     Ui::MainWindow *ui;
     QNetworkReply *reply;
+    QNetworkAccessManager *mAccessManager;
+    FILE *mFile;
     networkclean *detect_thread;
     QString pStrMain,pType,pStr;
     networkclean* pNetworkClean;
