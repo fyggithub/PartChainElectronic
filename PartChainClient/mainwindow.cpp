@@ -38,6 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+    multi_part->deleteLater();
     delete m_webView;
     delete ui;
 }
@@ -352,7 +353,17 @@ void MainWindow::OnReceiveMessageFromJS(QString strMain,QString type,QString str
     {
         QString path = jsonObject["path"].toString();
         qDebug()<<"path:"<<path;
-        QDesktopServices::openUrl(QUrl::fromLocalFile(path));
+        QDir dir(path);
+        if(dir.exists())
+        {
+            QDesktopServices::openUrl(QUrl::fromLocalFile(path));
+        }
+        else{
+            qDebug() << "file is not exists.";
+            QMessageBox::warning(NULL, QString::fromLocal8Bit("查看文件"), QString::fromLocal8Bit("本地文件已删除，无法查看"),\
+                                            QString::fromLocal8Bit("确定"), 0);
+        }
+
         QJsonObject obj;
         obj.insert("strMain", "openResourceManagement");
         QByteArray byteArray = QJsonDocument(obj).toJson(QJsonDocument::Compact);
@@ -429,9 +440,9 @@ void MainWindow::OnReceiveMessageFromJS(QString strMain,QString type,QString str
 
 void MainWindow::UploadFile(QString *filename,int num)
 {
-    QHttpMultiPart *multi_part = new QHttpMultiPart(QHttpMultiPart::FormDataType);
+    multi_part = new QHttpMultiPart(QHttpMultiPart::FormDataType);
     QString formData = "form-data; name=\"file\";filename=";
-
+    qDebug()<<"**********************UploadFile";
     Common *pcom = NULL;
     QString strDirPath = pcom->FileDirPath(pRecordType);
 //    for(int i = 0;i < num;i++)
@@ -468,18 +479,31 @@ void MainWindow::UploadFile(QString *filename,int num)
     multi_part->append(*textPart1);
     delete textPart1;
 
+    qDebug()<<"**********************UploadFile1";
     QUrl url("http://172.16.5.71:8080/api/file/uploadFile");
     QNetworkRequest request(url);
     QString tokenStr = pGetJsToken;
     QString tokenHeaderData = QString("Bearer ") + tokenStr;
     request.setRawHeader("Authorization", tokenHeaderData.toLatin1());
+    qDebug()<<"**********************UploadFile2";
 
-    mAccessManager = new QNetworkAccessManager(this);    //往该目录中上传文件
-    mAccessManager->setNetworkAccessible(QNetworkAccessManager::Accessible);
-    reply = mAccessManager->post(request, multi_part);
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    //qDebug()<<"**********************UploadFile22";
+    manager->setNetworkAccessible(QNetworkAccessManager::Accessible);
+    //qDebug()<<"**********************UploadFile23";
+    reply = manager->post(request, multi_part);
+    //qDebug()<<"**********************UploadFile24";
     multi_part->setParent(reply);
 
-    connect(mAccessManager,SIGNAL(finished(QNetworkReply*)),this,SLOT(replyFinished(QNetworkReply*)));
+//    mAccessManager = new QNetworkAccessManager(this);    //往该目录中上传文件
+//    qDebug()<<"**********************UploadFile22";
+//    mAccessManager->setNetworkAccessible(QNetworkAccessManager::Accessible);
+//    qDebug()<<"**********************UploadFile23";
+//    reply = mAccessManager->post(request, multi_part);
+//    qDebug()<<"**********************UploadFile24";
+//    multi_part->setParent(reply);
+    qDebug()<<"**********************UploadFile3";
+    connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(replyFinished(QNetworkReply*)));
     connect(reply, SIGNAL(error(QNetworkReply::NetworkError)),this,SLOT(loadError(QNetworkReply::NetworkError)));
 }
 
@@ -493,10 +517,14 @@ void MainWindow::replyFinished(QNetworkReply*)    //删除指针，更新和关�
     if(reply->error() == QNetworkReply::NoError)
     {
         qDebug()<<"**********************replyFinished";
-        QString str = reply->readAll();
+        QString str = reply->readAll();        
         reply->deleteLater();
-        mAccessManager->deleteLater();
+        //mAccessManager->deleteLater();
+        //multi_part->deleteLater();
+
         //qDebug() << str;
+        QApplication::processEvents();
+        qDebug()<<"**********************reply delete over.";
 
         QJsonParseError parseJsonErr;
         QJsonDocument document = QJsonDocument::fromJson(str.toUtf8(), &parseJsonErr);

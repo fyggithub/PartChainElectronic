@@ -42,7 +42,6 @@ web_forensics::web_forensics(QWidget *parent) :
 
 web_forensics::~web_forensics()
 {
-    delete pLog;
     delete m_webView;
     delete ui;
 }
@@ -233,6 +232,7 @@ void web_forensics::closeEvent(QCloseEvent *event)
     }
     pCloseFlag = 0;
     m_loadFinishFlag = 0;
+    delete pLog;
     event->accept();
     emit SendMsgCloseWnd(WebRecord);
 }

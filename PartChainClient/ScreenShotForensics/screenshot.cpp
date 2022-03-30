@@ -150,7 +150,7 @@ void ScreenShot::OpenPreview(void)
 
 void ScreenShot::FileUpload(void)
 {
-    if(pCloseFlag == 1)
+    if((pCloseFlag == 1) && (pMap.size() != 0))
     {
         pCloseFlag = 2;
         Common *pCommon = NULL;
@@ -167,21 +167,16 @@ void ScreenShot::FileUpload(void)
         obj.insert("macAddress", pMacAddress);
         obj.insert("osVersion", pOsVersion);
         QJsonArray tokeArray;
-
-        //QString strMsg;
         for(QMap<QString,QString>::ConstIterator ite=pMap.constBegin(); ite!=pMap.constEnd(); ++ite)
         {
             //qDebug()<<ite.key()<<": "<<ite.value();
             //strMsg += ite.value();
-            //qDebug() << strMsg;
             tokeArray.append(ite.value());
         }
         obj.insert("str", tokeArray);
         QByteArray byteArray = QJsonDocument(obj).toJson(QJsonDocument::Compact);
         QString strJson(byteArray);
 
-        //pCommon->CommunicationWriteLog("GetScreenshotDate","token",strMsg);
-        //emit SigSendMessageToJS("GetScreenshotDate","token",strMsg);
         pCommon->CommunicationWriteLog("GetScreenshotDate","token",strJson);
         emit SigSendMessageToJS(strJson,"","");
         this->close();  //关闭子窗口
@@ -196,15 +191,10 @@ void ScreenShot::FileUpload(void)
 
 void ScreenShot::GrabFullScreen(void)
 {
-    int count = 0;
-    for (auto it = pMap.begin(); it != pMap.end();++it)
-    {
-        count++;
-        if(count >= 5){
-            QMessageBox::information(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("最多只能截图5张！"),\
-                                                           QString::fromLocal8Bit("确定"), 0);
-            return;
-        }
+    if(pMap.size() >= 5){
+        QMessageBox::information(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("最多只能截图5张！"),\
+                                                       QString::fromLocal8Bit("确定"), 0);
+        return;
     }
 
     Common *pcom = NULL;

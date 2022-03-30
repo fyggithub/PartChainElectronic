@@ -90,6 +90,7 @@ private:
     Ui::MainWindow *ui;
     QNetworkReply *reply;
     QNetworkAccessManager *mAccessManager;
+    QHttpMultiPart *multi_part;
     FILE *mFile;
     networkclean *detect_thread;
     QString pStrMain,pType,pStr;
