@@ -23,7 +23,9 @@ public:
 
 private:
     void PreviewItem(void);
-
+    void closeEvent(QCloseEvent *event);
+signals:
+    void SendPreviewMsgCloseWnd();
 private slots:
     void SlotItemClicked(QListWidgetItem * item);
     void SlotDoubleClicked(QListWidgetItem* item);

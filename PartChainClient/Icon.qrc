@@ -17,5 +17,6 @@
         <file>Icon/scn_max.png</file>
         <file>Icon/upload_max.png</file>
         <file>Icon/button_gray.png</file>
+        <file>Icon/line.png</file>
     </qresource>
 </RCC>

@@ -16,6 +16,7 @@
 QString pGetJsToken,pGetJsUrl,pGetForensicsName,pGetNameNoTime,pGetHostIp,pGetDirPath;
 QString pDownLoadFileName, pBatchSingle;
 QString pIpAddress,pMacAddress,pOsVersion,pGateway;
+int pRecordDialogFlag = 0;
 
 Common::Common()
 {
@@ -181,6 +182,13 @@ void Common::CreateForensicsLog(RecordType recordType, QString fileName)
         default:break;
     }
     QString mForensics = timeFromat + str;
+    WriteLog(recordType, fileName, mForensics);
+}
+
+void Common::StorageForensicsLog(RecordType recordType, const QString& fileName,const QString& str)
+{
+    QString timeFromat = SetLogTimeFromat();
+    QString mForensics = timeFromat + str + "\n";
     WriteLog(recordType, fileName, mForensics);
 }
 

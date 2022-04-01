@@ -143,6 +143,7 @@
 					msg.key = "";
 					msg.filename = "";
 					msg.batchSingle = "batch";//批量为：batch；单次为：single
+					msg.SingleType = "certificate";//详情下载：detail; 保全证书下载：certificate；批量下载时为空
 					var json = JSON.stringify(msg);
 					interactObj.JSSendMessage(json,"","");
 				})

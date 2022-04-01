@@ -10,6 +10,7 @@ enum RecordType{
     WebRecord = 0,
     CameraRecord,
     VideoRecord,
+    VideoRecordDialog,
     ScreenShotRecord
 };
 
@@ -28,6 +29,7 @@ public:
 
     QString SetLogTimeFromat(void);
     void CreateForensicsLog(RecordType recordType, QString fileName);
+    void StorageForensicsLog(RecordType recordType, const QString& fileName,const QString& str);
     void FromBaiDuJumpTime(RecordType recordType, QString fileName);
     void FromBaiDuJumpUrl(RecordType recordType, QString fileName, QString url);
     void WebJumpTime(RecordType recordType, QString fileName);
@@ -48,5 +50,6 @@ public:
 extern QString pGetJsToken,pGetJsUrl,pGetForensicsName,pGetNameNoTime,pGetHostIp,pGetDirPath;
 extern QString pDownLoadFileName, pBatchSingle;
 extern QString pIpAddress,pMacAddress,pOsVersion,pGateway;
+extern int pRecordDialogFlag;
 
 #endif // COMMON_H

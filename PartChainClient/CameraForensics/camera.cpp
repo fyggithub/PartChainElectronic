@@ -21,6 +21,7 @@ Camera::Camera(QWidget *parent) :
 
 Camera::~Camera()
 {
+    delete pLog;
     delete capture;
     delete ui;
 }
@@ -48,6 +49,13 @@ void Camera::InitPhotographUi()
     pCurrentTime = new QTimer(this);
     connect(pCurrentTime, SIGNAL(timeout()), this, SLOT(DisplayCurrentTime()));
     pCurrentTime->start(100);
+
+    pLog = new Common();
+    QString getTime = QDateTime::currentDateTime().toString("yyyy-MM-dd-hh-mm-ss-zzz");
+    FileLogName = "log" + getTime + ".txt";
+    pLog->CreateForensicsLog(CameraRecord, FileLogName);
+
+    WriteToVideo();
 
     connect(ui->BtnStart, SIGNAL(clicked()), this, SLOT(StartRecordVideo()));
     connect(ui->BtnReload, SIGNAL(clicked()), this, SLOT(ReloadRecordVideo()));
@@ -148,6 +156,7 @@ void Camera::StartRecordVideo(void)
     {
         if (!m_isRun)
         {
+            pLog->StorageForensicsLog(CameraRecord, FileLogName,"StartRecordVideo.");
             //删除刚录取的视频和音频文件
             RemoveFile(FileVideoName);
             RemoveFile(pAudioName);
@@ -168,10 +177,11 @@ void Camera::StartRecordVideo(void)
             m_Audio = new Audio();
             m_Audio->AudioInit(filePath);
             m_Audio->OnRecordStart(2);
-            WriteToVideo();
+            //WriteToVideo();
         }
         else
         {
+            pLog->StorageForensicsLog(CameraRecord, FileLogName,"StopRecordVideo.");
             emit StopRecordVideoSignal();
         }
     }
@@ -243,8 +253,11 @@ void Camera::MplayerCompressFinished(int exitCode, QProcess::ExitStatus exitStat
     delete pProcess;
 
     //上传文件服务器
+    QString filelog = pLog->RenameLogFile(CameraRecord, FileLogName);
+    pLog->RemoveWebLogFile(CameraRecord,FileLogName);
     BufferFileName[0] = getNameMp4;
-    CameraUploadFile(BufferFileName,1);
+    BufferFileName[1] = filelog;
+    CameraUploadFile(BufferFileName,2);
     Common *pcom = NULL;
     QString filePath = pcom->FileDirPath(CameraRecord);
     QString strWav = filePath + pAudioName;
@@ -298,6 +311,7 @@ void Camera::ReloadRecordVideo(void)
     pcom->RemoveOverageFile(pAudioName);
     pcom->RemoveOverageFile(FileVideoName);
 
+    pLog->StorageForensicsLog(CameraRecord, FileLogName,"ReloadRecordVideo.");
     m_isRun     = true;
     pCloseFlag = 1;
     pStopFlag = 0;
@@ -651,7 +665,10 @@ void Camera::RecordTime(void)
         image.scaled(ui->label_display->size(), Qt::KeepAspectRatio);//图片自适应
         ui->label_display->setScaledContents(true);
         ui->label_display->setPixmap(QPixmap::fromImage(image));
-        outputVideo->write(*frameImg);
+        if(m_isRun)
+        {
+            outputVideo->write(*frameImg);
+        }
     }
 
     delete frameImg;

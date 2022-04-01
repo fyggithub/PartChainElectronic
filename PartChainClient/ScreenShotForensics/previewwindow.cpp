@@ -39,6 +39,12 @@ PreviewWindow::~PreviewWindow()
     delete ui;
 }
 
+void PreviewWindow::closeEvent(QCloseEvent *event)
+{
+    qDebug()<<"PreviewWindow::closeEvent.";
+    emit SendPreviewMsgCloseWnd();
+}
+
 void PreviewWindow::SlotItemClicked(QListWidgetItem* item)
 {
 

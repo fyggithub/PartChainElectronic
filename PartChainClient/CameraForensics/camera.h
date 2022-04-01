@@ -91,6 +91,7 @@ private:
     VideoWriter *outputVideo;
     QTimer *timer, *count_timer;
     QDateTime  m_timeStart;
+    Common* pLog;
     bool       m_isRun;
     Audio*     m_Audio;
     QNetworkReply *reply;
@@ -109,6 +110,7 @@ private:
     QString getStrMsg;
     QProcess* pProcess;
     QString getNameMp4;
+    QString FileLogName;
 };
 
 #endif // CAMERA_H

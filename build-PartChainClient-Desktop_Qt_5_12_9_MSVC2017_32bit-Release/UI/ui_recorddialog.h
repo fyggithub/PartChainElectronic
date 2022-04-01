@@ -26,74 +26,110 @@ class Ui_RecordDialog
 {
 public:
     QVBoxLayout *verticalLayout;
-    QWidget *timeWidget;
-    QVBoxLayout *verticalLayout_5;
+    QWidget *widget;
+    QHBoxLayout *horizontalLayout_2;
     QHBoxLayout *horizontalLayout;
     QSpacerItem *horizontalSpacer;
-    QLabel *label_time;
+    QPushButton *minBtn;
+    QPushButton *closeBtn;
+    QWidget *timeWidget;
+    QVBoxLayout *verticalLayout_2;
+    QHBoxLayout *horizontalLayout_3;
     QSpacerItem *horizontalSpacer_2;
+    QLabel *label_time;
+    QSpacerItem *horizontalSpacer_3;
     QWidget *btnWidget;
-    QVBoxLayout *verticalLayout_4;
-    QHBoxLayout *horizontalLayout_2;
+    QVBoxLayout *verticalLayout_3;
+    QHBoxLayout *horizontalLayout_4;
     QPushButton *startBtn;
     QPushButton *stopBtn;
     QPushButton *uploadBtn;
+    QWidget *widget_2;
     QWidget *pointWidget;
-    QVBoxLayout *verticalLayout_3;
-    QVBoxLayout *verticalLayout_2;
+    QVBoxLayout *verticalLayout_5;
+    QVBoxLayout *verticalLayout_4;
     QLabel *label_point;
 
     void setupUi(QDialog *RecordDialog)
     {
         if (RecordDialog->objectName().isEmpty())
             RecordDialog->setObjectName(QString::fromUtf8("RecordDialog"));
-        RecordDialog->resize(220, 160);
+        RecordDialog->resize(260, 188);
+        RecordDialog->setMaximumSize(QSize(600, 188));
         verticalLayout = new QVBoxLayout(RecordDialog);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        timeWidget = new QWidget(RecordDialog);
-        timeWidget->setObjectName(QString::fromUtf8("timeWidget"));
-        timeWidget->setMaximumSize(QSize(16777215, 48));
-        verticalLayout_5 = new QVBoxLayout(timeWidget);
-        verticalLayout_5->setSpacing(2);
-        verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
-        verticalLayout_5->setContentsMargins(0, 0, 0, 0);
+        verticalLayout->setContentsMargins(0, 0, 0, -1);
+        widget = new QWidget(RecordDialog);
+        widget->setObjectName(QString::fromUtf8("widget"));
+        widget->setMaximumSize(QSize(16777215, 30));
+        horizontalLayout_2 = new QHBoxLayout(widget);
+        horizontalLayout_2->setSpacing(7);
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
         horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setSpacing(0);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout->addItem(horizontalSpacer);
 
+        minBtn = new QPushButton(widget);
+        minBtn->setObjectName(QString::fromUtf8("minBtn"));
+
+        horizontalLayout->addWidget(minBtn);
+
+        closeBtn = new QPushButton(widget);
+        closeBtn->setObjectName(QString::fromUtf8("closeBtn"));
+
+        horizontalLayout->addWidget(closeBtn);
+
+
+        horizontalLayout_2->addLayout(horizontalLayout);
+
+
+        verticalLayout->addWidget(widget);
+
+        timeWidget = new QWidget(RecordDialog);
+        timeWidget->setObjectName(QString::fromUtf8("timeWidget"));
+        timeWidget->setMaximumSize(QSize(16777215, 48));
+        verticalLayout_2 = new QVBoxLayout(timeWidget);
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        verticalLayout_2->setContentsMargins(0, 0, 0, 0);
+        horizontalLayout_3 = new QHBoxLayout();
+        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_3->addItem(horizontalSpacer_2);
+
         label_time = new QLabel(timeWidget);
         label_time->setObjectName(QString::fromUtf8("label_time"));
 
-        horizontalLayout->addWidget(label_time);
+        horizontalLayout_3->addWidget(label_time);
 
-        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        horizontalLayout->addItem(horizontalSpacer_2);
+        horizontalLayout_3->addItem(horizontalSpacer_3);
 
 
-        verticalLayout_5->addLayout(horizontalLayout);
+        verticalLayout_2->addLayout(horizontalLayout_3);
 
 
         verticalLayout->addWidget(timeWidget);
 
         btnWidget = new QWidget(RecordDialog);
         btnWidget->setObjectName(QString::fromUtf8("btnWidget"));
-        verticalLayout_4 = new QVBoxLayout(btnWidget);
-        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
-        horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        verticalLayout_3 = new QVBoxLayout(btnWidget);
+        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
+        horizontalLayout_4 = new QHBoxLayout();
+        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
         startBtn = new QPushButton(btnWidget);
         startBtn->setObjectName(QString::fromUtf8("startBtn"));
-        startBtn->setMaximumSize(QSize(16777215, 16777215));
-        startBtn->setLayoutDirection(Qt::LeftToRight);
         QIcon icon;
         icon.addFile(QString::fromUtf8(":/new/prefix1/Icon/startRecord.png"), QSize(), QIcon::Normal, QIcon::Off);
         startBtn->setIcon(icon);
         startBtn->setIconSize(QSize(40, 40));
 
-        horizontalLayout_2->addWidget(startBtn);
+        horizontalLayout_4->addWidget(startBtn);
 
         stopBtn = new QPushButton(btnWidget);
         stopBtn->setObjectName(QString::fromUtf8("stopBtn"));
@@ -102,7 +138,7 @@ public:
         stopBtn->setIcon(icon1);
         stopBtn->setIconSize(QSize(40, 40));
 
-        horizontalLayout_2->addWidget(stopBtn);
+        horizontalLayout_4->addWidget(stopBtn);
 
         uploadBtn = new QPushButton(btnWidget);
         uploadBtn->setObjectName(QString::fromUtf8("uploadBtn"));
@@ -111,31 +147,36 @@ public:
         uploadBtn->setIcon(icon2);
         uploadBtn->setIconSize(QSize(40, 40));
 
-        horizontalLayout_2->addWidget(uploadBtn);
+        horizontalLayout_4->addWidget(uploadBtn);
 
 
-        verticalLayout_4->addLayout(horizontalLayout_2);
+        verticalLayout_3->addLayout(horizontalLayout_4);
 
 
         verticalLayout->addWidget(btnWidget);
 
+        widget_2 = new QWidget(RecordDialog);
+        widget_2->setObjectName(QString::fromUtf8("widget_2"));
+        widget_2->setMaximumSize(QSize(16777215, 1));
+        widget_2->setStyleSheet(QString::fromUtf8("background-image: url(:/new/prefix1/Icon/line.png);"));
+
+        verticalLayout->addWidget(widget_2);
+
         pointWidget = new QWidget(RecordDialog);
         pointWidget->setObjectName(QString::fromUtf8("pointWidget"));
-        pointWidget->setMaximumSize(QSize(16777215, 48));
-        verticalLayout_3 = new QVBoxLayout(pointWidget);
-        verticalLayout_3->setSpacing(0);
-        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
-        verticalLayout_3->setContentsMargins(0, 0, 0, 0);
-        verticalLayout_2 = new QVBoxLayout();
-        verticalLayout_2->setSpacing(7);
-        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        pointWidget->setMaximumSize(QSize(16777215, 36));
+        verticalLayout_5 = new QVBoxLayout(pointWidget);
+        verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
+        verticalLayout_5->setContentsMargins(-1, 0, -1, 0);
+        verticalLayout_4 = new QVBoxLayout();
+        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
         label_point = new QLabel(pointWidget);
         label_point->setObjectName(QString::fromUtf8("label_point"));
 
-        verticalLayout_2->addWidget(label_point);
+        verticalLayout_4->addWidget(label_point);
 
 
-        verticalLayout_3->addLayout(verticalLayout_2);
+        verticalLayout_5->addLayout(verticalLayout_4);
 
 
         verticalLayout->addWidget(pointWidget);
@@ -148,7 +189,9 @@ public:
 
     void retranslateUi(QDialog *RecordDialog)
     {
-        RecordDialog->setWindowTitle(QApplication::translate("RecordDialog", "\345\275\225\345\261\217\345\217\226\350\257\201", nullptr));
+        RecordDialog->setWindowTitle(QApplication::translate("RecordDialog", "Dialog", nullptr));
+        minBtn->setText(QString());
+        closeBtn->setText(QString());
         label_time->setText(QApplication::translate("RecordDialog", "TextLabel", nullptr));
         startBtn->setText(QString());
         stopBtn->setText(QString());

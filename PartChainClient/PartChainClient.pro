@@ -25,10 +25,12 @@ SOURCES += \
     RecordForensics/avilib.cpp \
     RecordForensics/head.cpp \
     RecordForensics/mywin.cpp \
+    RecordForensics/recorddialog.cpp \
     RecordForensics/recordvideo.cpp \
     SM4/En_Decrypt.cpp \
     SM4/base64.cpp \
     SM4/sm4.cpp \
+    ScreenShotForensics/bubbleltipbutton.cpp \
     ScreenShotForensics/previewwindow.cpp \
     ScreenShotForensics/screenshot.cpp \
     ScreenShotForensics/zoompreview.cpp \
@@ -57,10 +59,12 @@ HEADERS += \
     RecordForensics/avilib.h \
     RecordForensics/head.h \
     RecordForensics/mywin.h \
+    RecordForensics/recorddialog.h \
     RecordForensics/recordvideo.h \
     SM4/En_Decrypt.h \
     SM4/base64.h \
     SM4/sm4.h \
+    ScreenShotForensics/bubbleltipbutton.h \
     ScreenShotForensics/previewwindow.h \
     ScreenShotForensics/screenshot.h \
     ScreenShotForensics/zoompreview.h \
@@ -72,6 +76,7 @@ HEADERS += \
 FORMS += \
     CameraForensics/camera.ui \
     Common/widget.ui \
+    RecordForensics/recorddialog.ui \
     RecordForensics/recordvideo.ui \
     ScreenShotForensics/previewwindow.ui \
     ScreenShotForensics/screenshot.ui \

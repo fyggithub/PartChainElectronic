@@ -27,6 +27,7 @@
 #include <QJsonArray>
 
 #include "inspector.h"
+#include "RecordForensics/recorddialog.h"
 #include <QMap>
 
 QT_BEGIN_NAMESPACE
@@ -63,11 +64,13 @@ public:
     Camera *pCamera;
     SM4Decrypt *pDecrypt;
     Inspector* m_inspector;
+    RecordDialog *m_record;
 
 public slots:
     void OpenWebForensics(void);
     void OpenWebScreenShoot(void);
     void OpenWebRecordVideo(void);
+    void OpenWebRecordDialog(void);
     void OpenWebCamera(void);
     void DialogProgressTime();
     void OnReceiveMessageFromJS(QString strMain,QString type,QString str);
@@ -76,7 +79,7 @@ public slots:
 private slots:
     void replyFinished(QNetworkReply*);
     void DownReplyFinished(QNetworkReply*);
-    void DownReplyFinishedTest(QNetworkReply *);
+    void DownReplyFinishedTest(QNetworkReply *strReply);
     void loadError(QNetworkReply::NetworkError);
     void RecvMsgCloseWnd(RecordType type);
     void MsgInspector();
@@ -90,7 +93,7 @@ private:
     Ui::MainWindow *ui;
     QNetworkReply *reply;
     QNetworkAccessManager *mAccessManager;
-    QHttpMultiPart *multi_part;
+    //QHttpMultiPart *multi_part;
     FILE *mFile;
     networkclean *detect_thread;
     QString pStrMain,pType,pStr;
@@ -108,6 +111,7 @@ private:
     QString sendBuff;
     QStringList keyList;
     QStringList fileList;
+    QString mSingleType;
     int fileSum;
     int countBuff;
 };

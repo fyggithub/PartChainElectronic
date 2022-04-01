@@ -6,7 +6,7 @@
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../../../../ThirdIteration/PartChainElectronic/PartChainClient/RecordForensics/recorddialog.h"
+#include "../../PartChainClient/RecordForensics/recorddialog.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_RecordDialog_t {
-    QByteArrayData data[20];
-    char stringdata0[275];
+    QByteArrayData data[24];
+    char stringdata0[330];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -38,29 +38,35 @@ QT_MOC_LITERAL(3, 29, 18), // "SigSendMessageToJS"
 QT_MOC_LITERAL(4, 48, 7), // "strMain"
 QT_MOC_LITERAL(5, 56, 4), // "type"
 QT_MOC_LITERAL(6, 61, 3), // "str"
-QT_MOC_LITERAL(7, 65, 18), // "StartButtonClicked"
-QT_MOC_LITERAL(8, 84, 17), // "StopButtonClicked"
-QT_MOC_LITERAL(9, 102, 10), // "RecordTime"
-QT_MOC_LITERAL(10, 113, 10), // "FileUpload"
-QT_MOC_LITERAL(11, 124, 13), // "replyFinished"
-QT_MOC_LITERAL(12, 138, 14), // "QNetworkReply*"
-QT_MOC_LITERAL(13, 153, 9), // "loadError"
-QT_MOC_LITERAL(14, 163, 27), // "QNetworkReply::NetworkError"
-QT_MOC_LITERAL(15, 191, 18), // "DialogProgressTime"
-QT_MOC_LITERAL(16, 210, 23), // "MplayerCompressFinished"
-QT_MOC_LITERAL(17, 234, 8), // "exitCode"
-QT_MOC_LITERAL(18, 243, 20), // "QProcess::ExitStatus"
-QT_MOC_LITERAL(19, 264, 10) // "exitStatus"
+QT_MOC_LITERAL(7, 65, 15), // "SendMsgCloseWnd"
+QT_MOC_LITERAL(8, 81, 10), // "RecordType"
+QT_MOC_LITERAL(9, 92, 18), // "StartButtonClicked"
+QT_MOC_LITERAL(10, 111, 17), // "StopButtonClicked"
+QT_MOC_LITERAL(11, 129, 10), // "RecordTime"
+QT_MOC_LITERAL(12, 140, 10), // "FileUpload"
+QT_MOC_LITERAL(13, 151, 13), // "replyFinished"
+QT_MOC_LITERAL(14, 165, 14), // "QNetworkReply*"
+QT_MOC_LITERAL(15, 180, 9), // "loadError"
+QT_MOC_LITERAL(16, 190, 27), // "QNetworkReply::NetworkError"
+QT_MOC_LITERAL(17, 218, 18), // "DialogProgressTime"
+QT_MOC_LITERAL(18, 237, 23), // "MplayerCompressFinished"
+QT_MOC_LITERAL(19, 261, 8), // "exitCode"
+QT_MOC_LITERAL(20, 270, 20), // "QProcess::ExitStatus"
+QT_MOC_LITERAL(21, 291, 10), // "exitStatus"
+QT_MOC_LITERAL(22, 302, 12), // "onMinClicked"
+QT_MOC_LITERAL(23, 315, 14) // "onCloseClicked"
 
     },
     "RecordDialog\0StopTimeSignal\0\0"
     "SigSendMessageToJS\0strMain\0type\0str\0"
+    "SendMsgCloseWnd\0RecordType\0"
     "StartButtonClicked\0StopButtonClicked\0"
     "RecordTime\0FileUpload\0replyFinished\0"
     "QNetworkReply*\0loadError\0"
     "QNetworkReply::NetworkError\0"
     "DialogProgressTime\0MplayerCompressFinished\0"
-    "exitCode\0QProcess::ExitStatus\0exitStatus"
+    "exitCode\0QProcess::ExitStatus\0exitStatus\0"
+    "onMinClicked\0onCloseClicked"
 };
 #undef QT_MOC_LITERAL
 
@@ -70,40 +76,46 @@ static const uint qt_meta_data_RecordDialog[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      10,   14, // methods
+      13,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       2,       // signalCount
+       3,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   64,    2, 0x06 /* Public */,
-       3,    3,   65,    2, 0x06 /* Public */,
+       1,    0,   79,    2, 0x06 /* Public */,
+       3,    3,   80,    2, 0x06 /* Public */,
+       7,    1,   87,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       7,    0,   72,    2, 0x08 /* Private */,
-       8,    0,   73,    2, 0x08 /* Private */,
-       9,    0,   74,    2, 0x08 /* Private */,
-      10,    0,   75,    2, 0x08 /* Private */,
-      11,    1,   76,    2, 0x08 /* Private */,
-      13,    1,   79,    2, 0x08 /* Private */,
-      15,    0,   82,    2, 0x08 /* Private */,
-      16,    2,   83,    2, 0x08 /* Private */,
+       9,    0,   90,    2, 0x08 /* Private */,
+      10,    0,   91,    2, 0x08 /* Private */,
+      11,    0,   92,    2, 0x08 /* Private */,
+      12,    0,   93,    2, 0x08 /* Private */,
+      13,    1,   94,    2, 0x08 /* Private */,
+      15,    1,   97,    2, 0x08 /* Private */,
+      17,    0,  100,    2, 0x08 /* Private */,
+      18,    2,  101,    2, 0x08 /* Private */,
+      22,    0,  106,    2, 0x08 /* Private */,
+      23,    0,  107,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void,
     QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString,    4,    5,    6,
+    QMetaType::Void, 0x80000000 | 8,    2,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 12,    2,
     QMetaType::Void, 0x80000000 | 14,    2,
+    QMetaType::Void, 0x80000000 | 16,    2,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int, 0x80000000 | 18,   17,   19,
+    QMetaType::Void, QMetaType::Int, 0x80000000 | 20,   19,   21,
+    QMetaType::Void,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -116,27 +128,30 @@ void RecordDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         switch (_id) {
         case 0: _t->StopTimeSignal(); break;
         case 1: _t->SigSendMessageToJS((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3]))); break;
-        case 2: _t->StartButtonClicked(); break;
-        case 3: _t->StopButtonClicked(); break;
-        case 4: _t->RecordTime(); break;
-        case 5: _t->FileUpload(); break;
-        case 6: _t->replyFinished((*reinterpret_cast< QNetworkReply*(*)>(_a[1]))); break;
-        case 7: _t->loadError((*reinterpret_cast< QNetworkReply::NetworkError(*)>(_a[1]))); break;
-        case 8: _t->DialogProgressTime(); break;
-        case 9: _t->MplayerCompressFinished((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QProcess::ExitStatus(*)>(_a[2]))); break;
+        case 2: _t->SendMsgCloseWnd((*reinterpret_cast< RecordType(*)>(_a[1]))); break;
+        case 3: _t->StartButtonClicked(); break;
+        case 4: _t->StopButtonClicked(); break;
+        case 5: _t->RecordTime(); break;
+        case 6: _t->FileUpload(); break;
+        case 7: _t->replyFinished((*reinterpret_cast< QNetworkReply*(*)>(_a[1]))); break;
+        case 8: _t->loadError((*reinterpret_cast< QNetworkReply::NetworkError(*)>(_a[1]))); break;
+        case 9: _t->DialogProgressTime(); break;
+        case 10: _t->MplayerCompressFinished((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QProcess::ExitStatus(*)>(_a[2]))); break;
+        case 11: _t->onMinClicked(); break;
+        case 12: _t->onCloseClicked(); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         switch (_id) {
         default: *reinterpret_cast<int*>(_a[0]) = -1; break;
-        case 6:
+        case 7:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
                 *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QNetworkReply* >(); break;
             }
             break;
-        case 7:
+        case 8:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
@@ -157,6 +172,13 @@ void RecordDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
             using _t = void (RecordDialog::*)(QString , QString , QString );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&RecordDialog::SigSendMessageToJS)) {
                 *result = 1;
+                return;
+            }
+        }
+        {
+            using _t = void (RecordDialog::*)(RecordType );
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&RecordDialog::SendMsgCloseWnd)) {
+                *result = 2;
                 return;
             }
         }
@@ -192,13 +214,13 @@ int RecordDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 10)
+        if (_id < 13)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 13;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 10)
+        if (_id < 13)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 13;
     }
     return _id;
 }
@@ -214,6 +236,13 @@ void RecordDialog::SigSendMessageToJS(QString _t1, QString _t2, QString _t3)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);
+}
+
+// SIGNAL 2
+void RecordDialog::SendMsgCloseWnd(RecordType _t1)
+{
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 2, _a);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

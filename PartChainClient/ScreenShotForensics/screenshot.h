@@ -16,6 +16,7 @@
 #include "Common/common.h"
 #include "Common/networkclean.h"
 #include "previewwindow.h"
+#include "bubbleltipbutton.h"
 
 namespace Ui {
 class ScreenShot;
@@ -56,6 +57,7 @@ public slots:
     void loadError(QNetworkReply::NetworkError);
     void DialogProgressTime();
     void DisplayCurrentTime();
+    void PreviewMsgCloseWnd(void);
 
 private:
     Ui::ScreenShot *ui;
@@ -71,6 +73,7 @@ private:
     PreviewWindow* pPreviewWindow;
     int timecount;
     int pCloseFlag;
+    BubblelTipButton  *pBtn;
 };
 
 #endif // SCREENSHOT_H

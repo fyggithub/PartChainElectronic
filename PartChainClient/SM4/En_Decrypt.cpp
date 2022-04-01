@@ -410,6 +410,48 @@ QString SM4Decrypt::DecodeSM4_StreamTest(const QStringList& key,const QStringLis
     return "";
 }
 
+QString SM4Decrypt::DecodeSM4_CertificateStreamTest(const QStringList& key,const QStringList& fileNameList)
+{
+    LogRecord wLog;
+    wLog.LogTrack("start DecodeSM4 Certificate.");
+    QString tmpKey = key.at(0);
+    QString tmpFileName = fileNameList.at(0);
+    qDebug() << tmpKey << tmpFileName;
+
+    const char *pStrkey = tmpKey.toLocal8Bit().constData();
+    unsigned char *pkey = (unsigned char *)pStrkey;
+    sm4_ctx ctx;
+    sm4_set_key(pkey, &ctx);
+    sm4_decrypt_file_test2(&ctx,TEMPFILENAME,tmpFileName);
+    pDownLoadFileName = tmpFileName;
+    QString tmpFile = QString(QLatin1String(TEMPFILENAME));
+    Common *pCommon = NULL;
+    pCommon->RemoveOverageFile(tmpFile);
+    qDebug()<<"ready end.";
+    return "";
+}
+
+QString SM4Decrypt::DecodeSM4_DetailStreamTest(const QStringList& key,const QStringList& fileNameList)
+{
+    LogRecord wLog;
+    wLog.LogTrack("start DecodeSM4 Detail.");
+    QString tmpKey = key.at(0);
+    QString tmpFileName = fileNameList.at(0);
+    qDebug() << tmpKey << tmpFileName;
+
+    const char *pStrkey = tmpKey.toLocal8Bit().constData();
+    unsigned char *pkey = (unsigned char *)pStrkey;
+    sm4_ctx ctx;
+    sm4_set_key(pkey, &ctx);
+    sm4_decrypt_file_test2(&ctx,TEMPFILEZIPNAME,tmpFileName);
+    pDownLoadFileName = tmpFileName;
+    QString tmpFile = QString(QLatin1String(TEMPFILEZIPNAME));
+    Common *pCommon = NULL;
+    pCommon->RemoveOverageFile(tmpFile);
+    qDebug()<<"ready end.";
+    return "";
+}
+
 void SM4Decrypt::Encrypt_String(QByteArray& source_array, QByteArray& result_array, unsigned char key[16] )
 {
     /*result_array.resize( source_array.length( ) );

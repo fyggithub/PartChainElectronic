@@ -21,6 +21,8 @@ public:
     QString DecodeSM4_Base64Test(const QString& key,const char* strInput,int len);
     QString DecodeSM4_Base64Test2(const QString& key,const QByteArray& strInput);
     QString DecodeSM4_StreamTest(const QStringList& key,const QStringList& fileNameList,const char* strInput,int len);
+    QString DecodeSM4_CertificateStreamTest(const QStringList& key,const QStringList& fileNameList);
+    QString DecodeSM4_DetailStreamTest(const QStringList& key,const QStringList& fileNameList);
 };
 
 extern QList<QString> pList;

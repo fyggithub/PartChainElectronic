@@ -29,16 +29,16 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    pProgressMaxRange = 40;
+    pProgressMaxRange = 5;
     countBuff = 0;
     recvBuff = "";
     sendBuff = "";
-    qputenv("QTWEBENGINE_REMOTE_DEBUGGING", "7777");
+    mSingleType = "";
+    //qputenv("QTWEBENGINE_REMOTE_DEBUGGING", "7777");
 }
 
 MainWindow::~MainWindow()
 {
-    multi_part->deleteLater();
     delete m_webView;
     delete ui;
 }
@@ -55,8 +55,8 @@ void MainWindow::startweb(void)
     QString filePath = QCoreApplication::applicationDirPath() + "/testHtml.html";
     QString urlPath = "file:///" + filePath;
     //m_webView->page()->load(QUrl(urlPath));
-    //m_webView->page()->load(QUrl("http://172.24.103.6:8016/"));
-    m_webView->page()->load(QUrl("http://172.16.5.71:8083/"));
+    m_webView->page()->load(QUrl("http://172.24.103.6:8016/"));
+    //m_webView->page()->load(QUrl("http://172.16.5.71:8083/"));
 
     QStackedLayout* layout = new QStackedLayout(ui->widgetMain);
     ui->widgetMain->setLayout(layout);
@@ -82,11 +82,11 @@ void MainWindow::startweb(void)
         download->accept();//接收当前下载请求，只有接收后才会开始下载
         wLog.LogTrack("download accept ok.");
     });
-    //m_webView->setContextMenuPolicy (Qt::NoContextMenu);
+    m_webView->setContextMenuPolicy (Qt::NoContextMenu);
     //m_webView->page()->settings()->setAttribute(QWebEngineSettings::LocalContentCanAccessRemoteUrls, true);
-    m_webView->setContextMenuPolicy(Qt::CustomContextMenu);
-    m_inspector = NULL;
-    connect(m_webView, &QWidget::customContextMenuRequested, this, &MainWindow::MsgInspector);
+//    m_webView->setContextMenuPolicy(Qt::CustomContextMenu);
+//    m_inspector = NULL;
+//    connect(m_webView, &QWidget::customContextMenuRequested, this, &MainWindow::MsgInspector);
 
     //获取本地ip及mac地址
     Common *pCommon = NULL;
@@ -374,6 +374,7 @@ void MainWindow::OnReceiveMessageFromJS(QString strMain,QString type,QString str
     else if(forensicsType == "GetDownLoadData")
     {
         pBatchSingle = jsonObject["batchSingle"].toString();
+        mSingleType = jsonObject["SingleType"].toString();
         QString downloadUrl = jsonObject["url"].toString();
         QString downloadToken = jsonObject["token"].toString();
         QJsonObject objParame = jsonObject["parame"].toObject();
@@ -440,7 +441,7 @@ void MainWindow::OnReceiveMessageFromJS(QString strMain,QString type,QString str
 
 void MainWindow::UploadFile(QString *filename,int num)
 {
-    multi_part = new QHttpMultiPart(QHttpMultiPart::FormDataType);
+    QHttpMultiPart *multi_part = new QHttpMultiPart(QHttpMultiPart::FormDataType);
     QString formData = "form-data; name=\"file\";filename=";
     qDebug()<<"**********************UploadFile";
     Common *pcom = NULL;
@@ -543,7 +544,10 @@ void MainWindow::replyFinished(QNetworkReply*)    //删除指针，更新和关�
             {
                 case WebRecord:     OpenWebForensics();break;
                 case CameraRecord:  OpenWebCamera(); break;
-                case VideoRecord:   OpenWebRecordVideo();break;
+                case VideoRecord:   {
+                    OpenWebRecordVideo();
+                    OpenWebRecordDialog();
+                }break;
                 case ScreenShotRecord:OpenWebScreenShoot();break;
                 default:break;
             }
@@ -612,28 +616,50 @@ void MainWindow::loadError(QNetworkReply::NetworkError)    //传输中的错误�
 
 void MainWindow::PostDownloadData(const QString& url,const QString& token,const QByteArray& parame)
 {
-    QUrl getUrl(url);
-    QNetworkRequest request(getUrl);
-    QString tokenStr = token;
-    QString tokenHeaderData = QString("Bearer ") + tokenStr;
-    request.setRawHeader("Authorization", tokenHeaderData.toLatin1());
-    request.setRawHeader("Content-Type", "application/json");
-    //request.setRawHeader("responseType", "blob");
-    QByteArray postData = parame;
-
-    //QNetworkAccessManager *accessManager = new QNetworkAccessManager(this);    //往该目录中上传文件
     mAccessManager = new QNetworkAccessManager(this);
-    mAccessManager->setNetworkAccessible(QNetworkAccessManager::Accessible);
-    mAccessManager->setRedirectPolicy(QNetworkRequest::NoLessSafeRedirectPolicy);
-    reply = mAccessManager->post(request, postData);
+    if((pBatchSingle == "single") && (mSingleType == "certificate")){
+        QJsonParseError parseJsonErr;
+        QJsonDocument document = QJsonDocument::fromJson(parame, &parseJsonErr);
+        QJsonObject jsonObject = document.object();
+        QString strEvidenceId = jsonObject["evidenceId"].toString();
+        QString strFullUrl = QString("%1?%2=%3").arg(url).arg("evidenceId").arg(strEvidenceId);
 
-    LogRecord wLog;
-    wLog.LogTrack("------------------------------------------");
-    wLog.LogTrack("start post download.");
-    mFile = fopen(TEMPFILEZIPNAME,"wb+");
-    connect(mAccessManager,SIGNAL(finished(QNetworkReply*)),this,SLOT(DownReplyFinishedTest(QNetworkReply*)));
-    connect(reply, SIGNAL(error(QNetworkReply::NetworkError)),this,SLOT(loadError(QNetworkReply::NetworkError)));
-    connect( reply, SIGNAL( readyRead() ), this, SLOT( WriteToFile() ) );
+        QNetworkRequest request;
+        QString tokenStr = token;
+        QString tokenHeaderData = QString("Bearer ") + tokenStr;
+        request.setRawHeader("Authorization", tokenHeaderData.toLatin1());
+        request.setUrl(QUrl(strFullUrl));
+        //mAccessManager = new QNetworkAccessManager(this);
+        mAccessManager->get(request);
+        mFile = fopen(TEMPFILENAME,"wb+");
+        connect(mAccessManager,SIGNAL(finished(QNetworkReply*)),this,SLOT(DownReplyFinishedTest(QNetworkReply*)));
+    }
+    else{
+        QUrl getUrl(url);
+        QNetworkRequest request(getUrl);
+        QString tokenStr = token;
+        QString tokenHeaderData = QString("Bearer ") + tokenStr;
+        request.setRawHeader("Authorization", tokenHeaderData.toLatin1());
+        request.setRawHeader("Content-Type", "application/json");
+        //request.setRawHeader("responseType", "blob");
+        QByteArray postData = parame;
+
+        //QNetworkAccessManager *accessManager = new QNetworkAccessManager(this);    //往该目录中上传文件
+        //mAccessManager = new QNetworkAccessManager(this);
+        mAccessManager->setNetworkAccessible(QNetworkAccessManager::Accessible);
+        mAccessManager->setRedirectPolicy(QNetworkRequest::NoLessSafeRedirectPolicy);
+        reply = mAccessManager->post(request, postData);
+
+        LogRecord wLog;
+        wLog.LogTrack("------------------------------------------");
+        wLog.LogTrack("start post download.");
+
+        mFile = fopen(TEMPFILEZIPNAME,"wb+");
+
+        connect(mAccessManager,SIGNAL(finished(QNetworkReply*)),this,SLOT(DownReplyFinishedTest(QNetworkReply*)));
+        connect(reply, SIGNAL(error(QNetworkReply::NetworkError)),this,SLOT(loadError(QNetworkReply::NetworkError)));
+        connect( reply, SIGNAL( readyRead() ), this, SLOT( WriteToFile() ) );
+    }
 }
 
 void MainWindow::WriteToFile()
@@ -645,27 +671,39 @@ void MainWindow::WriteToFile()
     }
 }
 
-void MainWindow::DownReplyFinishedTest(QNetworkReply *)
+void MainWindow::DownReplyFinishedTest(QNetworkReply *strReply)
 {
     qDebug()<<"-------------------DownReplyFinishedTest";
     LogRecord wLog;
     wLog.LogTrack("start recv download data.");
-    if(reply->error() == QNetworkReply::NoError){
+    if(strReply->error() == QNetworkReply::NoError){
         qDebug()<<"reply->readAll1.";
         wLog.LogTrack("start read download data.");
-        QByteArray strData = reply->readAll();
+        QByteArray strData = strReply->readAll();
         wLog.LogTrack("start read download data1.");
-        reply->close();
-        reply->deleteLater();
+        strReply->close();
+        strReply->deleteLater();
+        if(pBatchSingle != "single"){
+            reply->deleteLater();
+        }
         mAccessManager->deleteLater();
         wLog.LogTrack("read download file over.");
 
         fwrite(strData.data(), 1, strData.length(), mFile);
         fclose(mFile);
         mFile = NULL;
+        qDebug()<<"strData.length():"<<strData.length();
 
         pDecrypt = new SM4Decrypt;
-        pDecrypt->DecodeSM4_StreamTest(keyList,fileList,strData.data(),strData.length());
+        if((pBatchSingle == "single") && (mSingleType == "certificate")){
+            pDecrypt->DecodeSM4_CertificateStreamTest(keyList,fileList);
+        }
+        else if((pBatchSingle == "single") && (mSingleType == "detail")){
+            pDecrypt->DecodeSM4_DetailStreamTest(keyList,fileList);
+        }
+        else{
+            pDecrypt->DecodeSM4_StreamTest(keyList,fileList,strData.data(),strData.length());
+        }
         delete pDecrypt;
         wLog.LogTrack("DecodeSM4 over.");
 
@@ -724,6 +762,7 @@ void MainWindow::DownReplyFinishedTest(QNetworkReply *)
             Common *pCommon = NULL;
             pCommon->RemoveOverageFile(pDownLoadFileName);
         }
+        //mSingleType = "";
         pBatchSingle = "";
         fileList.clear();
         keyList.clear();
@@ -839,7 +878,18 @@ void MainWindow::RecvMsgCloseWnd(RecordType type)
             }
         }break;
         case CameraRecord:  delete pCamera; break;
-        case VideoRecord:   delete pRecordVideo;break;
+        case VideoRecord:{
+            delete pRecordVideo;
+        }break;
+        case VideoRecordDialog: {
+            delete m_record;
+            if(pRecordDialogFlag == 0){
+                pRecordVideo->CloseRecordWebMsg();
+            }
+            else if(pRecordDialogFlag == 1){
+                pRecordDialogFlag = 0;
+            }
+        }break;
         case ScreenShotRecord:delete pScreenShot;break;
         default:break;
     }
@@ -873,8 +923,17 @@ void MainWindow::OpenWebRecordVideo(void)
     pRecordVideo->OpenRecordVideoWeb();
     pRecordVideo->setWindowTitle(QString::fromLocal8Bit("录屏取证"));
     pRecordVideo->ShowMaximized();
+    pRecordVideo->SimulateButtonClick();
     connect(pRecordVideo, &RecordVideo::SigSendMessageToJS,pJsCommunicate, &JSCommunicate::SigSendMessageToJS);
     connect(pRecordVideo, &RecordVideo::SendMsgCloseWnd,this, &MainWindow::RecvMsgCloseWnd);
+}
+
+void MainWindow::OpenWebRecordDialog(void)
+{
+    m_record = new RecordDialog();
+    m_record->show();
+    connect(m_record, &RecordDialog::SigSendMessageToJS,pJsCommunicate, &JSCommunicate::SigSendMessageToJS);
+    connect(m_record, &RecordDialog::SendMsgCloseWnd,this, &MainWindow::RecvMsgCloseWnd);
 }
 
 void MainWindow::OpenWebScreenShoot(void)

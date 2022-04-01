@@ -46,6 +46,7 @@ ScreenShot::ScreenShot(QWidget *parent) :
     ui->BtnScnSot->setToolTip(QString::fromLocal8Bit("截图"));
     ui->BtnUpload->setToolTip(QString::fromLocal8Bit("上传"));
     ui->BtnPreview->setToolTip(QString::fromLocal8Bit("预览"));
+    pBtn = new BubblelTipButton(ui->BtnPreview);
 
     connect(ui->BtnReload,SIGNAL(clicked()),this,SLOT(ReloadUrl()));
     connect(ui->BtnBack,SIGNAL(clicked()),this,SLOT(BackUrl()));
@@ -57,6 +58,7 @@ ScreenShot::ScreenShot(QWidget *parent) :
 
 ScreenShot::~ScreenShot()
 {
+    delete pBtn;
     delete pLog;
     delete m_ScnSotWebView;
     delete ui;
@@ -146,6 +148,14 @@ void ScreenShot::OpenPreview(void)
 {
     pPreviewWindow = new PreviewWindow;
     pPreviewWindow->show();
+    connect(pPreviewWindow, &PreviewWindow::SendPreviewMsgCloseWnd,this, &ScreenShot::PreviewMsgCloseWnd);
+}
+
+void ScreenShot::PreviewMsgCloseWnd(void)
+{
+    delete pPreviewWindow;
+    pBtn->setFixedSize(40, 13);
+    pBtn->setMsgNumber(pMap.size());
 }
 
 void ScreenShot::FileUpload(void)
@@ -196,6 +206,10 @@ void ScreenShot::GrabFullScreen(void)
                                                        QString::fromLocal8Bit("确定"), 0);
         return;
     }
+
+    pBtn->setFixedSize(40, 13);
+    pBtn->setMsgNumber(pMap.size()+1);
+
 
     Common *pcom = NULL;
     QScreen *screen = QGuiApplication::primaryScreen();
