@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    pProgressMaxRange = 5;
+    pProgressMaxRange = 40;
     countBuff = 0;
     recvBuff = "";
     sendBuff = "";
@@ -55,8 +55,8 @@ void MainWindow::startweb(void)
     QString filePath = QCoreApplication::applicationDirPath() + "/testHtml.html";
     QString urlPath = "file:///" + filePath;
     //m_webView->page()->load(QUrl(urlPath));
-    m_webView->page()->load(QUrl("http://172.24.103.6:8016/"));
-    //m_webView->page()->load(QUrl("http://172.16.5.71:8083/"));
+    //m_webView->page()->load(QUrl("http://172.24.103.6:8016/"));
+    m_webView->page()->load(QUrl("http://172.16.5.71:8083/"));
 
     QStackedLayout* layout = new QStackedLayout(ui->widgetMain);
     ui->widgetMain->setLayout(layout);

@@ -49,7 +49,7 @@ RecordVideo::~RecordVideo()
 
 void RecordVideo::JumpUrl(void)
 {
-    QUrl url = ui->lineEdit->text();
+    QUrl url = QUrl::fromUserInput(ui->lineEdit->text());
     if (!url.isEmpty())
     {
         m_RecordWebView->load(url);

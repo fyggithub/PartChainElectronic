@@ -75,7 +75,14 @@ void ScreenShot::ShowMaximized(void)
 
 void ScreenShot::JumpUrl(void)
 {
-    QUrl url = ui->lineEdit->text();
+    QUrl url = QUrl::fromUserInput(ui->lineEdit->text());
+    if(url.isValid()){
+        qDebug()<<"url is Valid."<<url;
+    }
+    else{
+        qDebug()<<"url is not Valid."<<url;
+    }
+
     if (!url.isEmpty())
     {
         m_ScnSotWebView->load(url);

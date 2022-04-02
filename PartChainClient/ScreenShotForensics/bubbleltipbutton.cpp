@@ -39,16 +39,8 @@ void BubblelTipButton::paintEvent(QPaintEvent * event)
             bubbleWidth = 27;
         }
         QRect rt = rect();
-//        QRect rt1 = QRect(rt.right() - bubbleWidth, rt.top(), bubbleWidth, bubbleWidth);
-//        painter.setPen(Qt::red);
-//        painter.setBrush(QBrush(Qt::red));
-//        painter.drawEllipse(rt1);
-
-//        painter.setPen(Qt::white);
-//        painter.drawText(rt1, Qt::AlignCenter, QString::number(m_msgNumber));
-
-        qDebug()<<"rt:"<<rt<<"bubbleWidth:"<<bubbleWidth << this->height() << this->width();
-        //QRect rt1 = QRect(this->width() - bubbleWidth, rt.top(), bubbleWidth, bubbleWidth);
+        //QRect rt1 = QRect(rt.right() - bubbleWidth, rt.top(), bubbleWidth, bubbleWidth);
+        //qDebug()<<"rt:"<<rt<<"bubbleWidth:"<<bubbleWidth << this->height() << this->width();
         QRect rt1 = QRect(this->width() - bubbleWidth, rt.top(), bubbleWidth, bubbleWidth);
         painter.setPen(Qt::red);
         painter.setBrush(QBrush(Qt::red));

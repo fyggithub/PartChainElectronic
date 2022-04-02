@@ -176,7 +176,7 @@ void Camera::StartRecordVideo(void)
             //开始录取音屏
             m_Audio = new Audio();
             m_Audio->AudioInit(filePath);
-            m_Audio->OnRecordStart(2);
+            m_Audio->OnRecordStart(1);
             //WriteToVideo();
         }
         else
@@ -215,7 +215,8 @@ void Camera::StopRecordVideo(void)
         pcom->RemoveOverageFile(strDelete);
     }
     getNameMp4 = nameMp4;
-    StartMplayerCompress(strWav, strAvi, strMp4);
+    //StartMplayerCompress(strWav, strAvi, strMp4);
+    StartMplayerCompress("", strAvi, strMp4);
     DialogProgressDeal();
 
     ui->BtnStart->setEnabled(false);
@@ -256,14 +257,15 @@ void Camera::MplayerCompressFinished(int exitCode, QProcess::ExitStatus exitStat
     QString filelog = pLog->RenameLogFile(CameraRecord, FileLogName);
     pLog->RemoveWebLogFile(CameraRecord,FileLogName);
     BufferFileName[0] = getNameMp4;
-    BufferFileName[1] = filelog;
-    CameraUploadFile(BufferFileName,2);
+    BufferFileName[1] = pAudioName;
+    BufferFileName[2] = filelog;
+    CameraUploadFile(BufferFileName,3);
     Common *pcom = NULL;
     QString filePath = pcom->FileDirPath(CameraRecord);
     QString strWav = filePath + pAudioName;
     QString strAvi = filePath + FileVideoName;
     QString strRaw = filePath + "record.raw";
-    pcom->RemoveOverageFile(strWav);
+    //pcom->RemoveOverageFile(strWav);
     pcom->RemoveOverageFile(strAvi);
     pcom->RemoveOverageFile(strRaw);
 }
@@ -322,7 +324,7 @@ void Camera::ReloadRecordVideo(void)
     //开始录取音屏
     m_Audio = new Audio();
     m_Audio->AudioInit(filePath);
-    m_Audio->OnRecordStart(2);
+    m_Audio->OnRecordStart(1);
 
     ui->BtnStart->setEnabled(true);
     ui->BtnReload->setEnabled(false);

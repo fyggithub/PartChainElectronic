@@ -57,8 +57,15 @@ RecordDialog::RecordDialog(QWidget *parent) :
     ui->startBtn->setToolTip(QString::fromLocal8Bit("开始"));
     ui->stopBtn->setToolTip(QString::fromLocal8Bit("停止"));
     ui->uploadBtn->setToolTip(QString::fromLocal8Bit("上传"));
+
+    ui->label_circle->setText("");
+    ui->label_point->setText(QString::fromLocal8Bit("提示：1、如果有需要请使用客户端提供浏览器\n      2、录屏取证一次最长15分钟"));
+    ui->label_point->setStyleSheet("color:red;");
+
+    QFont ft;
+    ft.setPointSize(10);
+    ui->label_time->setFont(ft);
     ui->label_time->setText(QString::fromLocal8Bit("录制时长：00:00:00"));
-    ui->label_point->setText(QString::fromLocal8Bit("提示：如果有需要请使用客户端提供浏览器"));
     ui->label_time->setStyleSheet("color:red;");
 
     connect(ui->startBtn,SIGNAL(clicked()),this,SLOT(StartButtonClicked()));
@@ -88,6 +95,12 @@ void RecordDialog::StartButtonClicked()
         m_isRun     = true;
         pCloseFlag = 1;
         m_timeStart = QDateTime::currentDateTime();
+
+        QImage *img = new QImage; //新建一个image对象
+        img->load(":/new/prefix1/Icon/circle.png"); //将图像资源载入对象img，注意路径，可点进图片右键复制路径
+        ui->label_circle->setPixmap(QPixmap::fromImage(*img)); //将图片放入label，使用setPixmap,注意指针*img
+        delete img;
+
         CameraInit();
         CameraStart();
 
@@ -220,10 +233,12 @@ void RecordDialog::RecordTime()
         QString time_count = QString("%1%2:%3%4:%5%6").arg(hour_h).arg(hour_l).arg(minute_h).arg(minute_l).arg(second_h).arg(second_l);
         display_time = display_time + time_count;
 
-        //if ((minute_h >= 1) && (minute_l >= 5) && (second_l > 0)) //如果超过15分钟，则弹框并关闭定时器
-        if (minute_l >= 1)
+        if ((minute_h >= 1) && (minute_l >= 5) && (second_l > 0)) //如果超过15分钟，则弹框并关闭定时器
         {
-            showMaximized();
+            if(isMinimized()){
+                qDebug()<<"is Minimized.";
+                showNormal();
+            }
 
             pTimeoutFlag = 1;
             emit StopTimeSignal(); //关闭定时器

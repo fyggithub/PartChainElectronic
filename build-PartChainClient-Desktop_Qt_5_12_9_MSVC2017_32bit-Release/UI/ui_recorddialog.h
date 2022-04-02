@@ -36,6 +36,7 @@ public:
     QVBoxLayout *verticalLayout_2;
     QHBoxLayout *horizontalLayout_3;
     QSpacerItem *horizontalSpacer_2;
+    QLabel *label_circle;
     QLabel *label_time;
     QSpacerItem *horizontalSpacer_3;
     QWidget *btnWidget;
@@ -54,8 +55,11 @@ public:
     {
         if (RecordDialog->objectName().isEmpty())
             RecordDialog->setObjectName(QString::fromUtf8("RecordDialog"));
-        RecordDialog->resize(260, 188);
-        RecordDialog->setMaximumSize(QSize(600, 188));
+        RecordDialog->resize(260, 200);
+        RecordDialog->setMaximumSize(QSize(600, 200));
+        QIcon icon;
+        icon.addFile(QString::fromUtf8(":/new/prefix1/Icon/Titleicon.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        RecordDialog->setWindowIcon(icon);
         verticalLayout = new QVBoxLayout(RecordDialog);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, -1);
@@ -101,6 +105,12 @@ public:
 
         horizontalLayout_3->addItem(horizontalSpacer_2);
 
+        label_circle = new QLabel(timeWidget);
+        label_circle->setObjectName(QString::fromUtf8("label_circle"));
+        label_circle->setMaximumSize(QSize(20, 16777215));
+
+        horizontalLayout_3->addWidget(label_circle);
+
         label_time = new QLabel(timeWidget);
         label_time->setObjectName(QString::fromUtf8("label_time"));
 
@@ -124,27 +134,27 @@ public:
         horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
         startBtn = new QPushButton(btnWidget);
         startBtn->setObjectName(QString::fromUtf8("startBtn"));
-        QIcon icon;
-        icon.addFile(QString::fromUtf8(":/new/prefix1/Icon/startRecord.png"), QSize(), QIcon::Normal, QIcon::Off);
-        startBtn->setIcon(icon);
+        QIcon icon1;
+        icon1.addFile(QString::fromUtf8(":/new/prefix1/Icon/startRecord.png"), QSize(), QIcon::Normal, QIcon::Off);
+        startBtn->setIcon(icon1);
         startBtn->setIconSize(QSize(40, 40));
 
         horizontalLayout_4->addWidget(startBtn);
 
         stopBtn = new QPushButton(btnWidget);
         stopBtn->setObjectName(QString::fromUtf8("stopBtn"));
-        QIcon icon1;
-        icon1.addFile(QString::fromUtf8(":/new/prefix1/Icon/stopRecord.png"), QSize(), QIcon::Normal, QIcon::Off);
-        stopBtn->setIcon(icon1);
+        QIcon icon2;
+        icon2.addFile(QString::fromUtf8(":/new/prefix1/Icon/stopRecord.png"), QSize(), QIcon::Normal, QIcon::Off);
+        stopBtn->setIcon(icon2);
         stopBtn->setIconSize(QSize(40, 40));
 
         horizontalLayout_4->addWidget(stopBtn);
 
         uploadBtn = new QPushButton(btnWidget);
         uploadBtn->setObjectName(QString::fromUtf8("uploadBtn"));
-        QIcon icon2;
-        icon2.addFile(QString::fromUtf8(":/new/prefix1/Icon/upload.png"), QSize(), QIcon::Normal, QIcon::Off);
-        uploadBtn->setIcon(icon2);
+        QIcon icon3;
+        icon3.addFile(QString::fromUtf8(":/new/prefix1/Icon/upload.png"), QSize(), QIcon::Normal, QIcon::Off);
+        uploadBtn->setIcon(icon3);
         uploadBtn->setIconSize(QSize(40, 40));
 
         horizontalLayout_4->addWidget(uploadBtn);
@@ -189,9 +199,10 @@ public:
 
     void retranslateUi(QDialog *RecordDialog)
     {
-        RecordDialog->setWindowTitle(QApplication::translate("RecordDialog", "Dialog", nullptr));
+        RecordDialog->setWindowTitle(QApplication::translate("RecordDialog", "\346\265\256\347\252\227 ", nullptr));
         minBtn->setText(QString());
         closeBtn->setText(QString());
+        label_circle->setText(QApplication::translate("RecordDialog", "TextLabel", nullptr));
         label_time->setText(QApplication::translate("RecordDialog", "TextLabel", nullptr));
         startBtn->setText(QString());
         stopBtn->setText(QString());
