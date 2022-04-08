@@ -59,7 +59,7 @@ RecordDialog::RecordDialog(QWidget *parent) :
     ui->uploadBtn->setToolTip(QString::fromLocal8Bit("上传"));
 
     ui->label_circle->setText("");
-    ui->label_point->setText(QString::fromLocal8Bit("提示：1、如果有需要请使用客户端提供浏览器\n      2、录屏取证一次最长15分钟"));
+    ui->label_point->setText(QString::fromLocal8Bit("提示：1、如果有需要请使用客户端提供的浏览器\n      2、录屏取证一次最长15分钟"));
     ui->label_point->setStyleSheet("color:red;");
 
     QFont ft;
@@ -120,6 +120,7 @@ void RecordDialog::StopButtonClicked()
 {
     if(pCloseFlag == 1)
     {
+        ui->label_circle->clear();
         m_isRun = false;
         CameraStop();
         Common *pcom = NULL;
@@ -233,12 +234,21 @@ void RecordDialog::RecordTime()
         QString time_count = QString("%1%2:%3%4:%5%6").arg(hour_h).arg(hour_l).arg(minute_h).arg(minute_l).arg(second_h).arg(second_l);
         display_time = display_time + time_count;
 
+        if((minute_h == 1) && (minute_l == 4) && (second_h == 0) && (second_l == 0)){//最后一分钟窗口弹出
+            if(isMinimized()){
+                qDebug()<<"is Minimized.";
+                showNormal();
+            }
+            activateWindow();
+        }
+
         if ((minute_h >= 1) && (minute_l >= 5) && (second_l > 0)) //如果超过15分钟，则弹框并关闭定时器
         {
             if(isMinimized()){
                 qDebug()<<"is Minimized.";
                 showNormal();
             }
+            activateWindow();
 
             pTimeoutFlag = 1;
             emit StopTimeSignal(); //关闭定时器

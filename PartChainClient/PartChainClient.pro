@@ -36,6 +36,7 @@ SOURCES += \
     ScreenShotForensics/zoompreview.cpp \
     WebForensics/web_forensics.cpp \
     WebForensics/weburlrequestinterceptor.cpp \
+    config.cpp \
     inspector.cpp \
     main.cpp \
     mainwindow.cpp
@@ -70,6 +71,7 @@ HEADERS += \
     ScreenShotForensics/zoompreview.h \
     WebForensics/web_forensics.h \
     WebForensics/weburlrequestinterceptor.h \
+    config.h \
     inspector.h \
     mainwindow.h
 

@@ -83,6 +83,9 @@ private slots:
     void loadError(QNetworkReply::NetworkError);
     void RecvMsgCloseWnd(RecordType type);
     void MsgInspector();
+    void MsgOperation();
+    void MsgCopy();
+    void MsgPaste();
     void WriteToFile();
 private:
     void DownLoadFinish();

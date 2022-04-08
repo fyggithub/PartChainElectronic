@@ -206,6 +206,8 @@ void Camera::StopRecordVideo(void)
 
     QString strWav = filePath + pAudioName;
     QString strAvi = filePath + FileVideoName;
+    QString getDirPath = QCoreApplication::applicationDirPath();
+    QString strTmpAudio = QString::fromLocal8Bit("%1%2").arg(getDirPath).arg("/tmpAudio.wav");
     QString currentTime = QDateTime::currentDateTime().toString("yyyy-MM-dd-hh-mm-ss-zzz");
     QString nameMp4 = "mplayer" + currentTime + ".mp4";
     QString strMp4 = filePath + nameMp4;
@@ -216,7 +218,7 @@ void Camera::StopRecordVideo(void)
     }
     getNameMp4 = nameMp4;
     //StartMplayerCompress(strWav, strAvi, strMp4);
-    StartMplayerCompress("", strAvi, strMp4);
+    StartMplayerCompress(strTmpAudio, strAvi, strMp4);
     DialogProgressDeal();
 
     ui->BtnStart->setEnabled(false);

@@ -19,6 +19,8 @@
 #include "Json/json/json.h"
 #include <fstream>
 #include <string.h>
+#include "config.h"
+#include <QClipboard>
 
 #define MAXBUFFSIZE (100*1024*1024)
 char BuffData[MAXBUFFSIZE] = {0};
@@ -52,11 +54,15 @@ void MainWindow::startweb(void)
     pWebChannel->registerObject("interactObj", pJsCommunicate);//"interactObj"为注册名，JS调用的对象名必须和它相同
     m_webView->page()->setWebChannel(pWebChannel);
 
+    Config pConfig("");
+    QString urlIni = pConfig.Get("URL","url").toString();
+    QUrl getLoginUrl = QUrl::fromUserInput(urlIni);
     QString filePath = QCoreApplication::applicationDirPath() + "/testHtml.html";
     QString urlPath = "file:///" + filePath;
     //m_webView->page()->load(QUrl(urlPath));
     //m_webView->page()->load(QUrl("http://172.24.103.6:8016/"));
-    m_webView->page()->load(QUrl("http://172.16.5.71:8083/"));
+    //m_webView->page()->load(QUrl("http://172.16.5.71:8083/"));
+    m_webView->page()->load(getLoginUrl);
 
     QStackedLayout* layout = new QStackedLayout(ui->widgetMain);
     ui->widgetMain->setLayout(layout);
@@ -82,15 +88,51 @@ void MainWindow::startweb(void)
         download->accept();//接收当前下载请求，只有接收后才会开始下载
         wLog.LogTrack("download accept ok.");
     });
-    m_webView->setContextMenuPolicy (Qt::NoContextMenu);
+    //m_webView->setContextMenuPolicy (Qt::NoContextMenu);
     //m_webView->page()->settings()->setAttribute(QWebEngineSettings::LocalContentCanAccessRemoteUrls, true);
-//    m_webView->setContextMenuPolicy(Qt::CustomContextMenu);
-//    m_inspector = NULL;
-//    connect(m_webView, &QWidget::customContextMenuRequested, this, &MainWindow::MsgInspector);
+    m_webView->setContextMenuPolicy(Qt::CustomContextMenu);
+    //m_inspector = NULL;
+    //connect(m_webView, &QWidget::customContextMenuRequested, this, &MainWindow::MsgInspector);
+    connect(m_webView, &QWidget::customContextMenuRequested, this, &MainWindow::MsgOperation);
 
     //获取本地ip及mac地址
     Common *pCommon = NULL;
     pCommon->GetIpAddress();
+}
+
+void MainWindow::MsgOperation()
+{
+    QMenu* menu = new QMenu(this);
+    QAction* actionCopy = menu->addAction(QString::fromLocal8Bit("复制"));
+    QAction* actionPaste = menu->addAction(QString::fromLocal8Bit("粘贴"));
+    connect(actionCopy,SIGNAL(triggered()), this,SLOT(MsgCopy()));
+    connect(actionPaste,SIGNAL(triggered()), this,SLOT(MsgPaste()));
+    menu->exec(QCursor::pos());
+
+//    if(m_webView->hasSelection()){
+//        QMenu* menu = new QMenu(this);
+//        QAction* action = menu->addAction(QString::fromLocal8Bit("复制"));
+//        connect(action,SIGNAL(triggered()), this,SLOT(MsgCopy()));
+//        menu->exec(QCursor::pos());
+//    }
+//    else{
+//        if(m_webView->hasFocus()){//窗口有焦点
+//            QMenu* menu = new QMenu(this);
+//            QAction* action = menu->addAction(QString::fromLocal8Bit("粘贴"));
+//            connect(action,SIGNAL(triggered()), this,SLOT(MsgPaste()));
+//            menu->exec(QCursor::pos());
+//        }
+//    }
+}
+
+void MainWindow::MsgCopy()
+{
+    m_webView->triggerPageAction(QWebEnginePage::Copy);
+}
+
+void MainWindow::MsgPaste()
+{
+    m_webView->triggerPageAction(QWebEnginePage::Paste);
 }
 
 //调出控制台
