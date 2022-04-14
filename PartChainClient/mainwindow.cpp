@@ -522,20 +522,15 @@ void MainWindow::UploadFile(QString *filename,int num)
     multi_part->append(*textPart1);
     delete textPart1;
 
-    qDebug()<<"**********************UploadFile1";
     QUrl url("http://172.16.5.71:8080/api/file/uploadFile");
     QNetworkRequest request(url);
     QString tokenStr = pGetJsToken;
     QString tokenHeaderData = QString("Bearer ") + tokenStr;
     request.setRawHeader("Authorization", tokenHeaderData.toLatin1());
-    qDebug()<<"**********************UploadFile2";
 
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    //qDebug()<<"**********************UploadFile22";
     manager->setNetworkAccessible(QNetworkAccessManager::Accessible);
-    //qDebug()<<"**********************UploadFile23";
     reply = manager->post(request, multi_part);
-    //qDebug()<<"**********************UploadFile24";
     multi_part->setParent(reply);
 
 //    mAccessManager = new QNetworkAccessManager(this);    //往该目录中上传文件
@@ -545,7 +540,6 @@ void MainWindow::UploadFile(QString *filename,int num)
 //    reply = mAccessManager->post(request, multi_part);
 //    qDebug()<<"**********************UploadFile24";
 //    multi_part->setParent(reply);
-    qDebug()<<"**********************UploadFile3";
     connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(replyFinished(QNetworkReply*)));
     connect(reply, SIGNAL(error(QNetworkReply::NetworkError)),this,SLOT(loadError(QNetworkReply::NetworkError)));
 }

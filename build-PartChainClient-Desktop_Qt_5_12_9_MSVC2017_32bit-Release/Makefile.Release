@@ -7311,7 +7311,9 @@ release\mainwindow.obj: ..\PartChainClient\mainwindow.cpp ..\PartChainClient\mai
 		..\PartChainClient\Json\json\writer.h \
 		..\PartChainClient\config.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QSettings \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qsettings.h
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qsettings.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\QClipboard \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qclipboard.h
 
 release\qrc_Icon.obj: release\qrc_Icon.cpp 
 
