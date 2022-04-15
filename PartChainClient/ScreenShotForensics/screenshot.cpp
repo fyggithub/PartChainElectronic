@@ -294,11 +294,7 @@ void ScreenShot::closeEvent(QCloseEvent *event)
                 default:break;
             }
             pCurrentTime->stop();//停止记录当前时间
-            //清空容器
-            for (auto it = pMap.begin(); it != pMap.end();++it)
-            {
-                pMap.erase(it);
-            }
+            pMap.clear();//清空容器
             event->accept();
             pCommon->RemoveDirFile(strDirPath);//本地删除此次操作的取证文件
         }
@@ -311,11 +307,7 @@ void ScreenShot::closeEvent(QCloseEvent *event)
     else
     {
         pCloseFlag = 0;
-        //清空容器
-        for (auto it = pMap.begin(); it != pMap.end();++it)
-        {
-            pMap.erase(it);
-        }
+        pMap.clear();//清空容器
     }
     emit SendMsgCloseWnd(ScreenShotRecord);
 }

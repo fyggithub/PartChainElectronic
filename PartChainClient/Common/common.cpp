@@ -6,6 +6,7 @@
 #include <QHostInfo>
 #include <winsock2.h>
 #include <iphlpapi.h>
+#include "logrecord.h"
 
 #pragma comment(lib, "iphlpapi.lib")
 
@@ -281,8 +282,23 @@ QString Common::GetIpAddress()
                     {
                         QString version = "";
                         version.append(QSysInfo::productType());
-                        version.append(QSysInfo::productVersion());
 
+                        QString kVersion = QSysInfo::kernelVersion();
+                        int pos = kVersion.lastIndexOf(".");
+                        QString posLeft = kVersion.left(pos);
+                        QString posRight = kVersion.right(kVersion.length() - pos - 1);
+                        if(posLeft.compare("10.0") == 0){
+                            int versionNum = posRight.toInt();
+                            if(versionNum >= 22000){//为win11系统
+                                version.append("11");
+                            }
+                            else{
+                                version.append(QSysInfo::productVersion());
+                            }
+                        }
+                        else{
+                            version.append(QSysInfo::productVersion());
+                        }
                         pIpAddress = ip;
                         pMacAddress = interFaceList.at(i).hardwareAddress();
                         pGateway = gatway;
