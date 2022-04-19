@@ -221,6 +221,23 @@ void Common::WebJumpUrl(RecordType recordType, QString fileName, QString url)
     WriteLog(recordType, fileName, str);
 }
 
+void Common::StartForensicsLog(RecordType recordType, QString fileName)
+{
+    QString timeFromat = SetLogTimeFromat();
+    QString str;
+    switch(recordType)
+    {
+        case WebRecord:         str = "开始网页取证=\n";break;
+        case CameraRecord:      str = "开始拍摄取证=\n";break;
+        case VideoRecord:       str = "开始录屏取证=\n";break;
+        case ScreenShotRecord:  str = "开始截图取证=\n";break;
+        default:break;
+    }
+
+    QString mForensics = timeFromat + str;
+    WriteLog(recordType, fileName, mForensics);
+}
+
 void Common::SaveForensicsLog(RecordType recordType, QString fileName)
 {
     QString timeFromat = SetLogTimeFromat();

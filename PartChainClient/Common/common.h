@@ -34,6 +34,7 @@ public:
     void FromBaiDuJumpUrl(RecordType recordType, QString fileName, QString url);
     void WebJumpTime(RecordType recordType, QString fileName);
     void WebJumpUrl(RecordType recordType, QString fileName, QString url);
+    void StartForensicsLog(RecordType recordType, QString fileName);
     void SaveForensicsLog(RecordType recordType, QString fileName);
 
     QString GetIpAddress();

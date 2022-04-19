@@ -53,6 +53,8 @@ void RecordVideo::JumpUrl(void)
     if (!url.isEmpty())
     {
         m_RecordWebView->load(url);
+        Common logCom;
+        logCom.WebJumpUrl(VideoRecord, RecordFileLogName,url.toEncoded());
     }
 }
 
@@ -111,6 +113,8 @@ void RecordVideo::closeEvent(QCloseEvent *event)
 
 void RecordVideo::OnUrlChanged(QUrl url)
 {
+    Common logCom;
+    logCom.WebJumpUrl(VideoRecord, RecordFileLogName,url.toEncoded());
     ui->lineEdit->setText(url.toEncoded());
 }
 

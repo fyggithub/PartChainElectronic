@@ -74,8 +74,7 @@ private:
     Ui::RecordDialog *ui;
     QNetworkReply *reply;
     networkclean* pNetworkClean;
-    QString BufferFileName[8];
-    //QString FileLogName;
+    QString BufferFileName[8];    
     QString pFilePathName;
     QTimer* timerProgress;
     QProgressDialog* progressDialog;
@@ -85,5 +84,7 @@ private:
     QString getStrMsg;
     QString getNameMp4;
 };
+
+extern QString RecordFileLogName;
 
 #endif // RECORDDIALOG_H

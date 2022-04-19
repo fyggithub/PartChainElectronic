@@ -12,6 +12,8 @@
 #include <QDesktopWidget>
 #include <QRect>
 
+QString RecordFileLogName;
+
 RecordDialog::RecordDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::RecordDialog)
@@ -72,6 +74,11 @@ RecordDialog::RecordDialog(QWidget *parent) :
     connect(ui->stopBtn,SIGNAL(clicked()),this,SLOT(StopButtonClicked()));
     connect(ui->uploadBtn,SIGNAL(clicked()),this,SLOT(FileUpload()));
     connect(this,SIGNAL(StopTimeSignal()),this,SLOT(StopButtonClicked()));
+
+    Common logCom;
+    QString getTime = QDateTime::currentDateTime().toString("yyyy-MM-dd-hh-mm-ss-zzz");
+    RecordFileLogName = "log" + getTime + ".aisino";
+    logCom.CreateForensicsLog(VideoRecord, RecordFileLogName);
 }
 
 RecordDialog::~RecordDialog()
@@ -96,6 +103,10 @@ void RecordDialog::StartButtonClicked()
         pCloseFlag = 1;
         m_timeStart = QDateTime::currentDateTime();
 
+        Common *pcom = NULL;
+        QString filePath = pcom->FileDirPath(VideoRecord);
+        pcom->StartForensicsLog(VideoRecord, RecordFileLogName);
+
         QImage *img = new QImage; //新建一个image对象
         img->load(":/new/prefix1/Icon/circle.png"); //将图像资源载入对象img，注意路径，可点进图片右键复制路径
         ui->label_circle->setPixmap(QPixmap::fromImage(*img)); //将图片放入label，使用setPixmap,注意指针*img
@@ -104,8 +115,6 @@ void RecordDialog::StartButtonClicked()
         CameraInit();
         CameraStart();
 
-        Common *pcom = NULL;
-        QString filePath = pcom->FileDirPath(VideoRecord);
         m_Audio = new Audio();
         m_Audio->AudioInit(filePath);
         m_Audio->OnRecordStart(1);
@@ -128,6 +137,8 @@ void RecordDialog::StopButtonClicked()
         m_Audio->OnRecordSave(filePath);
         delete m_Audio;
         pCloseFlag = 2;
+        Common logCom;
+        logCom.SaveForensicsLog(VideoRecord, RecordFileLogName);
 
         QString strWav = filePath + pAudioName;
         QString strAvi = filePath + pRecordVideoName;
@@ -289,7 +300,8 @@ void RecordDialog::MplayerCompressFinished(int exitCode, QProcess::ExitStatus ex
 
     //上传文件服务器
     BufferFileName[0] = getNameMp4;
-    RecordVideoUploadFile(BufferFileName, 1);
+    BufferFileName[1] = RecordFileLogName;
+    RecordVideoUploadFile(BufferFileName, 2);
 
     Common *pcom = NULL;
     QString filePath = pcom->FileDirPath(VideoRecord);
