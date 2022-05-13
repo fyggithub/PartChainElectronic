@@ -1,6 +1,7 @@
 ﻿#include "networkclean.h"
 #include "common.h"
 #include <QProgressDialog>
+#include "logrecord.h"
 
 QString pHostFileName,pIpTrackFileName,pFileLog;
 
@@ -64,13 +65,16 @@ void networkclean::HostFile(RecordType recordType)
 
     QString hostPath = QString("C:/Windows/System32/drivers/etc/hosts");
     bool ok = QFile::copy(hostPath, fileFullPathName);
+    LogRecord mLog;
     if (ok)
     {
-        qDebug() << "host file is ok.";
+        qDebug() << "host file is ok.";        
+        mLog.LogTrack("Get host file success.");
     }
     else
     {
         qDebug() << "host file is fail!";
+        mLog.LogTrack("Get host file Fail!");
     }
 }
 
@@ -119,6 +123,8 @@ void networkclean::IpTrackFinish(RecordType recordType)
     QString strTemp = QString::fromLocal8Bit(openProcess->readAllStandardOutput());
     Common *pcom = NULL;
     pcom->WriteIpTrack(recordType, strTemp);
+    LogRecord mLog;
+    mLog.LogTrack("Get IpTrack file success.");
 
     openProcess->close();
     openProcess->kill();

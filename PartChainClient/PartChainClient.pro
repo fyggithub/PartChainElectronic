@@ -117,5 +117,8 @@ else:unix: LIBS += -LD:/sotfwarePath/OpenCvPath/opencv/build_msvc/install/x86/vc
 INCLUDEPATH += D:/sotfwarePath/OpenCvPath/opencv/build_msvc/install/x86/vc15
 DEPENDPATH += D:/sotfwarePath/OpenCvPath/opencv/build_msvc/install/x86/vc15
 
+RC_ICONS = $$PWD/Icon/Titleicon.ico
+
 RESOURCES += \
     Icon.qrc
+

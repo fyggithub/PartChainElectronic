@@ -37,6 +37,8 @@ MainWindow::MainWindow(QWidget *parent)
     sendBuff = "";
     mSingleType = "";
     //qputenv("QTWEBENGINE_REMOTE_DEBUGGING", "7777");
+    LogRecord mlog;
+    mlog.LogTrack("**************************************************");
 }
 
 MainWindow::~MainWindow()
@@ -63,6 +65,9 @@ void MainWindow::startweb(void)
     //m_webView->page()->load(QUrl("http://172.24.103.6:8016/"));
     //m_webView->page()->load(QUrl("http://172.16.5.71:8083/"));
     m_webView->page()->load(getLoginUrl);
+    QString logmsg = QString("Start load url : %1").arg(urlIni);
+    LogRecord mlog;
+    mlog.LogTrack(logmsg);
 
     QStackedLayout* layout = new QStackedLayout(ui->widgetMain);
     ui->widgetMain->setLayout(layout);
@@ -91,8 +96,7 @@ void MainWindow::startweb(void)
     //m_webView->setContextMenuPolicy (Qt::NoContextMenu);
     //m_webView->page()->settings()->setAttribute(QWebEngineSettings::LocalContentCanAccessRemoteUrls, true);
     m_webView->setContextMenuPolicy(Qt::CustomContextMenu);
-    //m_inspector = NULL;
-    //connect(m_webView, &QWidget::customContextMenuRequested, this, &MainWindow::MsgInspector);
+    m_inspector = NULL;
     connect(m_webView, &QWidget::customContextMenuRequested, this, &MainWindow::MsgOperation);
 
     //获取本地ip及mac地址
@@ -105,24 +109,22 @@ void MainWindow::MsgOperation()
     QMenu* menu = new QMenu(this);
     QAction* actionCopy = menu->addAction(QString::fromLocal8Bit("复制"));
     QAction* actionPaste = menu->addAction(QString::fromLocal8Bit("粘贴"));
+    //QAction* actionInspector = menu->addAction(QString::fromLocal8Bit("控制台"));
     connect(actionCopy,SIGNAL(triggered()), this,SLOT(MsgCopy()));
-    connect(actionPaste,SIGNAL(triggered()), this,SLOT(MsgPaste()));
+    connect(actionPaste,SIGNAL(triggered()), this,SLOT(MsgPaste()));    
+//    connect(actionInspector, &QAction::triggered, this, [this](){
+//        if(m_inspector == NULL)
+//        {
+//            m_inspector = new Inspector(this);
+//        }
+//        else
+//        {
+//            m_inspector->show();
+//        }
+//    });
     menu->exec(QCursor::pos());
 
-//    if(m_webView->hasSelection()){
-//        QMenu* menu = new QMenu(this);
-//        QAction* action = menu->addAction(QString::fromLocal8Bit("复制"));
-//        connect(action,SIGNAL(triggered()), this,SLOT(MsgCopy()));
-//        menu->exec(QCursor::pos());
-//    }
-//    else{
-//        if(m_webView->hasFocus()){//窗口有焦点
-//            QMenu* menu = new QMenu(this);
-//            QAction* action = menu->addAction(QString::fromLocal8Bit("粘贴"));
-//            connect(action,SIGNAL(triggered()), this,SLOT(MsgPaste()));
-//            menu->exec(QCursor::pos());
-//        }
-//    }
+
 }
 
 void MainWindow::MsgCopy()
@@ -133,24 +135,6 @@ void MainWindow::MsgCopy()
 void MainWindow::MsgPaste()
 {
     m_webView->triggerPageAction(QWebEnginePage::Paste);
-}
-
-//调出控制台
-void MainWindow::MsgInspector()
-{
-    QMenu* menu = new QMenu(this);
-    QAction* action = menu->addAction("Inspect");
-    connect(action, &QAction::triggered, this, [this](){
-        if(m_inspector == NULL)
-        {
-            m_inspector = new Inspector(this);
-        }
-        else
-        {
-            m_inspector->show();
-        }
-    });
-    menu->exec(QCursor::pos());
 }
 
 void MainWindow::DownLoadFinish()
@@ -389,10 +373,13 @@ void MainWindow::OnReceiveMessageFromJS(QString strMain,QString type,QString str
         SigSendMessageToJS(strJson,"","");
         QString msg = QString::fromLocal8Bit("登录信息已失效，<br>请关闭窗口，重新登录！");
         QMessageBox::warning(NULL, QString::fromLocal8Bit("提示"), msg, QString::fromLocal8Bit("确定"), 0);
+        LogRecord mLog;
+        mLog.LogTrack(QString("Send js data : %1").arg(strJson));
         return;
     }
     else if(forensicsType == "openResourceManagement")
     {
+        LogRecord mLog;
         QString path = jsonObject["path"].toString();
         qDebug()<<"path:"<<path;
         QDir dir(path);
@@ -402,6 +389,7 @@ void MainWindow::OnReceiveMessageFromJS(QString strMain,QString type,QString str
         }
         else{
             qDebug() << "file is not exists.";
+            mLog.LogTrack(QString("File path is not exists : %1").arg(path));
             QMessageBox::warning(NULL, QString::fromLocal8Bit("查看文件"), QString::fromLocal8Bit("本地文件已删除，无法查看"),\
                                             QString::fromLocal8Bit("确定"), 0);
         }
@@ -410,7 +398,8 @@ void MainWindow::OnReceiveMessageFromJS(QString strMain,QString type,QString str
         obj.insert("strMain", "openResourceManagement");
         QByteArray byteArray = QJsonDocument(obj).toJson(QJsonDocument::Compact);
         QString strJson(byteArray);
-        SigSendMessageToJS(strJson,"","");
+        SigSendMessageToJS(strJson,"","");        
+        mLog.LogTrack(QString("Send js data : %1").arg(strJson));
         return;
     }
     else if(forensicsType == "GetDownLoadData")
@@ -522,7 +511,9 @@ void MainWindow::UploadFile(QString *filename,int num)
     multi_part->append(*textPart1);
     delete textPart1;
 
-    QUrl url("http://172.16.5.71:8080/api/file/uploadFile");
+    QUrl url = pcom->GetUploadUrl();
+    //QUrl url("http://172.16.5.71:8080/api/file/uploadFile");
+    //QUrl url("http://172.16.5.71:21417/api/file/uploadFile");
     QNetworkRequest request(url);
     QString tokenStr = pGetJsToken;
     QString tokenHeaderData = QString("Bearer ") + tokenStr;
@@ -672,12 +663,12 @@ void MainWindow::PostDownloadData(const QString& url,const QString& token,const 
     }
     else{
         QUrl getUrl(url);
+        qDebug()<<"url:"<<url;
         QNetworkRequest request(getUrl);
         QString tokenStr = token;
         QString tokenHeaderData = QString("Bearer ") + tokenStr;
         request.setRawHeader("Authorization", tokenHeaderData.toLatin1());
         request.setRawHeader("Content-Type", "application/json");
-        //request.setRawHeader("responseType", "blob");
         QByteArray postData = parame;
 
         //QNetworkAccessManager *accessManager = new QNetworkAccessManager(this);    //往该目录中上传文件
@@ -810,6 +801,7 @@ void MainWindow::DownReplyFinishedTest(QNetworkReply *strReply)
         QByteArray byteArray = QJsonDocument(obj).toJson(QJsonDocument::Compact);
         QString strJson(byteArray);
         SigSendMessageToJS(strJson,"","");
+        wLog.LogTrack(QString("Send js data : %1").arg(strJson));
     }
     else{
         qDebug() << "QNetworkReply Error.";
@@ -819,6 +811,7 @@ void MainWindow::DownReplyFinishedTest(QNetworkReply *strReply)
         QByteArray byteArray = QJsonDocument(obj).toJson(QJsonDocument::Compact);
         QString strJson(byteArray);
         SigSendMessageToJS(strJson,"","");
+        wLog.LogTrack(QString("Send js data : %1").arg(strJson));
     }
 }
 
@@ -1098,4 +1091,6 @@ void MainWindow::SendPathMessage(QString mode)
     QByteArray byteArray = QJsonDocument(obj).toJson(QJsonDocument::Compact);
     QString strJson(byteArray);
     emit SigSendMessageToJS(strJson,"","");
+    LogRecord mLog;
+    mLog.LogTrack(QString("Send js data : %1").arg(strJson));
 }

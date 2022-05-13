@@ -5,6 +5,7 @@
 #include <QDir>
 #include <QCoreApplication>
 #include <QNetworkInterface>
+#include <QUrl>
 
 enum RecordType{
     WebRecord = 0,
@@ -46,6 +47,7 @@ public:
     void RemoveScnLogFile(QString fileName);
     void RemoveWebLogFile(RecordType recordType,QString fileName);
     void RemoveFailFiles(RecordType recordType);
+    QUrl GetUploadUrl(void);
 };
 
 extern QString pGetJsToken,pGetJsUrl,pGetForensicsName,pGetNameNoTime,pGetHostIp,pGetDirPath;

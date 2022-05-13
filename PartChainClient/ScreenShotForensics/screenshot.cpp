@@ -397,7 +397,9 @@ void ScreenShot::ScnShotUploadFile(QString *filename,int num)
         delete textPart;
     }
 
-    QUrl url("http://172.16.5.71:8080/api/file/uploadFile");
+    QUrl url = pcom->GetUploadUrl();
+    //QUrl url("http://172.16.5.71:8080/api/file/uploadFile");
+    //QUrl url("http://172.16.5.71:21417/api/file/uploadFile");
     QNetworkRequest request(url);
     QString tokenStr = pGetJsToken;
     QString tokenHeaderData = QString("Bearer ") + tokenStr;

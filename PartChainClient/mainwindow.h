@@ -82,7 +82,6 @@ private slots:
     void DownReplyFinishedTest(QNetworkReply *strReply);
     void loadError(QNetworkReply::NetworkError);
     void RecvMsgCloseWnd(RecordType type);
-    void MsgInspector();
     void MsgOperation();
     void MsgCopy();
     void MsgPaste();

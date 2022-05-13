@@ -7,7 +7,7 @@
 #include <winsock2.h>
 #include <iphlpapi.h>
 #include "logrecord.h"
-
+#include "config.h"
 #pragma comment(lib, "iphlpapi.lib")
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1600)
@@ -320,6 +320,11 @@ QString Common::GetIpAddress()
                         pMacAddress = interFaceList.at(i).hardwareAddress();
                         pGateway = gatway;
                         pOsVersion = version;
+                        LogRecord mLog;
+                        mLog.LogTrack(QString("Computer Os Version : %1").arg(pOsVersion));
+                        mLog.LogTrack(QString("Computer ip address: %1").arg(pIpAddress));
+                        mLog.LogTrack(QString("Computer mac address : %1").arg(pMacAddress));
+                        mLog.LogTrack(QString("Computer gateway : %1").arg(pGateway));
                     }
                 }
             }
@@ -507,3 +512,19 @@ void Common::RemoveOverageFile(QString &filePathName)
     }
 }
 
+QUrl Common::GetUploadUrl(void)
+{
+    Config pConfig("");
+    QString urlIni = pConfig.Get("URL","url").toString();
+    QString urlstr;
+    if(urlIni.right(1) == '/')
+    {
+        urlstr = QString("%1api/file/uploadFile").arg(urlIni);
+    }
+    else
+    {
+        urlstr = QString("%1/api/file/uploadFile").arg(urlIni);
+    }
+    QUrl url = QUrl::fromUserInput(urlstr);
+    return url;
+}

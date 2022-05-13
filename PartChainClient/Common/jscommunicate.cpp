@@ -1,5 +1,6 @@
 ﻿#include "jscommunicate.h"
 #include <QDebug>
+#include "logrecord.h"
 
 JSCommunicate::JSCommunicate()
 {
@@ -20,5 +21,7 @@ JSCommunicate::~JSCommunicate()
 void JSCommunicate::JSSendMessage(QString strMain,QString type,QString str)
 {
     //qDebug() << strMain;
+    LogRecord mLog;
+    mLog.LogTrack(QString("Recv js data : %1").arg(strMain));
     emit SigReceivedMessFromJS(strMain,type,str);
 }

@@ -164,6 +164,7 @@ void Audio::CreateAudioInput()
     }
 
     QAudioDeviceInfo inputDevice(QAudioDeviceInfo::defaultInputDevice());
+    qDebug()<<"---device name:"<<inputDevice.deviceName();
     mpAudioInputSound = new QAudioInput(inputDevice, mFormatSound, this);
 }
 
