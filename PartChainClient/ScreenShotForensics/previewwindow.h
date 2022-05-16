@@ -30,6 +30,7 @@ private slots:
     void SlotItemClicked(QListWidgetItem * item);
     void SlotDoubleClicked(QListWidgetItem* item);
     void DeleteClicked();
+    void GetZoomPreviewMsgCloseWnd();
 
 private:
     Ui::PreviewWindow *ui;

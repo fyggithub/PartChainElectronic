@@ -22,6 +22,7 @@ ScreenShot::ScreenShot(QWidget *parent) :
     ui->setupUi(this);
     timecount = 0;
     pCloseFlag = 0;
+    pPreviewWindow = NULL;
 
     ui->BtnReload->setStyleSheet("QPushButton{border-top:0px solid #e8f3f9;background:  transparent;}"
                                  "QPushButton:pressed{border:2px solid white;border-radius:10px;}"
@@ -100,7 +101,6 @@ void ScreenShot::BackUrl(void)
     m_ScnSotWebView->back();
 }
 
-
 void ScreenShot::OpenScreenShootWeb(void)
 {
     m_ScnSotWebView = new Widget(this);
@@ -153,14 +153,21 @@ void ScreenShot::DisplayCurrentTime()
 
 void ScreenShot::OpenPreview(void)
 {
-    pPreviewWindow = new PreviewWindow;
-    pPreviewWindow->show();
-    connect(pPreviewWindow, &PreviewWindow::SendPreviewMsgCloseWnd,this, &ScreenShot::PreviewMsgCloseWnd);
+    if(pPreviewWindow == NULL){
+        pPreviewWindow = new PreviewWindow;
+        pPreviewWindow->show();
+        connect(pPreviewWindow, &PreviewWindow::SendPreviewMsgCloseWnd,this, &ScreenShot::PreviewMsgCloseWnd);
+    }
+    else{
+        QMessageBox::information(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("请先关闭已打开的图片！"),\
+                                                       QString::fromLocal8Bit("确定"), 0);
+    }
 }
 
 void ScreenShot::PreviewMsgCloseWnd(void)
 {
     delete pPreviewWindow;
+    pPreviewWindow = NULL;
     pBtn->setFixedSize(40, 13);
     pBtn->setMsgNumber(pMap.size());
 }
@@ -308,6 +315,10 @@ void ScreenShot::closeEvent(QCloseEvent *event)
     {
         pCloseFlag = 0;
         pMap.clear();//清空容器
+    }
+    if(pPreviewWindow != NULL){
+        delete pPreviewWindow;
+        pPreviewWindow = NULL;
     }
     emit SendMsgCloseWnd(ScreenShotRecord);
 }

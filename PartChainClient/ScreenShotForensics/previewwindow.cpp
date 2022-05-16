@@ -17,6 +17,7 @@ PreviewWindow::PreviewWindow(QWidget *parent) :
     ui(new Ui::PreviewWindow)
 {
     ui->setupUi(this);
+    pZoomPreview = NULL;
 
     m_pListWidget = ui->listWidget;
     m_pListWidget->setIconSize(QSize(W_ICONSIZE, H_ICONSIZE));
@@ -42,6 +43,11 @@ PreviewWindow::~PreviewWindow()
 void PreviewWindow::closeEvent(QCloseEvent *event)
 {
     qDebug()<<"PreviewWindow::closeEvent.";
+    if(pZoomPreview != NULL)
+    {
+        delete pZoomPreview;
+        pZoomPreview = NULL;
+    }
     emit SendPreviewMsgCloseWnd();
 }
 
@@ -52,18 +58,33 @@ void PreviewWindow::SlotItemClicked(QListWidgetItem* item)
 
 void PreviewWindow::SlotDoubleClicked(QListWidgetItem* item)
 {
-    //qDebug() << "SlotDoubleClicked.";
-    QList<QListWidgetItem*> itemsCnt = m_pListWidget->selectedItems();
-    if(itemsCnt.size() == 0){
-        return;
-    }
-    Common *pcom = NULL;
-    QString filePath = pcom->FileDirPath(ScreenShotRecord);
-    QString fullFile = filePath + itemsCnt[0]->text();
+    if(pZoomPreview == NULL){
+        //qDebug() << "SlotDoubleClicked.";
+        QList<QListWidgetItem*> itemsCnt = m_pListWidget->selectedItems();
+        if(itemsCnt.size() == 0){
+            return;
+        }
+        Common *pcom = NULL;
+        QString filePath = pcom->FileDirPath(ScreenShotRecord);
+        QString fullFile = filePath + itemsCnt[0]->text();
 
-    pZoomPreview = new ZoomPreview;
-    pZoomPreview->DisplayImage(fullFile);
-    pZoomPreview->ShowMaximized();
+        pZoomPreview = new ZoomPreview;
+        pZoomPreview->DisplayImage(fullFile);
+        pZoomPreview->ShowMaximized();
+        connect(pZoomPreview, &ZoomPreview::SendZoomPreviewMsgCloseWnd,this, &PreviewWindow::GetZoomPreviewMsgCloseWnd);
+    }
+    else{
+        QMessageBox::information(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("请先关闭已打开的图片！"),\
+                                                       QString::fromLocal8Bit("确定"), 0);
+    }
+
+}
+
+void PreviewWindow::GetZoomPreviewMsgCloseWnd()
+{
+    qDebug()<<"ZoomPreview close.";
+    delete pZoomPreview;
+    pZoomPreview = NULL;
 }
 
 void PreviewWindow::PreviewItem(void)

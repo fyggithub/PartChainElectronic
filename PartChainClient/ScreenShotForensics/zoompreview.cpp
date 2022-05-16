@@ -21,6 +21,12 @@ void ZoomPreview::ShowMaximized()
     show();
 }
 
+void ZoomPreview::closeEvent(QCloseEvent *event)
+{
+    qDebug()<<"ZoomPreview::closeEvent.";
+    emit SendZoomPreviewMsgCloseWnd();
+}
+
 void ZoomPreview::DisplayImage(QString path)
 {
     /*QPixmap pixmap(path);

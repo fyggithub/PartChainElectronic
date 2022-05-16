@@ -18,7 +18,10 @@ public:
     QString imagePath;
     void DisplayImage(QString path);
     void ShowMaximized();
-
+private:
+    void closeEvent(QCloseEvent *event);
+signals:
+    void SendZoomPreviewMsgCloseWnd();
 private:
     Ui::ZoomPreview *ui;
 };

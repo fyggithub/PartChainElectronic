@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    pProgressMaxRange = 40;
+    pProgressMaxRange = 5;
     countBuff = 0;
     recvBuff = "";
     sendBuff = "";
