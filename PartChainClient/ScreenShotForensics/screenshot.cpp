@@ -159,7 +159,7 @@ void ScreenShot::OpenPreview(void)
         connect(pPreviewWindow, &PreviewWindow::SendPreviewMsgCloseWnd,this, &ScreenShot::PreviewMsgCloseWnd);
     }
     else{
-        QMessageBox::information(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("请先关闭已打开的图片！"),\
+        QMessageBox::information(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("请先关闭已打开的预览窗口！"),\
                                                        QString::fromLocal8Bit("确定"), 0);
     }
 }
