@@ -746,6 +746,8 @@ void MainWindow::DownReplyFinishedTest(QNetworkReply *strReply)
             pDecrypt->DecodeSM4_StreamTest(keyList,fileList,strData.data(),strData.length());
         }
         delete pDecrypt;
+        fileList.clear();
+        keyList.clear();
         wLog.LogTrack("DecodeSM4 over.");
 
         QString downloadName = "";
@@ -758,6 +760,19 @@ void MainWindow::DownReplyFinishedTest(QNetworkReply *strReply)
             downloadName = appPath + pDownLoadFileName;
         }
         downLoadPath = QFileDialog::getSaveFileName(this, QString::fromLocal8Bit("保存文件"), downloadName);//选择下载路径
+        if(downLoadPath == ""){
+            wLog.LogTrack("warning : download cancel!");
+            Common *pCommon = NULL;
+            pCommon->RemoveOverageFile(pDownLoadFileName);
+
+            QJsonObject obj;
+            obj.insert("strMain", "GetDownLoadData");
+            obj.insert("strBranch", "DownLoadFail");
+            QByteArray byteArray = QJsonDocument(obj).toJson(QJsonDocument::Compact);
+            QString strJson(byteArray);
+            SigSendMessageToJS(strJson,"","");
+            return;
+        }
         qDebug()<<"downLoadPath:"<<downLoadPath << pBatchSingle;
         QString getPath = QString("downLoadPath:%1").arg(downLoadPath);
         QString getBatchSingle = QString("pBatchSingle:%1").arg(pBatchSingle);
@@ -789,6 +804,8 @@ void MainWindow::DownReplyFinishedTest(QNetworkReply *strReply)
         {
             wLog.LogTrack("file download copy fail!");
             qDebug()<< "file copy fail.";
+            Common *pCommon = NULL;
+            pCommon->RemoveOverageFile(pDownLoadFileName);
 
             QMessageBox::warning(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("文件被占用！"), QString::fromLocal8Bit("确定"), 0);
             QJsonObject obj;
@@ -803,12 +820,10 @@ void MainWindow::DownReplyFinishedTest(QNetworkReply *strReply)
             Common *pCommon = NULL;
             pCommon->RemoveOverageFile(pDownLoadFileName);
         }
+
         //mSingleType = "";
         pBatchSingle = "";
-        fileList.clear();
-        keyList.clear();
         wLog.LogTrack("file download over.");
-
         QJsonObject obj;
         obj.insert("strMain", "GetDownLoadData");
         obj.insert("strBranch", "DownLoadSuccess");

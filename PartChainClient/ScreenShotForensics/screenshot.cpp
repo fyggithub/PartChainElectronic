@@ -84,6 +84,7 @@ void ScreenShot::JumpUrl(void)
         qDebug()<<"url is not Valid."<<url;
     }
 
+    qDebug()<<"JumpUrl:"<<url;
     if (!url.isEmpty())
     {
         m_ScnSotWebView->load(url);
