@@ -1109,6 +1109,9 @@ void MainWindow::SendPathMessage(QString mode)
     QJsonObject obj;
     obj.insert("strMain", "forensicsMode");
     obj.insert("forensicsPath", strDirPath);
+    obj.insert("IpAddress", pIpAddress);
+    obj.insert("MacAddress", pMacAddress);
+    obj.insert("OsVersion", pOsVersion);
     QByteArray byteArray = QJsonDocument(obj).toJson(QJsonDocument::Compact);
     QString strJson(byteArray);
     emit SigSendMessageToJS(strJson,"","");
