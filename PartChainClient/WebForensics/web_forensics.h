@@ -60,7 +60,6 @@ public slots:
     void RecvMsgClose();
     void FullScreenShoot();
 
-
 private:
     Ui::web_forensics *ui;
     Common* pLog;

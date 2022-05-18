@@ -50,6 +50,8 @@ void web_forensics::ShowMaximized()
 {
     setWindowState((windowState() & ~(Qt::WindowMinimized | Qt::WindowFullScreen)) | Qt::WindowMaximized);
     show();
+
+    QTimer::singleShot(1000, this, SLOT(FullScreenShoot()));
 }
 
 void web_forensics::OpenWebForensics(void)
@@ -90,7 +92,7 @@ void web_forensics::OpenWebForensics(void)
         qDebug() << download->path() << download->savePageFormat();
         download->accept();//接收当前下载请求，只有接收后才会开始下载
     });*/
-    connect(m_webView,SIGNAL(loadFinished(bool)),this,SLOT(LoadWebOver(bool)));
+    //connect(m_webView,SIGNAL(loadFinished(bool)),this,SLOT(LoadWebOver(bool)));
 
     //判断输入的网址是否有效
     if(!QUrl(pGetJsUrl).isValid()){

@@ -123,8 +123,6 @@ void MainWindow::MsgOperation()
 //        }
 //    });
     menu->exec(QCursor::pos());
-
-
 }
 
 void MainWindow::MsgCopy()
@@ -569,7 +567,10 @@ void MainWindow::replyFinished(QNetworkReply*)    //删除指针，更新和关�
             pGetHostIp = str;
             switch(pRecordType)
             {
-                case WebRecord:     OpenWebForensics();break;
+                case WebRecord:{
+                    //OpenWebForensics();
+                    pWebForensics->ShowMaximized();
+                }break;
                 case CameraRecord:  OpenWebCamera(); break;
                 case VideoRecord:   {
                     OpenWebRecordVideo();
@@ -626,6 +627,19 @@ void MainWindow::replyFinished(QNetworkReply*)    //删除指针，更新和关�
         {
             pCamera->ClosePhotograph();//关闭摄像头
             delete pCamera;
+        }
+        else if(pRecordType ==  WebRecord)
+        {
+            delete pWebForensics;
+            //删除取消的文件
+            qDebug()<<pGetDirPath;
+            if(pGetDirPath != "")
+            {
+                qDebug()<<"---------------";
+                Common *pCommon = NULL;
+                pCommon->RemoveDirFile(pGetDirPath);
+                pGetDirPath = "";   //清空，避免异常导致错误
+            }
         }
 
         QMessageBox::critical(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("网络清洁性检测失败，<br>请重新取证！"),\
@@ -930,7 +944,8 @@ void MainWindow::OpenWebForensics(void)
     pWebForensics = new web_forensics;
     pWebForensics->OpenWebForensics();
     pWebForensics->setWindowTitle(QString::fromLocal8Bit("网页取证"));
-    pWebForensics->ShowMaximized();
+    //pWebForensics->ShowMaximized();
+    pWebForensics->hide();
     connect(pWebForensics, &web_forensics::SigSendMessageToJS,pJsCommunicate, &JSCommunicate::SigSendMessageToJS);
     connect(pWebForensics, &web_forensics::SendMsgCloseWnd,this, &MainWindow::RecvMsgCloseWnd);
 }
@@ -1028,8 +1043,14 @@ void MainWindow::DialogProgressTime()
     timecount++;
     if(timecount < pProgressMaxRange)
     {
+        if(timecount == 2)
+        {
+            if(pRecordType == WebRecord){
+                OpenWebForensics();
+            }
+        }
         progressDialog->setValue(timecount);
-    }
+    }    
     else if(timecount == pProgressMaxRange)
     {
         progressDialog->setValue(timecount);
