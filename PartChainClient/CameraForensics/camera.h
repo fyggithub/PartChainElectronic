@@ -62,10 +62,6 @@ private:
     void StartMplayerCompress(QString wav, QString avi, QString outName);
 
 private slots:
-    void StartRecordVideo1(void);
-    void StopRecordVideo1(void);
-    void RecordTime1(void);
-
     void StartRecordVideo(void);
     void StopRecordVideo(void);
     void ReloadRecordVideo(void);
@@ -91,7 +87,6 @@ private:
     VideoWriter *outputVideo;
     QTimer *timer, *count_timer;
     QDateTime  m_timeStart;
-    Common* pLog;
     bool       m_isRun;
     Audio*     m_Audio;
     QNetworkReply *reply;

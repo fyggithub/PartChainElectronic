@@ -21,7 +21,6 @@ Camera::Camera(QWidget *parent) :
 
 Camera::~Camera()
 {
-    delete pLog;
     delete capture;
     delete ui;
 }
@@ -50,10 +49,10 @@ void Camera::InitPhotographUi()
     connect(pCurrentTime, SIGNAL(timeout()), this, SLOT(DisplayCurrentTime()));
     pCurrentTime->start(100);
 
-    pLog = new Common();
     QString getTime = QDateTime::currentDateTime().toString("yyyy-MM-dd-hh-mm-ss-zzz");
     FileLogName = "log" + getTime + ".aisino";
-    pLog->CreateForensicsLog(CameraRecord, FileLogName);
+    Common mlog;
+    mlog.CreateForensicsLog(CameraRecord, FileLogName);
 
     WriteToVideo();
 
@@ -61,68 +60,6 @@ void Camera::InitPhotographUi()
     connect(ui->BtnReload, SIGNAL(clicked()), this, SLOT(ReloadRecordVideo()));
     connect(ui->BtnUpload, SIGNAL(clicked()), this, SLOT(UploadRecordVideo()));
     connect(this,SIGNAL(StopRecordVideoSignal()),this,SLOT(StopRecordVideo()));
-
-//    connect(ui->BtnStart, SIGNAL(clicked()), this, SLOT(StartRecordVideo1()));
-//    connect(ui->BtnReload, SIGNAL(clicked()), this, SLOT(StopRecordVideo1()));
-}
-
-void Camera::StartRecordVideo1(void)
-{
-    qDebug() << "StartRecordVideo.";
-    capture = new VideoCapture(0);
-    //capture->set(CAP_PROP_FOURCC,cv::VideoWriter::fourcc('M', 'J', 'P', 'G'));
-    //判断是否出错
-    if (!capture->isOpened()){return;}
-    double  frameHeight = capture->get(CAP_PROP_FRAME_HEIGHT);
-    double frameWidth = capture->get(CAP_PROP_FRAME_WIDTH);
-
-    double fps = capture->get(CAP_PROP_FPS);
-    int fourcc = capture->get(CAP_PROP_FOURCC);
-    qDebug()<<"fps:"<<fps<<"fourcc:"<<fourcc;
-
-    //定义writer对象
-    outputVideo = new VideoWriter;
-    int failFps = 30;
-    outputVideo->open("TestVideo.avi", outputVideo->fourcc('M', 'J', 'P', 'G'), failFps, Size(frameWidth, frameHeight), true);
-    //outputVideo->open("TestVideo.avi", outputVideo->fourcc('U', '2', '6', '3'), fps, Size(frameWidth, frameHeight), true);
-
-    //判断open writer对象是否出错
-    if (!outputVideo->isOpened()){return;}
-
-    m_isRun     = true;
-    InitTimeTasks();
-
-    timer = new QTimer();
-    timer->setInterval(8);
-    timer->start();
-    connect(timer, SIGNAL(timeout()), this, SLOT(RecordTime1()));
-}
-
-void Camera::RecordTime1(void)
-{
-    frameImg = new Mat;
-    capture->read(*frameImg);
-    //判断是否读完
-    if (!frameImg->empty())
-    {
-        QImage image = cvMat2QImage(*frameImg);
-        ui->label_display->setPixmap(QPixmap::fromImage(image));
-
-        outputVideo->write(*frameImg);
-    }
-    delete frameImg;
-    return;
-}
-
-void Camera::StopRecordVideo1(void)
-{
-    qDebug() << "StopRecordVideo.";
-    count_timer->stop();
-    timer->stop();
-    capture->release();
-    outputVideo->release();
-    delete outputVideo;
-    delete timer;
 }
 
 void Camera::DisplayCurrentTime()
@@ -156,7 +93,8 @@ void Camera::StartRecordVideo(void)
     {
         if (!m_isRun)
         {
-            pLog->StorageForensicsLog(CameraRecord, FileLogName,"StartRecordVideo.");
+            Common mlog;
+            mlog.StorageForensicsLog(CameraRecord, FileLogName,"StartRecordVideo.");
             //删除刚录取的视频和音频文件
             RemoveFile(FileVideoName);
             RemoveFile(pAudioName);
@@ -181,7 +119,8 @@ void Camera::StartRecordVideo(void)
         }
         else
         {
-            pLog->StorageForensicsLog(CameraRecord, FileLogName,"StopRecordVideo.");
+            Common mlog;
+            mlog.StorageForensicsLog(CameraRecord, FileLogName,"StopRecordVideo.");
             emit StopRecordVideoSignal();
         }
     }
@@ -315,7 +254,8 @@ void Camera::ReloadRecordVideo(void)
     pcom->RemoveOverageFile(strWav);
     pcom->RemoveOverageFile(strAvi);
 
-    pLog->StorageForensicsLog(CameraRecord, FileLogName,"ReloadRecordVideo.");
+    Common mlog;
+    mlog.StorageForensicsLog(CameraRecord, FileLogName,"ReloadRecordVideo.");
     m_isRun     = true;
     pCloseFlag = 1;
     pStopFlag = 0;

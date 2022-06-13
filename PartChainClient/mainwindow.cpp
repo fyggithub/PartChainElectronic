@@ -620,6 +620,7 @@ void MainWindow::replyFinished(QNetworkReply*)    //删除指针，更新和关�
             {
                 delete pWebForensics;
             }
+
             pLog = new Common();
             pLog->RemoveFailFiles(pRecordType);
             delete pLog;
