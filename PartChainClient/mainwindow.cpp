@@ -16,7 +16,6 @@
 #include "include/JlCompress.h"
 #include "Common/logrecord.h"
 #include <QDesktopServices>
-#include "Json/json/json.h"
 #include <fstream>
 #include <string.h>
 #include "config.h"
@@ -39,20 +38,6 @@ MainWindow::MainWindow(QWidget *parent)
     qputenv("QTWEBENGINE_REMOTE_DEBUGGING", "7777");
     LogRecord mlog;
     mlog.LogTrack("**************************************************");
-
-//    QString filename0 = QString::fromLocal8Bit("F:\\fyg\\录12.txt");
-//    QString filename1 = QString::fromLocal8Bit("F:\\fyg\\录.txt");
-//    QString filename2 = QString::fromLocal8Bit("F:\\fyg\\测12.txt");
-//    QString filename3 = QString::fromLocal8Bit("F:\\fyg\\测试test123.txt");
-//    QString filename4 = QString::fromLocal8Bit("F:\\fyg\\123录12.txt");
-//    QString filename5 = QString::fromLocal8Bit("F:\\fyg\\test录.txt");
-//    QString filename6 = QString::fromLocal8Bit("F:\\fyg\\中1国2录3.txt");
-//    QString filename7 = QString::fromLocal8Bit("F:\\fyg\\录取.txt");
-//    QString filename8 = QString::fromLocal8Bit("F:\\fyg\\取12.txt");
-//    QString zipname = QString::fromLocal8Bit("F:\\fyg\\证据合集.zip");
-//    QStringList kk;
-//    kk << filename0 << filename1 << filename2 << filename3 << filename4 << filename5 <<filename6 << filename7 << filename8;
-//    JlCompress::compressFiles(zipname, kk);
 }
 
 MainWindow::~MainWindow()
@@ -92,7 +77,6 @@ void MainWindow::startweb(void)
     connect(this, &MainWindow::SigSendMessageToJS,pJsCommunicate, &JSCommunicate::SigSendMessageToJS);
 
     connect(m_webView->page()->profile(), &QWebEngineProfile::downloadRequested, [this](QWebEngineDownloadItem *download) {
-        //connect(download, &QWebEngineDownloadItem::finished,this,&MainWindow::DownLoadFinish);
         LogRecord wLog;
         //if (download->savePageFormat() != QWebEngineDownloadItem::UnknownSaveFormat){
         //}
@@ -149,53 +133,6 @@ void MainWindow::MsgPaste()
     m_webView->triggerPageAction(QWebEnginePage::Paste);
 }
 
-void MainWindow::DownLoadFinish()
-{
-    qDebug()<< "downLoadPath:" << downLoadPath;
-    qDebug()<< "pDownLoadFileName:" << pDownLoadFileName;
-    QString path = QString("DownLoadPath:%1").arg(downLoadPath);
-    LogRecord wLog;
-    wLog.LogTrack(path);
-    wLog.LogTrack(QString("pBatchSingle:%1").arg(pBatchSingle));
-    if(pBatchSingle != ""){
-        Common *pCommon = NULL;
-        pCommon->RemoveOverageFile(downLoadPath);
-        std::string dir = downLoadPath.toStdString();
-        int pos = dir.rfind("/");
-        QString toDir = downLoadPath.left(pos+1);
-        QStringList fileLists;
-
-        for(int i = 0; i < pList.size(); ++i){
-            QString getName = pList.at(i);
-            qDebug() << getName;
-            QString fullPath = toDir + getName;
-            if(!QFile::copy(getName, fullPath))
-            {
-                qDebug()<< "file copy fail.";
-            }
-            pCommon->RemoveOverageFile(getName);
-            fileLists << fullPath;
-        }
-
-        if((pBatchSingle == "batch") && (downLoadPath != "")){//为批量就进行压缩
-            std::string::size_type zipPos = dir.find(".zip");
-            QString zipPath = downLoadPath;
-            if(zipPos == dir.npos){
-                zipPath = QString("%1.zip").arg(downLoadPath);
-            }
-            JlCompress::compressFiles(zipPath, fileLists);
-            for(int j = 0;j < fileLists.size();++j)
-            {
-                pCommon->RemoveOverageFile(fileLists[j]);
-            }
-        }
-        pBatchSingle = "";
-        pList.clear();
-    }
-    wLog.LogTrack("downLoad over.");
-    return;
-}
-
 void MainWindow::OnReceiveMessageFromJS(QString strMain,QString type,QString str)
 {
     QJsonParseError parseJsonErr;
@@ -223,152 +160,6 @@ void MainWindow::OnReceiveMessageFromJS(QString strMain,QString type,QString str
     else if(forensicsType == "screenshot_login")
     {
         pRecordType = ScreenShotRecord;
-    }
-    else if(forensicsType == "sm4")
-    {
-        qDebug()<<"sm411111111111111111";
-        static int countNum = 0;
-        QString state = jsonObject["state"].toString();
-        qDebug()<<"state:"<<state;
-        if(state == "start")
-        {
-            LogRecord wLog;
-            wLog.LogTrack("--------------------------------------------startRecv");
-            qDebug()<<"start0";
-            QString sourceArray = jsonObject["encry"].toString();
-            int strlen1 = sourceArray.length();
-            countBuff += strlen1;
-            qDebug()<<"start1";
-            QByteArray bytes1 = sourceArray.toLatin1();
-            qDebug()<<"start3";
-            //const char* BuffEncry = bytes1.data();
-            char* p_buff1 = new char[MAXBUFFSIZE/4];
-            memset(p_buff1,0,MAXBUFFSIZE/4);
-            std::memcpy(p_buff1,bytes1.data(),strlen1);
-            qDebug()<<"start4";
-            //sprintf(BuffData, "%s", BuffEncry);
-            recvBuff.append(p_buff1);
-            delete [] p_buff1;
-            p_buff1 = nullptr;
-            qDebug()<<"start2";
-            wLog.LogTrack("--------------------------------------------recv over.");
-
-            QJsonObject obj;
-            obj.insert("strMain", "sm4");
-            obj.insert("strBranch", "JsSegmentSend");
-            obj.insert("str", "success");
-            QByteArray byteArray = QJsonDocument(obj).toJson(QJsonDocument::Compact);
-            QString strJson(byteArray);
-            SigSendMessageToJS(strJson,"","");
-            qDebug()<<"SigSend over.";
-            wLog.LogTrack("--------------------------------------------SigSend over.");
-            return;
-        }
-        else if(state == "finish")
-        {
-            LogRecord wLog;
-            wLog.LogTrack("--------------------------------------------");
-            qDebug()<<"finish111111111111111111111111111";
-            pDownLoadFileName = "";
-            pBatchSingle = "";
-            pDownLoadFileName = jsonObject["filename"].toString();
-            pBatchSingle = jsonObject["batchSingle"].toString();
-            fileSum = jsonObject["fileSum"].toInt();
-            qDebug()<<"pBatchSingle:"<<pBatchSingle;
-            qDebug()<<"pDownLoadFileName:"<<pDownLoadFileName;
-            qDebug()<< "fileSum:" << fileSum;
-            QString keyArray = jsonObject["key"].toString();
-            qDebug()<<"key:"<<keyArray;
-            QString sourceArray1 = jsonObject["encry"].toString();
-            int strlen2 = sourceArray1.length();
-            countBuff += strlen2;
-            QByteArray bytes2 = sourceArray1.toLatin1();
-            qDebug()<<"sourceArray:";
-            //const char* BuffEncry2 = bytes2.data();
-            char* p_buff2 = new char[MAXBUFFSIZE/4];
-            memset(p_buff2,0,MAXBUFFSIZE/4);
-            std::memcpy(p_buff2,bytes2.data(),strlen2);
-
-            //sprintf(BuffData, "%s", BuffEncry2);
-            recvBuff.append(p_buff2);
-            qDebug()<<"recvBuff.append";
-            delete [] p_buff2;
-            p_buff2 = nullptr;
-
-            wLog.LogTrack("recv is over starting to decrypt.");
-            pDecrypt = new SM4Decrypt;
-            qDebug()<<"****************************recvBuff len:"<<recvBuff.length();
-            //sendBuff = pDecrypt->DecodeSM4_Base64(keyArray,recvBuff);
-            //sendBuff = pDecrypt->DecodeSM4_Base64Test(keyArray,BuffData,countBuff);
-            sendBuff = pDecrypt->DecodeSM4_Base64Test2(keyArray,recvBuff);
-
-            double len = sendBuff.length();
-            QString str = sendBuff.left(len/5);
-            QJsonObject obj;
-            obj.insert("strMain", "sm4");
-            obj.insert("strBranch", "JsSegmentRecvStart");
-            obj.insert("str", str);
-            QByteArray byteArray = QJsonDocument(obj).toJson(QJsonDocument::Compact);
-            QString strJson(byteArray);
-            SigSendMessageToJS(strJson,"","");            
-            countNum = 0; //避免异常情况
-            //recvBuff = "";//清空缓存
-            recvBuff.clear();
-            countBuff = 0;
-            memset(BuffData, 0, MAXBUFFSIZE);
-            qDebug()<<"finish222222222222222222";
-            qDebug()<<"len:"<<len;
-            qDebug()<<str;
-            wLog.LogTrack("starting to send message.");
-            delete pDecrypt;
-            return;
-        }
-        else if(state == "rstart")
-        {
-            countNum++;
-            double len = sendBuff.length();
-            QJsonObject obj;
-            QString str;
-            int segmentNum = len/5;
-            int pos = segmentNum*countNum;
-            if(countNum < 4)
-            {                
-                str = sendBuff.mid(pos,segmentNum);
-                obj.insert("strBranch", "JsSegmentRecvStart");
-            }
-            else{
-                int rightPos = len - pos;
-                str = sendBuff.right(rightPos);
-                countNum = 0;
-                obj.insert("strBranch", "JsSegmentRecvFinish");
-                sendBuff = "";
-                LogRecord wLog;
-                wLog.LogTrack("message send to finish.");
-
-                qDebug()<< pList << pList.size()<<fileSum;
-                if(pList.size() >= fileSum){            //文件个数
-                    QString downloadName = "";
-                    QString appPath = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation) + "/";
-                    qDebug()<< "appPath:"<<appPath;
-                    if(pBatchSingle == "batch"){
-                        downloadName = appPath + QString::fromLocal8Bit("证据文件集.zip");
-                    }
-                    else{
-                        downloadName = appPath + pDownLoadFileName;
-                    }
-                    downLoadPath = QFileDialog::getSaveFileName(this, QString::fromLocal8Bit("保存文件"), downloadName);//选择下载路径
-                    qDebug()<<"downLoadPath:"<<downLoadPath << pBatchSingle;
-                    DownLoadFinish();
-                }
-            }
-            obj.insert("strMain", "sm4");
-            obj.insert("str", str);
-            QByteArray byteArray = QJsonDocument(obj).toJson(QJsonDocument::Compact);
-            QString strJson(byteArray);
-            SigSendMessageToJS(strJson,"","");
-            return;
-        }
-        return;
     }
     else if(forensicsType == "forensicsPath")
     {
@@ -538,13 +329,6 @@ void MainWindow::UploadFile(QString *filename,int num)
     reply = manager->post(request, multi_part);
     multi_part->setParent(reply);
 
-//    mAccessManager = new QNetworkAccessManager(this);    //往该目录中上传文件
-//    qDebug()<<"**********************UploadFile22";
-//    mAccessManager->setNetworkAccessible(QNetworkAccessManager::Accessible);
-//    qDebug()<<"**********************UploadFile23";
-//    reply = mAccessManager->post(request, multi_part);
-//    qDebug()<<"**********************UploadFile24";
-//    multi_part->setParent(reply);
     connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(replyFinished(QNetworkReply*)));
     connect(reply, SIGNAL(error(QNetworkReply::NetworkError)),this,SLOT(loadError(QNetworkReply::NetworkError)));
 }
@@ -561,10 +345,6 @@ void MainWindow::replyFinished(QNetworkReply*)    //删除指针，更新和关�
         qDebug()<<"**********************replyFinished";
         QString str = reply->readAll();        
         reply->deleteLater();
-        //mAccessManager->deleteLater();
-        //multi_part->deleteLater();
-
-        //qDebug() << str;
         QApplication::processEvents();
         qDebug()<<"**********************reply delete over.";
 
@@ -859,56 +639,6 @@ void MainWindow::DownReplyFinishedTest(QNetworkReply *strReply)
     }
 }
 
-void MainWindow::DownReplyFinished(QNetworkReply*)    //删除指针，更新和关闭文件
-{
-    qDebug()<<"-------------------**************---";
-    if(reply->error() == QNetworkReply::NoError)
-    {
-        QByteArray strJson = reply->readAll();
-        reply->deleteLater();
-        const char* buff = strJson.data();
-        std::string strbuff = buff;
-        qDebug()<<"data is readying0.";
-        Json::Reader reader;// 解析json用Json::Reader
-        Json::Value root;
-        qDebug()<<"data is readying1.";
-        if (reader.parse(strbuff, root))
-        {
-            qDebug()<<"reader parse success.";
-            std::string code = root.get("code", "null").asString();// 访问节点，Return the member named key if it exist, defaultValue otherwise.
-            QString stateCode = QString::fromStdString(code);
-            qDebug()<<"stateCode:"<<stateCode;
-
-            if(stateCode == "0000"){
-                int file_size = root["data"].size();  // 得到"files"的数组个数
-                qDebug()<<"file_size:"<<file_size;
-                for(int i = 0; i < file_size; ++i)  // 遍历数组
-                {
-                    qDebug()<<"qstrBase64:0";
-                    std::string strBase64 = root["data"][i]["base64"].asString();
-                    qDebug()<<"qstrBase64:1";
-
-                    QString strkey = keyList.at(i);
-                    qDebug()<<"tmp ="<< strkey;
-                    pDownLoadFileName = fileList.at(i);
-                    pDecrypt = new SM4Decrypt;
-                    pDecrypt->DecodeSM4_Base64Test(strkey,strBase64.c_str(),strBase64.length());
-                    delete pDecrypt;
-                }
-            }
-        }
-        else{
-            qDebug() << "reader parse Error.";
-        }
-        fileList.clear();
-        keyList.clear();
-    }
-    else
-    {
-        qDebug() << "QNetworkReply Error.";
-    }
-}
-
 void MainWindow::NetworkTest()
 {
     detect_thread = new networkclean();
@@ -952,23 +682,12 @@ void MainWindow::RecvMsgCloseWnd(RecordType type)
         }break;
         case CameraRecord:  delete pCamera; break;
         case VideoRecord:{
-//            delete m_record;
-//            pRecordDialogFlag = 1;
-//            pRecordVideo->CloseRecordWebMsg();
-//            delete pRecordVideo;
         }break;
         case VideoRecordDialog: {
             delete m_record;
             pRecordDialogFlag = 1;
             pRecordVideo->CloseRecordWebMsg();
             delete pRecordVideo;
-//            delete m_record;
-//            if(pRecordDialogFlag == 0){
-//                pRecordVideo->CloseRecordWebMsg();
-//            }
-//            else if(pRecordDialogFlag == 1){
-//                pRecordDialogFlag = 0;
-//            }
         }break;
         case ScreenShotRecord:delete pScreenShot;break;
         default:break;

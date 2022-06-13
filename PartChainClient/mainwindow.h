@@ -78,7 +78,6 @@ public slots:
 
 private slots:
     void replyFinished(QNetworkReply*);
-    void DownReplyFinished(QNetworkReply*);
     void DownReplyFinishedTest(QNetworkReply *strReply);
     void loadError(QNetworkReply::NetworkError);
     void RecvMsgCloseWnd(RecordType type);
@@ -86,8 +85,7 @@ private slots:
     void MsgCopy();
     void MsgPaste();
     void WriteToFile();
-private:
-    void DownLoadFinish();
+
 signals:
     void SigSendMessageToJS(QString strMain,QString type,QString str);
 
