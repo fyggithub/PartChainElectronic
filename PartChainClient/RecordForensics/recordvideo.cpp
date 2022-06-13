@@ -80,35 +80,34 @@ void RecordVideo::OpenRecordVideoWeb(void)
 
     connect(m_RecordWebView, SIGNAL(urlChanged(QUrl)),this, SLOT(OnUrlChanged(QUrl)));
     m_RecordWebView->setContextMenuPolicy (Qt::NoContextMenu);
-    /*connect(m_RecordWebView->page()->profile(), &QWebEngineProfile::downloadRequested, [this](QWebEngineDownloadItem *download) {
-        if (download->savePageFormat() != QWebEngineDownloadItem::UnknownSaveFormat)
-        {
-
-        }
-
-        QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), download->path());//选择下载路径
-        if (fileName.isEmpty())
-            return;
-
-        download->setPath(fileName);//设置文件下载路径
-        qDebug() << download->path() << download->savePageFormat();
-        download->accept();//接收当前下载请求，只有接收后才会开始下载
-    });*/
 }
 
 void RecordVideo::ShowMaximized(void)
 {
+//    setWindowState((windowState() & ~(Qt::WindowMinimized | Qt::WindowFullScreen))
+//                   | Qt::WindowMaximized );
+    setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowMinimizeButtonHint | Qt::WindowMaximizeButtonHint);
     setWindowState((windowState() & ~(Qt::WindowMinimized | Qt::WindowFullScreen))
-                   | Qt::WindowMaximized);
+                   | Qt::WindowMaximized );
     showMinimized();
 }
 
 //关闭窗口事件，关闭窗口首先需要判断定时器是否关闭了
 void RecordVideo::closeEvent(QCloseEvent *event)
 {
-    event->accept();
-    pRecordDialogFlag = 1;
-    emit SendMsgCloseWnd(VideoRecord);
+    if(pRecordDialogFlag == 1){
+        pRecordDialogFlag = 0;
+        event->accept();
+        return;
+    }
+    else{
+        event->ignore();
+        QMessageBox::warning(this,QString::fromLocal8Bit("消息"),QString::fromLocal8Bit("请勿关闭浏览器！"),\
+                                QString::fromLocal8Bit("确定"),0);
+    }
+
+    //pRecordDialogFlag = 1;
+    //emit SendMsgCloseWnd(VideoRecord);
 }
 
 void RecordVideo::OnUrlChanged(QUrl url)

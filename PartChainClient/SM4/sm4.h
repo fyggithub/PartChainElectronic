@@ -15,8 +15,8 @@
 #define SM4_KEY_SCHEDULE  32
 
 #define TEMPFILENAME        "tempDb.txt"
-#define TEMPFILEZIPNAME     "tmp.zip"
-#define BatchCompressFileName   "证据合集.zip"
+#define TEMPFILEZIPNAME     "tmp.rar"
+#define BatchCompressFileName   "证据合集.rar"
 
 typedef struct {
     int mode; // ENCRYPT OR DECRYPT

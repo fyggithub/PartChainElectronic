@@ -52,7 +52,7 @@ void Camera::InitPhotographUi()
 
     pLog = new Common();
     QString getTime = QDateTime::currentDateTime().toString("yyyy-MM-dd-hh-mm-ss-zzz");
-    FileLogName = "log" + getTime + ".txt";
+    FileLogName = "log" + getTime + ".aisino";
     pLog->CreateForensicsLog(CameraRecord, FileLogName);
 
     WriteToVideo();
@@ -256,11 +256,9 @@ void Camera::MplayerCompressFinished(int exitCode, QProcess::ExitStatus exitStat
     delete pProcess;
 
     //上传文件服务器
-    QString filelog = pLog->RenameLogFile(CameraRecord, FileLogName);
-    pLog->RemoveWebLogFile(CameraRecord,FileLogName);
     BufferFileName[0] = getNameMp4;
     BufferFileName[1] = pAudioName;
-    BufferFileName[2] = filelog;
+    BufferFileName[2] = FileLogName;
     CameraUploadFile(BufferFileName,3);
     Common *pcom = NULL;
     QString filePath = pcom->FileDirPath(CameraRecord);
@@ -312,8 +310,10 @@ void Camera::ReloadRecordVideo(void)
         QString strDelete = filePath + getNameMp4;
         pcom->RemoveOverageFile(strDelete);
     }
-    pcom->RemoveOverageFile(pAudioName);
-    pcom->RemoveOverageFile(FileVideoName);
+    QString strWav = filePath + pAudioName;
+    QString strAvi = filePath + FileVideoName;
+    pcom->RemoveOverageFile(strWav);
+    pcom->RemoveOverageFile(strAvi);
 
     pLog->StorageForensicsLog(CameraRecord, FileLogName,"ReloadRecordVideo.");
     m_isRun     = true;
@@ -366,7 +366,6 @@ void Camera::closeEvent(QCloseEvent *event)
             QByteArray byteArray = QJsonDocument(obj).toJson(QJsonDocument::Compact);
             QString strJson(byteArray);
 
-            pCommon->CommunicationWriteLog("GetCameraDate","cancel","cancel");
             emit SigSendMessageToJS(strJson,"","");
             capture->release();
             event->accept();
@@ -395,7 +394,6 @@ void Camera::closeEvent(QCloseEvent *event)
         obj.insert("osVersion", pOsVersion);
         QByteArray byteArray = QJsonDocument(obj).toJson(QJsonDocument::Compact);
         QString strJson(byteArray);
-        pCommon->CommunicationWriteLog("GetCameraDate","token",strJson);
         emit SigSendMessageToJS(strJson,"","");
         capture->release();
     }
@@ -648,12 +646,8 @@ void Camera::WriteToVideo(void)
     int rate = 1000/fps;
     qDebug()<<"rate:"<<rate;
     QString strRate = QString("fps:%1").arg(rate);
-    LogRecord wLog;
-    wLog.LogTrack(strRate);
 
     timer = new QTimer();
-    //timer->setInterval(6);
-    //timer->setInterval(8);
     timer->setInterval(8);
     timer->start();
     connect(timer, SIGNAL(timeout()), this, SLOT(RecordTime()));

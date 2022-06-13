@@ -26,7 +26,6 @@ public:
     void WriteIpTrack(RecordType recordType, QString str);
     void WriteLog(RecordType recordType, QString fileName, QString str);
     void RemoveLog(RecordType recordType, QString fileName);
-    void CommunicationWriteLog(QString str1,QString str2,QString str3);
 
     QString SetLogTimeFromat(void);
     void CreateForensicsLog(RecordType recordType, QString fileName);

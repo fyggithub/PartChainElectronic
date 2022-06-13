@@ -19,13 +19,13 @@ CXXFLAGS      = -nologo -Zc:wchar_t -FS -Zc:rvalueCast -Zc:inline -Zc:strictStri
 INCPATH       = -I..\PartChainClient -I. -ID:\softwarePath\OpenCvPath\opencv\build_msvc\install\include -ID:\softwarePath\OpenCvPath\opencv\build_msvc\install\include\opencv2 -ID:\sotfwarePath\OpenCvPath\opencv\build\include -I..\PartChainClient\include -ID:\sotfwarePath\OpenCvPath\opencv\build_msvc\install\x86\vc15 -ID:\sotfwarePath\OpenCvPath\opencv\build_msvc\install\x86\vc15 -ID:\sotfwarePath\QT\5.12.9\msvc2017\include -ID:\sotfwarePath\QT\5.12.9\msvc2017\include\QtMultimediaWidgets -ID:\sotfwarePath\QT\5.12.9\msvc2017\include\QtMultimedia -ID:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWebEngineWidgets -ID:\sotfwarePath\QT\5.12.9\msvc2017\include\QtPrintSupport -ID:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets -ID:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWebEngineCore -ID:\sotfwarePath\QT\5.12.9\msvc2017\include\QtQuick -ID:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui -ID:\sotfwarePath\QT\5.12.9\msvc2017\include\QtANGLE -ID:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWebChannel -ID:\sotfwarePath\QT\5.12.9\msvc2017\include\QtQml -ID:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork -ID:\sotfwarePath\QT\5.12.9\msvc2017\include\QtScript -ID:\sotfwarePath\QT\5.12.9\msvc2017\include\QtPositioning -ID:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore -Irelease -IUI -I/include -ID:\sotfwarePath\QT\5.12.9\msvc2017\mkspecs\win32-msvc 
 LINKER        = link
 LFLAGS        = /NOLOGO /DYNAMICBASE /NXCOMPAT /INCREMENTAL:NO /SUBSYSTEM:WINDOWS "/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'"
-LIBS          = /LIBPATH:F:\work\code\ElectronicDepository\FunctionIntegrate\PartChainElectronic\PartChainClient\lib F:\work\code\ElectronicDepository\FunctionIntegrate\PartChainElectronic\PartChainClient\lib\quazip.lib user32.lib /LIBPATH:D:\sotfwarePath\OpenCvPath\opencv\build_msvc\install\x86\vc15\lib D:\sotfwarePath\OpenCvPath\opencv\build_msvc\install\x86\vc15\lib\opencv_img_hash453.lib D:\sotfwarePath\OpenCvPath\opencv\build_msvc\install\x86\vc15\lib\opencv_world453.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5MultimediaWidgets.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Multimedia.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5WebEngineWidgets.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5PrintSupport.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Widgets.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5WebEngineCore.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Quick.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Gui.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5WebChannel.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Qml.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Network.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Script.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Positioning.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Core.lib  D:\sotfwarePath\QT\5.12.9\msvc2017\lib\qtmain.lib /LIBPATH:C:\opensslx86\lib /LIBPATH:C:\Utils\my_sql\mysql-5.6.11-win32\lib /LIBPATH:C:\Utils\postgresqlx86\pgsql\lib shell32.lib 
+LIBS          = /LIBPATH:F:\work\code\ElectronicDepository\FunctionIntegrate\PartChainElectronic\PartChainClient\lib F:\work\code\ElectronicDepository\FunctionIntegrate\PartChainElectronic\PartChainClient\lib\quazip.lib user32.lib /LIBPATH:D:\sotfwarePath\OpenCvPath\opencv\build_msvc\install\x86\vc15\lib D:\sotfwarePath\OpenCvPath\opencv\build_msvc\install\x86\vc15\lib\opencv_img_hash453.lib D:\sotfwarePath\OpenCvPath\opencv\build_msvc\install\x86\vc15\lib\opencv_world453.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5MultimediaWidgets.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Multimedia.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5WebEngineWidgets.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5PrintSupport.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Widgets.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5WebEngineCore.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Quick.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Gui.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5WebChannel.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Qml.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Network.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Script.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Positioning.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Core.lib release\PartChainClient_resource.res  D:\sotfwarePath\QT\5.12.9\msvc2017\lib\qtmain.lib /LIBPATH:C:\opensslx86\lib /LIBPATH:C:\Utils\my_sql\mysql-5.6.11-win32\lib /LIBPATH:C:\Utils\postgresqlx86\pgsql\lib shell32.lib 
 QMAKE         = D:\sotfwarePath\QT\5.12.9\msvc2017\bin\qmake.exe
 IDC           = idc
 IDL           = midl
 ZIP           = zip -r -9
 DEF_FILE      = 
-RES_FILE      = 
+RES_FILE      = release\PartChainClient_resource.res
 COPY          = copy /y
 SED           = $(QMAKE) -install sed
 COPY_FILE     = copy /y
@@ -430,12 +430,15 @@ DESTDIR_TARGET = release\PartChainClient.exe
 first: all
 all: Makefile.Release  release\PartChainClient.exe
 
-release\PartChainClient.exe: D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5MultimediaWidgets.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Multimedia.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5WebEngineWidgets.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5PrintSupport.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Widgets.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5WebEngineCore.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Quick.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Gui.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5WebChannel.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Qml.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Network.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Script.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Positioning.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Core.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\qtmain.lib UI\ui_camera.h UI\ui_widget.h UI\ui_recorddialog.h UI\ui_recordvideo.h UI\ui_previewwindow.h UI\ui_screenshot.h UI\ui_zoompreview.h UI\ui_web_forensics.h UI\ui_inspector.h UI\ui_mainwindow.h $(OBJECTS) 
+release\PartChainClient.exe: D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5MultimediaWidgets.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Multimedia.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5WebEngineWidgets.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5PrintSupport.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Widgets.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5WebEngineCore.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Quick.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Gui.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5WebChannel.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Qml.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Network.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Script.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Positioning.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\Qt5Core.lib D:\sotfwarePath\QT\5.12.9\msvc2017\lib\qtmain.lib UI\ui_camera.h UI\ui_widget.h UI\ui_recorddialog.h UI\ui_recordvideo.h UI\ui_previewwindow.h UI\ui_screenshot.h UI\ui_zoompreview.h UI\ui_web_forensics.h UI\ui_inspector.h UI\ui_mainwindow.h $(OBJECTS) release\PartChainClient_resource.res
 	$(LINKER) $(LFLAGS) /MANIFEST:embed /OUT:$(DESTDIR_TARGET) @<<
 release\audio.obj release\camera.obj release\common.obj release\jscommunicate.obj release\logrecord.obj release\networkclean.obj release\widget.obj release\json_reader.obj release\json_value.obj release\json_writer.obj release\avilib.obj release\head.obj release\mywin.obj release\recorddialog.obj release\recordvideo.obj release\En_Decrypt.obj release\base64.obj release\sm4.obj release\bubbleltipbutton.obj release\previewwindow.obj release\screenshot.obj release\zoompreview.obj release\web_forensics.obj release\weburlrequestinterceptor.obj release\config.obj release\inspector.obj release\main.obj release\mainwindow.obj release\qrc_Icon.obj release\moc_audio.obj release\moc_camera.obj release\moc_jscommunicate.obj release\moc_networkclean.obj release\moc_widget.obj release\moc_mywin.obj release\moc_recorddialog.obj release\moc_recordvideo.obj release\moc_bubbleltipbutton.obj release\moc_previewwindow.obj release\moc_screenshot.obj release\moc_zoompreview.obj release\moc_web_forensics.obj
 release\moc_weburlrequestinterceptor.obj release\moc_inspector.obj release\moc_mainwindow.obj
 $(LIBS)
 <<
+
+release\PartChainClient_resource.res: PartChainClient_resource.rc
+	rc /NOLOGO $(DEFINES) -fo release\PartChainClient_resource.res PartChainClient_resource.rc
 
 qmake: FORCE
 	@$(QMAKE) -o Makefile.Release ..\PartChainClient\PartChainClient.pro -spec win32-msvc "CONFIG+=qtquickcompiler"
@@ -447,6 +450,7 @@ dist:
 
 clean: compiler_clean 
 	-$(DEL_FILE) release\audio.obj release\camera.obj release\common.obj release\jscommunicate.obj release\logrecord.obj release\networkclean.obj release\widget.obj release\json_reader.obj release\json_value.obj release\json_writer.obj release\avilib.obj release\head.obj release\mywin.obj release\recorddialog.obj release\recordvideo.obj release\En_Decrypt.obj release\base64.obj release\sm4.obj release\bubbleltipbutton.obj release\previewwindow.obj release\screenshot.obj release\zoompreview.obj release\web_forensics.obj release\weburlrequestinterceptor.obj release\config.obj release\inspector.obj release\main.obj release\mainwindow.obj release\qrc_Icon.obj release\moc_audio.obj release\moc_camera.obj release\moc_jscommunicate.obj release\moc_networkclean.obj release\moc_widget.obj release\moc_mywin.obj release\moc_recorddialog.obj release\moc_recordvideo.obj release\moc_bubbleltipbutton.obj release\moc_previewwindow.obj release\moc_screenshot.obj release\moc_zoompreview.obj release\moc_web_forensics.obj release\moc_weburlrequestinterceptor.obj release\moc_inspector.obj release\moc_mainwindow.obj
+	-$(DEL_FILE) release\PartChainClient_resource.res
 
 distclean: clean 
 	-$(DEL_FILE) .qmake.stash
@@ -1043,6 +1047,7 @@ release\moc_networkclean.cpp: ..\PartChainClient\Common\networkclean.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qtnetwork-config.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qhostaddress.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qabstractsocket.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QUrl \
 		release\moc_predefs.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\bin\moc.exe
 	D:\sotfwarePath\QT\5.12.9\msvc2017\bin\moc.exe $(DEFINES) --compiler-flavor=msvc --include F:/work/code/ElectronicDepository/FunctionIntegrate/PartChainElectronic/build-PartChainClient-Desktop_Qt_5_12_9_MSVC2017_32bit-Release/release/moc_predefs.h -ID:/sotfwarePath/QT/5.12.9/msvc2017/mkspecs/win32-msvc -IF:/work/code/ElectronicDepository/FunctionIntegrate/PartChainElectronic/PartChainClient -ID:/softwarePath/OpenCvPath/opencv/build_msvc/install/include -ID:/softwarePath/OpenCvPath/opencv/build_msvc/install/include/opencv2 -ID:/sotfwarePath/OpenCvPath/opencv/build/include -IF:/work/code/ElectronicDepository/FunctionIntegrate/PartChainElectronic/PartChainClient/include -ID:/sotfwarePath/OpenCvPath/opencv/build_msvc/install/x86/vc15 -ID:/sotfwarePath/OpenCvPath/opencv/build_msvc/install/x86/vc15 -ID:/sotfwarePath/QT/5.12.9/msvc2017/include -ID:/sotfwarePath/QT/5.12.9/msvc2017/include/QtMultimediaWidgets -ID:/sotfwarePath/QT/5.12.9/msvc2017/include/QtMultimedia -ID:/sotfwarePath/QT/5.12.9/msvc2017/include/QtWebEngineWidgets -ID:/sotfwarePath/QT/5.12.9/msvc2017/include/QtPrintSupport -ID:/sotfwarePath/QT/5.12.9/msvc2017/include/QtWidgets -ID:/sotfwarePath/QT/5.12.9/msvc2017/include/QtWebEngineCore -ID:/sotfwarePath/QT/5.12.9/msvc2017/include/QtQuick -ID:/sotfwarePath/QT/5.12.9/msvc2017/include/QtGui -ID:/sotfwarePath/QT/5.12.9/msvc2017/include/QtANGLE -ID:/sotfwarePath/QT/5.12.9/msvc2017/include/QtWebChannel -ID:/sotfwarePath/QT/5.12.9/msvc2017/include/QtQml -ID:/sotfwarePath/QT/5.12.9/msvc2017/include/QtNetwork -ID:/sotfwarePath/QT/5.12.9/msvc2017/include/QtScript -ID:/sotfwarePath/QT/5.12.9/msvc2017/include/QtPositioning -ID:/sotfwarePath/QT/5.12.9/msvc2017/include/QtCore -I. -ID:\sotfwarePath\VisualStudio2017\VC\Tools\MSVC\14.16.27023\ATLMFC\include -ID:\sotfwarePath\VisualStudio2017\VC\Tools\MSVC\14.16.27023\include -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\cppwinrt" ..\PartChainClient\Common\networkclean.h -o release\moc_networkclean.cpp
@@ -3233,6 +3238,7 @@ release\audio.obj: ..\PartChainClient\CameraForensics\audio.cpp ..\PartChainClie
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qtnetwork-config.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qhostaddress.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qabstractsocket.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QUrl \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QTextCodec \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qtextcodec.h
 
@@ -3672,6 +3678,7 @@ release\common.obj: ..\PartChainClient\Common\common.cpp ..\PartChainClient\Comm
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qtnetwork-config.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qhostaddress.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qabstractsocket.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QUrl \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QDateTime \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qdatetime.h \
 		..\PartChainClient\Common\networkclean.h \
@@ -3688,7 +3695,12 @@ release\common.obj: ..\PartChainClient\Common\common.cpp ..\PartChainClient\Comm
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qdialog.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QSysInfo \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\QHostInfo \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qhostinfo.h
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qhostinfo.h \
+		..\PartChainClient\Common\logrecord.h \
+		..\PartChainClient\config.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QVariant \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QSettings \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qsettings.h
 
 release\jscommunicate.obj: ..\PartChainClient\Common\jscommunicate.cpp ..\PartChainClient\Common\jscommunicate.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QObject \
@@ -3763,7 +3775,62 @@ release\jscommunicate.obj: ..\PartChainClient\Common\jscommunicate.cpp ..\PartCh
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qset.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qcontiguouscache.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qsharedpointer.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qsharedpointer_impl.h
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qsharedpointer_impl.h \
+		..\PartChainClient\Common\logrecord.h \
+		..\PartChainClient\Common\common.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QWidget \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qwidget.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qtwidgetsglobal.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qtguiglobal.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qtgui-config.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qtwidgets-config.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qwindowdefs.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qwindowdefs_win.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qmargins.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qpaintdevice.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qrect.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qsize.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qpalette.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qcolor.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qrgb.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qrgba64.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qbrush.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qmatrix.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qpolygon.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qregion.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qdatastream.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qline.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qtransform.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qpainterpath.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qimage.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qpixelformat.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qpixmap.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qfont.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qfontmetrics.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qfontinfo.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\qsizepolicy.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qcursor.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qkeysequence.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qevent.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qurl.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qurlquery.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qfile.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qfiledevice.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qvector2d.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qtouchdevice.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QDir \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qdir.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qfileinfo.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QCoreApplication \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qcoreapplication.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qeventloop.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\QNetworkInterface \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qnetworkinterface.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qtnetworkglobal.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qtnetwork-config.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qhostaddress.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qabstractsocket.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QUrl
 
 release\logrecord.obj: ..\PartChainClient\Common\logrecord.cpp ..\PartChainClient\Common\logrecord.h \
 		..\PartChainClient\Common\common.h \
@@ -3882,6 +3949,7 @@ release\logrecord.obj: ..\PartChainClient\Common\logrecord.cpp ..\PartChainClien
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qtnetwork-config.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qhostaddress.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qabstractsocket.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QUrl \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QDateTime \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qdatetime.h
 
@@ -4014,7 +4082,9 @@ release\networkclean.obj: ..\PartChainClient\Common\networkclean.cpp ..\PartChai
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qtnetworkglobal.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qtnetwork-config.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qhostaddress.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qabstractsocket.h
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qabstractsocket.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QUrl \
+		..\PartChainClient\Common\logrecord.h
 
 release\widget.obj: ..\PartChainClient\Common\widget.cpp ..\PartChainClient\Common\widget.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QWidget \
@@ -4474,6 +4544,7 @@ release\mywin.obj: ..\PartChainClient\RecordForensics\mywin.cpp ..\PartChainClie
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qtnetwork-config.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qhostaddress.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qabstractsocket.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QUrl \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QTextCodec \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\qtextcodec.h
 
@@ -5098,6 +5169,7 @@ release\En_Decrypt.obj: ..\PartChainClient\SM4\En_Decrypt.cpp ..\PartChainClient
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qtnetwork-config.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qhostaddress.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qabstractsocket.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QUrl \
 		..\PartChainClient\Common\logrecord.h \
 		..\PartChainClient\include\JlCompress.h \
 		..\PartChainClient\include\quazip.h \
@@ -5302,7 +5374,8 @@ release\sm4.obj: ..\PartChainClient\SM4\sm4.cpp ..\PartChainClient\SM4\sm4.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qtnetworkglobal.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qtnetwork-config.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qhostaddress.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qabstractsocket.h
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qabstractsocket.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QUrl
 
 release\bubbleltipbutton.obj: ..\PartChainClient\ScreenShotForensics\bubbleltipbutton.cpp D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\QPainter \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtGui\qpainter.h \
@@ -5592,7 +5665,8 @@ release\previewwindow.obj: ..\PartChainClient\ScreenShotForensics\previewwindow.
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qtnetworkglobal.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qtnetwork-config.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qhostaddress.h \
-		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qabstractsocket.h
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtNetwork\qabstractsocket.h \
+		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtCore\QUrl
 
 release\screenshot.obj: ..\PartChainClient\ScreenShotForensics\screenshot.cpp ..\PartChainClient\ScreenShotForensics\screenshot.h \
 		D:\sotfwarePath\QT\5.12.9\msvc2017\include\QtWidgets\QMainWindow \

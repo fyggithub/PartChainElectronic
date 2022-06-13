@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>260</width>
-    <height>200</height>
+    <width>300</width>
+    <height>90</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -24,6 +24,9 @@
     <normaloff>:/new/prefix1/Icon/Titleicon.ico</normaloff>:/new/prefix1/Icon/Titleicon.ico</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>2</number>
+   </property>
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -33,73 +36,15 @@
    <property name="rightMargin">
     <number>0</number>
    </property>
-   <item>
-    <widget class="QWidget" name="widget" native="true">
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>30</height>
-      </size>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <property name="spacing">
-       <number>7</number>
-      </property>
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <property name="spacing">
-         <number>0</number>
-        </property>
-        <item>
-         <spacer name="horizontalSpacer">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QPushButton" name="minBtn">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="closeBtn">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
-   </item>
+   <property name="bottomMargin">
+    <number>6</number>
+   </property>
    <item>
     <widget class="QWidget" name="timeWidget" native="true">
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>48</height>
+       <height>32</height>
       </size>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -170,7 +115,22 @@
    </item>
    <item>
     <widget class="QWidget" name="btnWidget" native="true">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>32</height>
+      </size>
+     </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <property name="spacing">
+       <number>7</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>4</number>
+      </property>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
@@ -247,10 +207,16 @@
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>36</height>
+       <height>32</height>
       </size>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_5">
+      <property name="spacing">
+       <number>2</number>
+      </property>
+      <property name="leftMargin">
+       <number>11</number>
+      </property>
       <property name="topMargin">
        <number>0</number>
       </property>

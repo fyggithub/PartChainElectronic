@@ -325,14 +325,16 @@ QString SM4Decrypt::DecodeSM4_StreamTest(const QStringList& key,const QStringLis
     qDebug()<<"DecodeSM4_Base641111111111111";
     LogRecord wLog;
     wLog.LogTrack("start write download file become to zip file.");
-//    FILE *file_in = NULL;
-//    file_in = fopen(TEMPFILEZIPNAME,"wb+");
-//    fwrite(strInput, 1, len, file_in);
-//    fclose(file_in);
-//    file_in = NULL;
-    wLog.LogTrack("write download file become to zip file over.");
 
     QString tmpCompressName = QCoreApplication::applicationDirPath() + "/tmp";
+    QDir tempFolder(tmpCompressName);
+    if(tempFolder.exists()){
+        wLog.LogTrack("warning : Folder exists!");
+        qDebug() << "warning : Folder exists!";
+        Common pFolder;
+        pFolder.RemoveDirFile(tmpCompressName);
+    }
+
     JlCompress::extractDir(TEMPFILEZIPNAME,tmpCompressName);
     QDir dir(tmpCompressName);
     QFileInfoList fileList;
@@ -351,12 +353,14 @@ QString SM4Decrypt::DecodeSM4_StreamTest(const QStringList& key,const QStringLis
     if(fileList.size() > 0)
     {
         int infoNum = fileList.size();
+        wLog.LogTrack(QString("fileList.size : %1").arg(infoNum));
         QString strPath = "";
         QStringList RecvfilesList;
         for(int i = infoNum - 1; i >= 0; i--)
         {
             curFile = fileList[i];
             qDebug()<<curFile.filePath();
+            wLog.LogTrack(curFile.filePath());
             fileList.removeAt(i);
             strPath = curFile.filePath();
 
@@ -367,7 +371,7 @@ QString SM4Decrypt::DecodeSM4_StreamTest(const QStringList& key,const QStringLis
                 bool temp = strPath.contains(ite.key(), Qt::CaseInsensitive);
                 if(temp == true){
                     tmpKey = ite.value();
-                    for(int j = 0; j < key.size(); ++j){
+                    for(int j = 0; j < key.size(); j++){
                             if(key.at(j) == tmpKey){
                                 tmpFileName = fileNameList.at(j);
                                 break;
@@ -377,6 +381,7 @@ QString SM4Decrypt::DecodeSM4_StreamTest(const QStringList& key,const QStringLis
                 }
             }
             qDebug()<<tmpKey<<tmpFileName;
+            wLog.LogTrack(QString("filename : %1").arg(tmpFileName));
             RecvfilesList << tmpFileName;
 
             const char *pStrkey = tmpKey.toLocal8Bit().constData();
@@ -385,6 +390,7 @@ QString SM4Decrypt::DecodeSM4_StreamTest(const QStringList& key,const QStringLis
             sm4_set_key(pkey, &ctx);
             sm4_decrypt_file_test2(&ctx,curFile.filePath(),tmpFileName);
         }
+        keyMap.clear();
 
         if(pBatchSingle == "batch"){
             JlCompress::compressFiles(BatchCompressFileName, RecvfilesList);

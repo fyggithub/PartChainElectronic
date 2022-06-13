@@ -124,7 +124,7 @@ void ScreenShot::OpenScreenShootWeb(void)
 
     pLog = new Common();
     QString getTime = QDateTime::currentDateTime().toString("yyyy-MM-dd-hh-mm-ss-zzz");
-    FileLogName = "log" + getTime + ".txt";
+    FileLogName = "log" + getTime + ".aisino";
     pLog->CreateForensicsLog(ScreenShotRecord, FileLogName);
     connect(m_ScnSotWebView, SIGNAL(urlChanged(QUrl)),this, SLOT(OnUrlChanged(QUrl)));
     m_ScnSotWebView->setContextMenuPolicy (Qt::NoContextMenu);
@@ -180,8 +180,6 @@ void ScreenShot::FileUpload(void)
         pCloseFlag = 2;
         Common *pCommon = NULL;
         QString strDirPath = pCommon->FileDirPath(ScreenShotRecord);
-        QString removeLogFile = strDirPath + FileLogName;
-        pCommon->RemoveScnLogFile(removeLogFile);
 
         QJsonObject obj;
         obj.insert("strMain", "GetScreenshotDate");
@@ -202,7 +200,6 @@ void ScreenShot::FileUpload(void)
         QByteArray byteArray = QJsonDocument(obj).toJson(QJsonDocument::Compact);
         QString strJson(byteArray);
 
-        pCommon->CommunicationWriteLog("GetScreenshotDate","token",strJson);
         emit SigSendMessageToJS(strJson,"","");
         this->close();  //关闭子窗口
     }
@@ -222,10 +219,6 @@ void ScreenShot::GrabFullScreen(void)
         return;
     }
 
-    pBtn->setFixedSize(40, 13);
-    pBtn->setMsgNumber(pMap.size()+1);
-
-
     Common *pcom = NULL;
     QScreen *screen = QGuiApplication::primaryScreen();
     QString filePath = pcom->FileDirPath(ScreenShotRecord);
@@ -241,12 +234,11 @@ void ScreenShot::GrabFullScreen(void)
     }
 
     pLog->SaveForensicsLog(ScreenShotRecord, FileLogName);
-    QString strRenameFile = pcom->RenameLogFile(ScreenShotRecord, FileLogName);
+    //QString strRenameFile = pcom->RenameLogFile(ScreenShotRecord, FileLogName);
 
     DialogProgressDeal();
     BufferFileName[0] = pFilePathName;
-    //BufferFileName[1] = FileLogName;
-    BufferFileName[1] = strRenameFile;
+    BufferFileName[1] = FileLogName;
     ScnShotUploadFile(BufferFileName,2);
 }
 
@@ -277,7 +269,6 @@ void ScreenShot::closeEvent(QCloseEvent *event)
                     obj.insert("hostIp", pGetHostIp);
                     QByteArray byteArray = QJsonDocument(obj).toJson(QJsonDocument::Compact);
                     QString strJson(byteArray);
-                    pCommon->CommunicationWriteLog("GetWebDate","cancel","cancel");
                     emit SigSendMessageToJS(strJson,"","");
                 }break;
                 case 1:{
@@ -296,7 +287,6 @@ void ScreenShot::closeEvent(QCloseEvent *event)
                     obj.insert("hostIp", pGetHostIp);
                     QByteArray byteArray = QJsonDocument(obj).toJson(QJsonDocument::Compact);
                     QString strJson(byteArray);
-                    pCommon->CommunicationWriteLog("GetWebDate","cancel",strMsg);
                     emit SigSendMessageToJS(strJson,"","");
                 }break;
                 default:break;
@@ -340,12 +330,8 @@ void ScreenShot::DialogProgressInit()
     progressDialog->setWindowTitle(QStringLiteral("请稍等"));  //设置进度对话框的窗体标题
     progressDialog->setLabelText(QStringLiteral("文件正在上传..."));  //设置进度对话框的显示文字信息
     //设置进度对话框的“取消”按钮的显示文字
-    //progressDialog->setMinimum(0);  // 最小值
-    //progressDialog->setMaximum(0);
     progressDialog->setRange(0,0);     //设置进度对话框的步进范围
     progressDialog->setCancelButton(0);//隐藏取消按钮
-    //progressDialog->setWindowFlags(Qt::FramelessWindowHint);//无边框
-    //progressDialog->setWindowFlags(Qt::Dialog | Qt::WindowCloseButtonHint);
     progressDialog->setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
     progressDialog->show();
 }
@@ -353,30 +339,6 @@ void ScreenShot::DialogProgressInit()
 void ScreenShot::DialogProgressTime()
 {
     timecount++;
-    /*if(timecount < 40)
-    {
-        progressDialog->setValue(timecount);
-    }
-    else if(timecount == 40)
-    {
-        qDebug() << "emit SigIpTrack";
-        pNetworkClean->IpTrackFinish(ScreenShotRecord);
-        progressDialog->setValue(timecount);
-    }
-    else
-    {
-        DialogProgressStop();
-
-        BufferFileName[0] = pFilePathName;
-        BufferFileName[1] = pHostFileName;
-        BufferFileName[2] = FileLogName;
-        BufferFileName[3] = pIpTrackFileName;
-        qDebug() << pFilePathName;
-        qDebug() << pHostFileName;
-        qDebug() << FileLogName;
-        ScnShotUploadFile(BufferFileName,4);
-        return;
-    }*/
 }
 
 void ScreenShot::DialogProgressStop()
@@ -446,17 +408,9 @@ void ScreenShot::replyFinished(QNetworkReply*)    //删除指针，更新和关�
         QString msg = jsonObject["message"].toString();
         if(code == "0000")
         {
-            /*int result = QMessageBox::information(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("文件上传成功"),\
-                                               QString::fromLocal8Bit("确定"), 0);
-            if (result == 0)
-            {
-                qDebug() << "code == 0000";
-                //emit SigSendMessageToJS("GetScreenshotDate","token",str);
-                //pCloseFlag = 1;
-                //this->close();  //关闭子窗口
+            pBtn->setFixedSize(40, 13);
+            pBtn->setMsgNumber(pMap.size()+1);
 
-                pMap.insert(pFilePathName,str);//存储到容器
-            }*/
             pMap.insert(pFilePathName,str);//存储到容器
             pCloseFlag = 1;
         }
@@ -465,12 +419,16 @@ void ScreenShot::replyFinished(QNetworkReply*)    //删除指针，更新和关�
             //上传服务器失败
             QMessageBox::warning(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("截图上传失败，<br>请再次上传取证！"),\
                                                QString::fromLocal8Bit("确定"), 0);
+            Common mCom;
+            mCom.RemoveScnLogFile(pFilePathName);
         }
     }
     else
     {
         QMessageBox::critical(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("截图上传失败，<br>请再次上传取证！"),\
                                                 QString::fromLocal8Bit("确定"), 0);
+        Common mCom;
+        mCom.RemoveScnLogFile(pFilePathName);
     }
 }
 

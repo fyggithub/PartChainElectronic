@@ -149,20 +149,6 @@ void Common::RemoveLog(RecordType recordType, QString fileName)
     }
 }
 
-void Common::CommunicationWriteLog(QString str1,QString str2,QString str3)
-{
-    QString filePath = QCoreApplication::applicationDirPath() + "/ForensicLogs.txt";
-    QFile file(filePath);
-    file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append);
-    QString m_str0 = QString("**********\n");
-    QString m_str1 = QString("type : ") + str1 + QString("\n");
-    QString m_str2 = QString("key : ") + str2 + QString("\n");
-    QString m_str3 = QString("str : ") + str3 + QString("\n");
-    QString str =  m_str0 +  m_str1 + m_str2 + m_str3;
-    file.write(str.toUtf8());
-    file.close();
-}
-
 QString Common::SetLogTimeFromat(void)
 {
     QString getTime = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");

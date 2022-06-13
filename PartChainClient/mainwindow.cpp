@@ -36,9 +36,23 @@ MainWindow::MainWindow(QWidget *parent)
     recvBuff = "";
     sendBuff = "";
     mSingleType = "";
-    //qputenv("QTWEBENGINE_REMOTE_DEBUGGING", "7777");
+    qputenv("QTWEBENGINE_REMOTE_DEBUGGING", "7777");
     LogRecord mlog;
     mlog.LogTrack("**************************************************");
+
+//    QString filename0 = QString::fromLocal8Bit("F:\\fyg\\录12.txt");
+//    QString filename1 = QString::fromLocal8Bit("F:\\fyg\\录.txt");
+//    QString filename2 = QString::fromLocal8Bit("F:\\fyg\\测12.txt");
+//    QString filename3 = QString::fromLocal8Bit("F:\\fyg\\测试test123.txt");
+//    QString filename4 = QString::fromLocal8Bit("F:\\fyg\\123录12.txt");
+//    QString filename5 = QString::fromLocal8Bit("F:\\fyg\\test录.txt");
+//    QString filename6 = QString::fromLocal8Bit("F:\\fyg\\中1国2录3.txt");
+//    QString filename7 = QString::fromLocal8Bit("F:\\fyg\\录取.txt");
+//    QString filename8 = QString::fromLocal8Bit("F:\\fyg\\取12.txt");
+//    QString zipname = QString::fromLocal8Bit("F:\\fyg\\证据合集.zip");
+//    QStringList kk;
+//    kk << filename0 << filename1 << filename2 << filename3 << filename4 << filename5 <<filename6 << filename7 << filename8;
+//    JlCompress::compressFiles(zipname, kk);
 }
 
 MainWindow::~MainWindow()
@@ -109,19 +123,19 @@ void MainWindow::MsgOperation()
     QMenu* menu = new QMenu(this);
     QAction* actionCopy = menu->addAction(QString::fromLocal8Bit("复制"));
     QAction* actionPaste = menu->addAction(QString::fromLocal8Bit("粘贴"));
-    //QAction* actionInspector = menu->addAction(QString::fromLocal8Bit("控制台"));
+    QAction* actionInspector = menu->addAction(QString::fromLocal8Bit("控制台"));
     connect(actionCopy,SIGNAL(triggered()), this,SLOT(MsgCopy()));
     connect(actionPaste,SIGNAL(triggered()), this,SLOT(MsgPaste()));    
-//    connect(actionInspector, &QAction::triggered, this, [this](){
-//        if(m_inspector == NULL)
-//        {
-//            m_inspector = new Inspector(this);
-//        }
-//        else
-//        {
-//            m_inspector->show();
-//        }
-//    });
+    connect(actionInspector, &QAction::triggered, this, [this](){
+        if(m_inspector == NULL)
+        {
+            m_inspector = new Inspector(this);
+        }
+        else
+        {
+            m_inspector->show();
+        }
+    });
     menu->exec(QCursor::pos());
 }
 
@@ -446,6 +460,8 @@ void MainWindow::OnReceiveMessageFromJS(QString strMain,QString type,QString str
             {
                 QString filename = arrFilename.at(j).toString();
                 qDebug()<<"filename:"<<filename;
+                LogRecord wLog;
+                wLog.LogTrack(QString("filename : %1").arg(filename));
                 fileList << filename;
             }
         }
@@ -600,6 +616,10 @@ void MainWindow::replyFinished(QNetworkReply*)    //删除指针，更新和关�
                 pCamera->ClosePhotograph();//关闭摄像头
                 delete pCamera;
             }
+            else if(pRecordType ==  WebRecord)
+            {
+                delete pWebForensics;
+            }
             pLog = new Common();
             pLog->RemoveFailFiles(pRecordType);
             delete pLog;
@@ -631,15 +651,6 @@ void MainWindow::replyFinished(QNetworkReply*)    //删除指针，更新和关�
         else if(pRecordType ==  WebRecord)
         {
             delete pWebForensics;
-            //删除取消的文件
-            qDebug()<<pGetDirPath;
-            if(pGetDirPath != "")
-            {
-                qDebug()<<"---------------";
-                Common *pCommon = NULL;
-                pCommon->RemoveDirFile(pGetDirPath);
-                pGetDirPath = "";   //清空，避免异常导致错误
-            }
         }
 
         QMessageBox::critical(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("网络清洁性检测失败，<br>请重新取证！"),\
@@ -684,6 +695,7 @@ void MainWindow::PostDownloadData(const QString& url,const QString& token,const 
         request.setRawHeader("Authorization", tokenHeaderData.toLatin1());
         request.setRawHeader("Content-Type", "application/json");
         QByteArray postData = parame;
+        qDebug()<<"parame:"<<parame;
 
         //QNetworkAccessManager *accessManager = new QNetworkAccessManager(this);    //往该目录中上传文件
         //mAccessManager = new QNetworkAccessManager(this);
@@ -694,6 +706,8 @@ void MainWindow::PostDownloadData(const QString& url,const QString& token,const 
         LogRecord wLog;
         wLog.LogTrack("------------------------------------------");
         wLog.LogTrack("start post download.");
+        QString strParame = parame;
+        wLog.LogTrack(QString("parame : %1").arg(strParame));
 
         mFile = fopen(TEMPFILEZIPNAME,"wb+");
 
@@ -754,7 +768,7 @@ void MainWindow::DownReplyFinishedTest(QNetworkReply *strReply)
         QString appPath = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation) + "/";
         qDebug()<< "appPath:"<<appPath;
         if(pBatchSingle == "batch"){            
-            downloadName = appPath + QString::fromLocal8Bit("证据文件集.zip");
+            downloadName = appPath + QString::fromLocal8Bit("证据文件集.rar");
         }
         else{
             downloadName = appPath + pDownLoadFileName;
@@ -780,10 +794,10 @@ void MainWindow::DownReplyFinishedTest(QNetworkReply *strReply)
         wLog.LogTrack(getBatchSingle);
         if(pBatchSingle == "batch"){
             std::string dir = downLoadPath.toStdString();
-            std::string::size_type zipPos = dir.find(".zip");
+            std::string::size_type zipPos = dir.find(".rar");
             QString zipPath = downLoadPath;
             if(zipPos == dir.npos){
-                downLoadPath = QString("%1.zip").arg(downLoadPath);
+                downLoadPath = QString("%1.rar").arg(downLoadPath);
             }
         }
 
@@ -937,16 +951,23 @@ void MainWindow::RecvMsgCloseWnd(RecordType type)
         }break;
         case CameraRecord:  delete pCamera; break;
         case VideoRecord:{
-            delete pRecordVideo;
+//            delete m_record;
+//            pRecordDialogFlag = 1;
+//            pRecordVideo->CloseRecordWebMsg();
+//            delete pRecordVideo;
         }break;
         case VideoRecordDialog: {
             delete m_record;
-            if(pRecordDialogFlag == 0){
-                pRecordVideo->CloseRecordWebMsg();
-            }
-            else if(pRecordDialogFlag == 1){
-                pRecordDialogFlag = 0;
-            }
+            pRecordDialogFlag = 1;
+            pRecordVideo->CloseRecordWebMsg();
+            delete pRecordVideo;
+//            delete m_record;
+//            if(pRecordDialogFlag == 0){
+//                pRecordVideo->CloseRecordWebMsg();
+//            }
+//            else if(pRecordDialogFlag == 1){
+//                pRecordDialogFlag = 0;
+//            }
         }break;
         case ScreenShotRecord:delete pScreenShot;break;
         default:break;
@@ -980,7 +1001,7 @@ void MainWindow::OpenWebRecordVideo(void)
 {
     pRecordVideo = new RecordVideo;
     pRecordVideo->OpenRecordVideoWeb();
-    pRecordVideo->setWindowTitle(QString::fromLocal8Bit("录屏取证"));
+    pRecordVideo->setWindowTitle(QString::fromLocal8Bit("录屏取证浏览器"));
     pRecordVideo->ShowMaximized();
     pRecordVideo->SimulateButtonClick();
     connect(pRecordVideo, &RecordVideo::SigSendMessageToJS,pJsCommunicate, &JSCommunicate::SigSendMessageToJS);

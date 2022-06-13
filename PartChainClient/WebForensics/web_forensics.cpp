@@ -224,9 +224,10 @@ void web_forensics::closeEvent(QCloseEvent *event)
     emit SigSendMessageToJS(strJson,"","");
     switch(pCloseFlag)
     {
-        case 1:pGetDirPath = "";pLog->CommunicationWriteLog("GetWebDate","token",strJson);break;
+        case 1:{
+            pGetDirPath = "";
+        }break;
         case 2:{
-            pLog->CommunicationWriteLog("GetWebDate","cancel",getStrMsg);
             pLog->RemoveDirFile(strDirPath);
             pGetDirPath = strDirPath;
         }break;

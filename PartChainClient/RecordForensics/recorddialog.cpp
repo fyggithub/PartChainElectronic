@@ -38,14 +38,16 @@ RecordDialog::RecordDialog(QWidget *parent) :
     qDebug()<<"screenWidth:"<<screenWidth<<screenHeight;
     setGeometry(QRect(screenWidth-360, screenHeight-280, 260, 180));
 
-    Qt::WindowFlags wndFlag = Qt::Dialog | Qt::FramelessWindowHint |Qt::CustomizeWindowHint | Qt::WindowShadeButtonHint | Qt::WindowStaysOnTopHint;
+    //Qt::WindowFlags wndFlag = Qt::Dialog | Qt::FramelessWindowHint |Qt::CustomizeWindowHint | Qt::WindowShadeButtonHint | Qt::WindowStaysOnTopHint;
+    Qt::WindowFlags wndFlag = Qt::Dialog | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint | Qt::WindowShadeButtonHint | Qt::WindowStaysOnTopHint;
     setWindowFlags(wndFlag);
-    ui->minBtn->setIcon(style()->standardIcon(QStyle::SP_TitleBarMinButton));
-    ui->closeBtn->setIcon(style()->standardIcon(QStyle::SP_TitleBarCloseButton));
-    ui->minBtn->setFlat(true);
-    ui->closeBtn->setFlat(true);
-    connect(ui->minBtn, SIGNAL(clicked(bool)), this, SLOT(onMinClicked()));
-    connect(ui->closeBtn, SIGNAL(clicked(bool)), this, SLOT(onCloseClicked()));
+//    ui->minBtn->setIcon(style()->standardIcon(QStyle::SP_TitleBarMinButton));
+//    ui->closeBtn->setIcon(style()->standardIcon(QStyle::SP_TitleBarCloseButton));
+//    ui->minBtn->setFlat(true);
+//    ui->closeBtn->setFlat(true);
+//    connect(ui->minBtn, SIGNAL(clicked(bool)), this, SLOT(onMinClicked()));
+//    connect(ui->closeBtn, SIGNAL(clicked(bool)), this, SLOT(onCloseClicked()));
+    setWindowTitle(" ");
 
     ui->startBtn->setStyleSheet("QPushButton{border-top:0px solid #e8f3f9;background:  transparent;}"
                                  "QPushButton:pressed{border:2px solid white;border-radius:10px;}"
@@ -191,7 +193,6 @@ void RecordDialog::closeEvent(QCloseEvent *event)
             QByteArray byteArray = QJsonDocument(obj).toJson(QJsonDocument::Compact);
             QString strJson(byteArray);
 
-            pCommon->CommunicationWriteLog("GetRecordDate","cancel","cancel");
             emit SigSendMessageToJS(strJson,"","");
             event->accept();
             pCommon->RemoveDirFile(strDirPath);//本地删除此次操作的取证文件
@@ -218,7 +219,6 @@ void RecordDialog::closeEvent(QCloseEvent *event)
         obj.insert("osVersion", pOsVersion);
         QByteArray byteArray = QJsonDocument(obj).toJson(QJsonDocument::Compact);
         QString strJson(byteArray);
-        pCommon->CommunicationWriteLog("GetRecordDate","token",strJson);
         emit SigSendMessageToJS(strJson,"","");
         if(m_isRun)
         {
