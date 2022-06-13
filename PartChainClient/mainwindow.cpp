@@ -91,8 +91,6 @@ void MainWindow::startweb(void)
         download->accept();//接收当前下载请求，只有接收后才会开始下载
         wLog.LogTrack("download accept ok.");
     });
-    //m_webView->setContextMenuPolicy (Qt::NoContextMenu);
-    //m_webView->page()->settings()->setAttribute(QWebEngineSettings::LocalContentCanAccessRemoteUrls, true);
     m_webView->setContextMenuPolicy(Qt::CustomContextMenu);
     m_inspector = NULL;
     connect(m_webView, &QWidget::customContextMenuRequested, this, &MainWindow::MsgOperation);
