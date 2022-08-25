@@ -251,6 +251,21 @@ void MainWindow::OnReceiveMessageFromJS(QString strMain,QString type,QString str
                 qDebug()<<"filename:"<<filename;
                 LogRecord wLog;
                 wLog.LogTrack(QString("filename : %1").arg(filename));
+                if(filename.isEmpty()){
+                    wLog.LogTrack(QString("Warning:: filename is empty!"));
+                    keyList.clear();
+                    keyMap.clear();
+
+                    QJsonObject obj;
+                    obj.insert("strMain", "GetDownLoadData");
+                    obj.insert("strBranch", "DownLoadFail");
+                    QByteArray byteArray = QJsonDocument(obj).toJson(QJsonDocument::Compact);
+                    QString strJson(byteArray);
+                    SigSendMessageToJS(strJson,"","");
+                    QMessageBox::warning(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("下载文件名不能为空！"), QString::fromLocal8Bit("确定"), 0);
+                    return;
+                }
+
                 fileList << filename;
             }
         }
@@ -527,6 +542,29 @@ void MainWindow::DownReplyFinishedTest(QNetworkReply *strReply)
         fclose(mFile);
         mFile = NULL;
         qDebug()<<"strData.length():"<<strData.length();
+        qDebug()<<"*****************recv:"<<strData;
+
+        QJsonParseError parseJsonErr;
+        QJsonDocument document = QJsonDocument::fromJson(strData, &parseJsonErr);
+        if (parseJsonErr.error == QJsonParseError::NoError)
+        {
+            QJsonObject jsonObject = document.object();
+            QString mes = jsonObject["message"].toString();
+            qDebug()<<"mes:"<<mes;
+
+            //获取的数据为json，则返回错误代码
+            qDebug() << "Service abnormal,file download failed!";
+            wLog.LogTrack("Service abnormal,file download failed!");
+            QJsonObject obj;
+            obj.insert("strMain", "GetDownLoadData");
+            obj.insert("strBranch", "DownLoadFail");
+            QByteArray byteArray = QJsonDocument(obj).toJson(QJsonDocument::Compact);
+            QString strJson(byteArray);
+            SigSendMessageToJS(strJson,"","");
+            //QMessageBox::warning(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("文件下载失败，服务器异常！"), QString::fromLocal8Bit("确定"), 0);
+            QMessageBox::warning(NULL, QString::fromLocal8Bit("提示"), mes, QString::fromLocal8Bit("确定"), 0);
+            return;
+        }
 
         pDecrypt = new SM4Decrypt;
         if((pBatchSingle == "single") && (mSingleType == "certificate")){
@@ -634,6 +672,7 @@ void MainWindow::DownReplyFinishedTest(QNetworkReply *strReply)
         QString strJson(byteArray);
         SigSendMessageToJS(strJson,"","");
         wLog.LogTrack(QString("Send js data : %1").arg(strJson));
+        QMessageBox::warning(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("文件下载失败，服务器异常！"), QString::fromLocal8Bit("确定"), 0);
     }
 }
 
